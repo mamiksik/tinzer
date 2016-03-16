@@ -9,25 +9,29 @@ Fruit::~Fruit(void)
 {
 }
 
-int Fruit::getXPos(){
+int Fruit::getXPos()
+{
 
 	return Fruit::xPos;
 
 }
 
-void Fruit::setXPos(int x){
+void Fruit::setXPos(int x)
+{
 
 	Fruit::xPos = x;
 
 }
 
-int Fruit::getYPos(){
+int Fruit::getYPos()
+{
 
 	return Fruit::yPos;
 
 }
 
-void Fruit::setYPos(int y){
+void Fruit::setYPos(int y)
+{
 
 	Fruit::yPos = y;
 

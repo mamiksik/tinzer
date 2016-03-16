@@ -5,15 +5,18 @@
 #include "Position.h"
 #include "../control/Control.h"
 
-Coordinates Position::getPosition(void) {
+Coordinates Position::getPosition(void)
+{
 	return current;
 }
 
-Coordinates Position::getStartPosition(void) {
+Coordinates Position::getStartPosition(void)
+{
 	return start;
 }
 
-void Position::moveToPosition(int width, int height) {
+void Position::moveToPosition(int width, int height)
+{
 
 
 }

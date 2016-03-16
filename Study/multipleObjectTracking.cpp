@@ -45,7 +45,8 @@ const string windowName2 = "Thresholded Image";
 const string windowName3 = "After Morphological Operations";
 const string trackbarWindowName = "Trackbars";
 
-void on_trackbar(int, void *) {//This function gets called whenever a
+void on_trackbar(int, void *)
+{//This function gets called whenever a
 	// trackbar position is changed
 
 
@@ -54,7 +55,8 @@ void on_trackbar(int, void *) {//This function gets called whenever a
 
 }
 
-string intToString(int number) {
+string intToString(int number)
+{
 
 
 	std::stringstream ss;
@@ -62,7 +64,8 @@ string intToString(int number) {
 	return ss.str();
 }
 
-void createTrackbars() {
+void createTrackbars()
+{
 	//create window for trackbars
 
 
@@ -89,7 +92,8 @@ void createTrackbars() {
 
 }
 
-void drawObject(vector<Fruit> theFruits, Mat &frame) {
+void drawObject(vector<Fruit> theFruits, Mat &frame)
+{
 
 	for (int i = 0; i < theFruits.size(); i++) {
 
@@ -99,7 +103,8 @@ void drawObject(vector<Fruit> theFruits, Mat &frame) {
 	}
 }
 
-void morphOps(Mat &thresh) {
+void morphOps(Mat &thresh)
+{
 
 	//create structuring element that will be used to "dilate" and "erode" image.
 	//the element chosen here is a 3px by 3px rectangle
@@ -118,7 +123,8 @@ void morphOps(Mat &thresh) {
 
 }
 
-void trackFilteredObject(Mat threshold, Mat HSV, Mat &cameraFeed) {
+void trackFilteredObject(Mat threshold, Mat HSV, Mat &cameraFeed)
+{
 
 
 	vector<Fruit> apples;
@@ -171,7 +177,8 @@ void trackFilteredObject(Mat threshold, Mat HSV, Mat &cameraFeed) {
 	}
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	//if we would like to calibrate our filter values, set to true.
 	bool calibrationMode = true;
 

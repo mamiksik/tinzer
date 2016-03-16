@@ -5,10 +5,12 @@
 #ifndef KETCHUPHOUSE_POSITION_H
 #define KETCHUPHOUSE_POSITION_H
 
-class Position {
+class Position
+{
 public:
 	Position(int width, int height, int startX, int startY) : sizeX(width), sizeY(height), start(startX, startY, 0),
-	                                                          current(startX, startY, 0) { }
+	                                                          current(startX, startY, 0)
+	{ }
 
 	Coordinates getPosition(void);
 
@@ -22,14 +24,13 @@ private:
 
 	Coordinates start;
 	Coordinates current;
-
-	//?
-	//Control control;
 };
 
-struct Coordinates {
+struct Coordinates
+{
 	Coordinates(double angle, unsigned short height, unsigned short width) : angle(angle), height(height),
-	                                                                         width(width) { }
+	                                                                         width(width)
+	{ }
 
 	unsigned short int width;
 	unsigned short int height;

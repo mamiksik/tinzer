@@ -12,7 +12,8 @@
 //          /\
 //          ||
 
-class Control {
+class Control
+{
 public:
 	Control(int wheelDiameter, int wheelsDistance, Engine leftEngine, Engine rightEngine);
 

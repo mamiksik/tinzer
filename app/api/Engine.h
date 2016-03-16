@@ -6,7 +6,8 @@
 #define KETCHUPHOUSE_ENGINE_H
 
 
-class Engine {
+class Engine
+{
 public:
 	int getEncoderRel(void);
 

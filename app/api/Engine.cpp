@@ -4,7 +4,8 @@
 
 #include "Engine.h"
 
-int Engine::getEncoderRel(void) {
+int Engine::getEncoderRel(void)
+{
 	int encoder = 23; //TODO
 	int result = lastEncoder - encoder;
 	lastEncoder = encoder;

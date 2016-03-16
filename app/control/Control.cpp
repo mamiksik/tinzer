@@ -3,6 +3,7 @@
 //
 
 #include "Control.h"
+#include "../api/Engine.h"
 #include <math.h>
 
 
@@ -16,22 +17,26 @@ void Control::Control(int wheelDiameter, int wheelsDistance, Engine leftEngine,
 	rightEngine = rightEngine;
 }
 
-double Control::getLastDistanceLeft() {
+double Control::getLastDistanceLeft()
+{
 	return (leftEngine.getEncoderRel() * wheelPerimeter) / tics;
 }
 
-double Control::getLastDistanceRight() {
+double Control::getLastDistanceRight()
+{
 	return (rightEngine.getEncoderRel() * wheelPerimeter) / tics;
 }
 
-void Control::goStraight(int distance, int power) {
+void Control::goStraight(int distance, int power)
+{
 	double tic = (360 * distance) / wheelPerimeter;
 
 	leftEngine.setPosition(tic, power);
 	rightEngine.setPosition(tic, power);
 }
 
-void Control::makeTurn(int angle, int power) {
+void Control::makeTurn(int angle, int power)
+{
 	double tic = (robotPerimeter * angle) / wheelPerimeter;
 
 	leftEngine.setPosition(-tic, power);
