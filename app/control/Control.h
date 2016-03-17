@@ -5,7 +5,7 @@
 #ifndef KETCHUPHOUSE_CONTROL_H
 #define KETCHUPHOUSE_CONTROL_H
 
-#include "../../api/Engine.h"
+#include "../api/Engine.h"
 
 //  + angle || - angle
 //
@@ -23,7 +23,9 @@ public:
 
 	void goStraight(int, int);
 
-	void makeTurn(int, int);
+	void makeTurn(double, int);
+
+	void calibrateRotation();
 
 private:
 	double wheelPerimeter;

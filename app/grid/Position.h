@@ -5,18 +5,24 @@
 #ifndef KETCHUPHOUSE_POSITION_H
 #define KETCHUPHOUSE_POSITION_H
 
+#include "../control/Control.h"
+
 class Position
 {
 public:
-	Position(int width, int height, int startX, int startY) : sizeX(width), sizeY(height), start(startX, startY, 0),
-	                                                          current(startX, startY, 0)
+	Position(int width, int height, int startX, int startY, int startAngle, Control control) : sizeX(width),
+	                                                                                           sizeY(height),
+	                                                                                           start(startX, startY, 0),
+	                                                                                           current(startX, startY,
+	                                                                                                   startAngle),
+	                                                                                           control(control)
 	{ }
 
 	Coordinates getPosition(void);
 
 	Coordinates getStartPosition(void);
 
-	void moveToPosition(int width, int height);
+	void moveToPosition(int x, int y);
 
 private:
 	unsigned short int sizeX;
@@ -24,17 +30,20 @@ private:
 
 	Coordinates start;
 	Coordinates current;
+
+	Control control;
 };
 
 struct Coordinates
 {
-	Coordinates(double angle, unsigned short height, unsigned short width) : angle(angle), height(height),
-	                                                                         width(width)
+	Coordinates(double angle, unsigned short y, unsigned short x) : angle(angle), y(y),
+	                                                                x(x)
 	{ }
 
-	unsigned short int width;
-	unsigned short int height;
+	unsigned short int y;
+	unsigned short int x;
 
+	//1 = full rotation
 	double angle;
 };
 

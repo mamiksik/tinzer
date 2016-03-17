@@ -2,8 +2,7 @@
 // Created by Martin Mikšík on 12/03/16.
 //
 
-#include "Control.h"
-#include "../api/Engine.h"
+#include "Control.h""
 #include <math.h>
 
 
@@ -35,10 +34,19 @@ void Control::goStraight(int distance, int power)
 	rightEngine.setPosition(tic, power);
 }
 
-void Control::makeTurn(int angle, int power)
+//1 = full rotation...
+void Control::makeTurn(double angleNew, int power)
 {
-	double tic = (robotPerimeter * angle) / wheelPerimeter;
+	double tic = (robotPerimeter * angleNew) / wheelPerimeter;
+
+	angle = angleNew;
 
 	leftEngine.setPosition(-tic, power);
 	rightEngine.setPosition(tic, power);
+}
+
+void Control::calibrateRotation()
+{
+	//TODO: In future remove and make it clean and more inteligent
+	//TODO: Implement return to default rotation
 }
