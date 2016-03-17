@@ -7,6 +7,10 @@
 
 #include "../control/Control.h"
 
+
+//   1
+// 0 # 2
+//   3
 class Position
 {
 public:
@@ -22,11 +26,14 @@ public:
 
 	Coordinates getStartPosition(void);
 
-	void moveToPosition(int x, int y);
+	void moveToPosition(short int x, short int y);
 
 private:
-	unsigned short int sizeX;
-	unsigned short int sizeY;
+	short int sizeX;
+	short int sizeY;
+
+	int forwardPower = 50;
+	int turnPower = 50;
 
 	Coordinates start;
 	Coordinates current;
@@ -36,15 +43,16 @@ private:
 
 struct Coordinates
 {
-	Coordinates(double angle, unsigned short y, unsigned short x) : angle(angle), y(y),
-	                                                                x(x)
+	Coordinates(int angle, short y, short x) : angle(angle), y(y),
+	                                           x(x)
 	{ }
 
-	unsigned short int y;
-	unsigned short int x;
+	short int y;
+	short int x;
 
 	//1 = full rotation
-	double angle;
+	//Why we wanted to store it as rad?
+	int angle;
 };
 
 

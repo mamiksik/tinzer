@@ -21,9 +21,9 @@ public:
 
 	double getLastDistanceRight(void);
 
-	void goStraight(int, int);
+	void goStraight(int distance, int power);
 
-	void makeTurn(double, int);
+	void makeTurn(double angle, int power);
 
 	void calibrateRotation();
 

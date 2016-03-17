@@ -35,11 +35,9 @@ void Control::goStraight(int distance, int power)
 }
 
 //1 = full rotation...
-void Control::makeTurn(double angleNew, int power)
+void Control::makeTurn(double angle, int power)
 {
-	double tic = (robotPerimeter * angleNew) / wheelPerimeter;
-
-	angle = angleNew;
+	double tic = (robotPerimeter * angle) / wheelPerimeter;
 
 	leftEngine.setPosition(-tic, power);
 	rightEngine.setPosition(tic, power);

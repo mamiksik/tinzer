@@ -30,5 +30,6 @@ int main(int argc, char *argv[])
 	Position position = Position(width, height, startX, startY, startAngle, control);
 
 	do {
+		//position.moveToPosition(4, 5);
 	} while (update);
 }
