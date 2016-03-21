@@ -2,11 +2,13 @@
 // Created by Martin Mikšík on 12/03/16.
 //
 
-#include "Control.h""
-#include <math.h>
+#include "Control.h"
+
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 
-void Control::Control(int wheelDiameter, int wheelsDistance, Engine leftEngine,
+Control::Control(int wheelDiameter, int wheelsDistance, Engine leftEngine,
                       Engine rightEngine)//:wheelPerimeter(M_PI * wheelDiameter)
 {
 	wheelPerimeter = M_PI * wheelDiameter;

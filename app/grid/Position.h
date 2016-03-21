@@ -8,6 +8,20 @@
 #include "../control/Control.h"
 
 
+struct Coordinates
+{
+	Coordinates(int angle, short y, short x) : angle(angle), y(y),
+		x(x)
+	{ }
+
+	short int y;
+	short int x;
+
+	//1 = full rotation
+	//Why we wanted to store it as rad?
+	int angle;
+};
+
 //   1
 // 0 # 2
 //   3
@@ -39,20 +53,6 @@ private:
 	Coordinates current;
 
 	Control control;
-};
-
-struct Coordinates
-{
-	Coordinates(int angle, short y, short x) : angle(angle), y(y),
-	                                           x(x)
-	{ }
-
-	short int y;
-	short int x;
-
-	//1 = full rotation
-	//Why we wanted to store it as rad?
-	int angle;
 };
 
 

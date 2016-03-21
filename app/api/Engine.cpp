@@ -11,3 +11,8 @@ int Engine::getEncoderRel(void)
 	lastEncoder = encoder;
 	return result;
 }
+
+void Engine::setPosition(double, int)
+{
+	
+}

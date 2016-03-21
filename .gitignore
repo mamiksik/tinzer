@@ -1,3 +1,9 @@
 bin/*
 .idea
+.vs
 .DS_Store
+*.sdf
+*.filters
+*.opensdf
+Debug
+Release
