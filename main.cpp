@@ -27,11 +27,11 @@ int main(int argc, char *argv[])
 	const int startX = 4;
 	const int startY = 4;
 	const int startAngle = 0;
-	
-	//chrono
+
+	//Chrono
 	const int gameTime = 10; //v sec
 	const int maxTimeLoop = 30; //v ms
-	
+
 	//END OF CONFIG
 
 	Control control = Control(wheelDiameter, wheelsDistance, leftEngine, rightEngine);
@@ -50,15 +50,15 @@ int main(int argc, char *argv[])
 		if (chrono::system_clock::to_time_t(clock_now) >= stopTime) {
 			break;
 		}
-		
-		// na konci smycky, hlida stejnou delku smycky (koriguje ji)
+
+		//Creates deterministic loop
 		if (maxTimeLoop > (clock() - watch)) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		}
 		else {
-			cout << "loop is owerflow" << endl;
+			cout << "loop time overflow" << endl;
 		}
-			
+
 		watch = clock();
 	} while (update);
 }
