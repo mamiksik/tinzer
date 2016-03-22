@@ -4,20 +4,6 @@
 
 #include "Control.h"
 
-#define _USE_MATH_DEFINES
-#include <cmath>
-
-
-Control::Control(int wheelDiameter, int wheelsDistance, Engine leftEngine,
-                      Engine rightEngine)//:wheelPerimeter(M_PI * wheelDiameter)
-{
-	wheelPerimeter = M_PI * wheelDiameter;
-	robotPerimeter = (M_PI * wheelsDistance) / 2;
-
-	leftEngine = leftEngine;
-	rightEngine = rightEngine;
-}
-
 double Control::getLastDistanceLeft()
 {
 	return (leftEngine.getEncoderRel() * wheelPerimeter) / tics;

@@ -10,8 +10,9 @@
 
 struct Coordinates
 {
-	Coordinates(int angle, short y, short x) : angle(angle), y(y),
-		x(x)
+	Coordinates(int angle, short y, short x)
+			: angle(angle), y(y),
+			  x(x)
 	{ }
 
 	short int y;
@@ -28,12 +29,12 @@ struct Coordinates
 class Position
 {
 public:
-	Position(int width, int height, int startX, int startY, int startAngle, Control control) : sizeX(width),
-	                                                                                           sizeY(height),
-	                                                                                           start(startX, startY, 0),
-	                                                                                           current(startX, startY,
-	                                                                                                   startAngle),
-	                                                                                           control(control)
+	Position(int width, int height, int startX, int startY, int startAngle, Control control)
+			: sizeX(width),
+			  sizeY(height),
+			  start(startX, startY, 0),
+			  current(startX, startY, startAngle),
+			  control(control)
 	{ }
 
 	Coordinates getPosition(void);
@@ -46,8 +47,8 @@ private:
 	short int sizeX;
 	short int sizeY;
 
-	int forwardPower = 50;
-	int turnPower = 50;
+	static const int forwardPower = 50;
+	static const int turnPower = 50;
 
 	Coordinates start;
 	Coordinates current;

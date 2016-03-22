@@ -5,6 +5,7 @@
 #ifndef KETCHUPHOUSE_CONTROL_H
 #define KETCHUPHOUSE_CONTROL_H
 
+#include <math.h>
 #include "../api/Engine.h"
 
 //  + angle || - angle
@@ -15,7 +16,12 @@
 class Control
 {
 public:
-	Control(int wheelDiameter, int wheelsDistance, Engine leftEngine, Engine rightEngine);
+	Control(double wheelPerimeter, double robotPerimeter, const Engine rightEngine, const Engine leftEngine)
+			: wheelPerimeter(M_PI * wheelPerimeter),
+			  robotPerimeter(M_PI * robotPerimeter),
+			  rightEngine(rightEngine),
+			  leftEngine(leftEngine)
+	{ }
 
 	double getLastDistanceLeft(void);
 

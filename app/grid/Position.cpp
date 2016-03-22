@@ -3,7 +3,6 @@
 //
 
 #include "Position.h"
-#include "../control/Control.h"
 
 Coordinates Position::getPosition(void)
 {
