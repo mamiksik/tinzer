@@ -8,7 +8,7 @@ find_library(LIBSTDCXX NAMES stdc++)
 
 #set(SOURCE_FILES Study/multipleObjectTracking.cpp Study/Fruit.cpp Study/Fruit.h)
 
-set(SOURCE_FILES main.cpp app/control/Control.cpp app/control/Control.h app/api/Engine.cpp app/api/Engine.h app/grid/Position.cpp app/grid/Position.h)
+set(SOURCE_FILES main.cpp app/control/Control.cpp app/control/Control.h app/api/Engine.cpp app/api/Engine.h app/grid/Position.cpp app/grid/Position.h app/Config.h app/threads/ControlThread.h app/threads/LogicThread.h)
 
 #add_compile_options(-stdlib=libstdc++)
 add_executable(KetchupHouse ${SOURCE_FILES})
