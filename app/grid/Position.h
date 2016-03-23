@@ -6,22 +6,7 @@
 #define KETCHUPHOUSE_POSITION_H
 
 #include "../control/Control.h"
-
-
-struct Coordinates
-{
-	Coordinates(int angle, short y, short x)
-			: angle(angle), y(y),
-			  x(x)
-	{ }
-
-	short int y;
-	short int x;
-
-	//1 = full rotation
-	//Why we wanted to store it as rad?
-	int angle;
-};
+#include "../Config.h"
 
 //   1
 // 0 # 2
@@ -29,11 +14,11 @@ struct Coordinates
 class Position
 {
 public:
-	Position(int width, int height, int startX, int startY, int startAngle, Control control)
+	Position(int width, int height, Coordinates coordinates, Control control)
 			: sizeX(width),
 			  sizeY(height),
-			  start(startX, startY, 0),
-			  current(startX, startY, startAngle),
+			  start(coordinates),
+			  current(coordinates),
 			  control(control)
 	{ }
 
@@ -41,7 +26,11 @@ public:
 
 	Coordinates getStartPosition(void);
 
-	void moveToPosition(short int x, short int y);
+	void moveToPosition(Coordinates coordinates);
+
+	void stayAtPosition(void);
+
+	void moveToHome(void);
 
 private:
 	short int sizeX;

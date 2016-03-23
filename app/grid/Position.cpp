@@ -14,9 +14,12 @@ Coordinates Position::getStartPosition(void)
 	return start;
 }
 
-void Position::moveToPosition(short int x, short int y)
+void Position::moveToPosition(Coordinates coordinates)
 {
 	int leightOfLine = 90;
+
+	int x = coordinates.x;
+	int y = coordinates.y;
 
 	if (x > sizeX) {
 		throw "Position X cannot be higher than size of field";

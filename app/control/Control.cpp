@@ -31,8 +31,3 @@ void Control::makeTurn(double angle, int power)
 	rightEngine.setPosition(tic, power);
 }
 
-void Control::calibrateRotation()
-{
-	//TODO: In future remove and make it clean and more inteligent
-	//TODO: Implement return to default rotation
-}

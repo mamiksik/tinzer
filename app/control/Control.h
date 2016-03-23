@@ -31,8 +31,6 @@ public:
 
 	void makeTurn(double angle, int power);
 
-	void calibrateRotation();
-
 private:
 	double wheelPerimeter;
 	double robotPerimeter;
