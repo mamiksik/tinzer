@@ -14,27 +14,20 @@
 class Position
 {
 public:
-	Position(int width, int height, Coordinates coordinates, Control control)
+	Position(int width, int height, Coordinates startCoordinates)
 			: sizeX(width),
 			  sizeY(height),
-			  start(coordinates),
-			  current(coordinates),
-			  control(control)
+			  start(startCoordinates),
+			  current(startCoordinates)
 	{ }
 
-	Coordinates getPosition(void);
-
-	Coordinates getStartPosition(void);
-
 	void moveToPosition(Coordinates coordinates);
-
-	void stayAtPosition(void);
 
 	void moveToHome(void);
 
 private:
-	short int sizeX;
-	short int sizeY;
+	int sizeX;
+	int sizeY;
 
 	static const int forwardPower = 50;
 	static const int turnPower = 50;
@@ -42,7 +35,7 @@ private:
 	Coordinates start;
 	Coordinates current;
 
-	Control control;
+	void makeMove(Instruction instruction);
 };
 
 

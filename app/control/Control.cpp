@@ -14,7 +14,7 @@ double Control::getLastDistanceRight()
 	return (rightEngine.getEncoderRel() * wheelPerimeter) / tics;
 }
 
-void Control::goStraight(int distance, int power)
+void Control::goStraight(double distance, int power)
 {
 	double tic = (360 * distance) / wheelPerimeter;
 
@@ -31,3 +31,7 @@ void Control::makeTurn(double angle, int power)
 	rightEngine.setPosition(tic, power);
 }
 
+void Control::stay(void)
+{
+	//TODO: Implement stay at position
+}

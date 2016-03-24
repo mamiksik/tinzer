@@ -4,16 +4,6 @@
 
 #include "Position.h"
 
-Coordinates Position::getPosition(void)
-{
-	return current;
-}
-
-Coordinates Position::getStartPosition(void)
-{
-	return start;
-}
-
 void Position::moveToPosition(Coordinates coordinates)
 {
 	int leightOfLine = 90;
@@ -38,30 +28,30 @@ void Position::moveToPosition(Coordinates coordinates)
 
 		switch (current.angle) {
 			case 1:
-				control.makeTurn(-0.25, turnPower);
+				makeMove(Instruction(0, -0.25, turnPower));
 				break;
 			case 2:
-				control.makeTurn(0.5, turnPower);
+				makeMove(Instruction(0, 0.5, turnPower));
 				break;
 			case 3:
-				control.makeTurn(0.25, turnPower);
+				makeMove(Instruction(0, 0.25, turnPower));
 				break;
 		}
 		current.angle = 0;
 		current.x = x;
-		control.goStraight(newX, forwardPower);
+		makeMove(Instruction(1, newX, forwardPower));
 
 	} else if (newX < current.x) {
 
 		switch (current.angle) {
 			case 0:
-				control.makeTurn(0.5, turnPower);
+				makeMove(Instruction(0, 0.5, turnPower));
 				break;
 			case 1:
-				control.makeTurn(0.25, turnPower);
+				makeMove(Instruction(0, 0.25, turnPower));
 				break;
 			case 3:
-				control.makeTurn(-0.25, turnPower);
+				makeMove(Instruction(0, -0.25, turnPower));
 				break;
 		}
 		current.angle = 2;
@@ -73,26 +63,38 @@ void Position::moveToPosition(Coordinates coordinates)
 	if (newY > current.y) {
 		switch (current.angle) {
 			case 0:
-				control.makeTurn(0.25, turnPower);
+				makeMove(Instruction(0, 0.25, turnPower));
 				break;
 			case 2:
-				control.makeTurn(-0.25, turnPower);
+				makeMove(Instruction(0, -0.25, turnPower));
 				break;
 		}
 		current.angle = 1;
 		current.y = y;
-		control.goStraight(newX, forwardPower);
+		makeMove(Instruction(1, newY, forwardPower));
 	} else if (newY < current.y) {
 		switch (current.angle) {
 			case 0:
-				control.makeTurn(-0.25, turnPower);
+				makeMove(Instruction(0, -0.25, turnPower));
 				break;
 			case 2:
-				control.makeTurn(0.25, turnPower);
+				makeMove(Instruction(0, 0.25, turnPower));
 				break;
 		}
 		current.angle = 3;
 		current.y = y;
-		control.goStraight(newX, forwardPower);
+		makeMove(Instruction(1, newY, forwardPower));
 	}
+}
+
+void Position::makeMove(Instruction instruction)
+{
+	mtx.lock();
+	coordinatesStack.push(instruction);
+	mtx.unlock();
+}
+
+void Position::moveToHome(void)
+{
+
 }

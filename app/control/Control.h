@@ -27,9 +27,11 @@ public:
 
 	double getLastDistanceRight(void);
 
-	void goStraight(int distance, int power);
+	void goStraight(double distance, int power);
 
 	void makeTurn(double angle, int power);
+
+	void stay(void);
 
 private:
 	double wheelPerimeter;

@@ -20,18 +20,15 @@ public:
 
 		bool update = true;
 
-		//Position position = Position(width, height, startCoordinates, control);
+		Position position = Position(width, height, startCoordinates);
 
 		while (update) {
 			system_clock::time_point clock_now = system_clock::now();
 
-			//mtx.lock();
-			//coordinatesStack.push(Coordinates(0, 1, 1));
-			//mtx.unlock();
+			position.moveToPosition(Coordinates(1, 1, 0));
 
 			if (system_clock::to_time_t(clock_now) >= stopTime) {
-				//TODO: Implement return to home
-				Position.
+				position.moveToHome();
 				break;
 			}
 
