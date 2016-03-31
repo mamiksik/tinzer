@@ -1,5 +1,18 @@
+//
+// Created by Martin Mikšík
+//
+
+#ifndef KETCHUPHOUSE_CONTROLTHREAD_H
+#define KETCHUPHOUSE_CONTROLTHREAD_H
+
+#include <iostream>
+
+
 #include "../control/Control.h"
 #include "../grid/Position.h"
+
+using namespace std;
+using namespace chrono;
 
 //Keep just .h or create also .cpp
 class ControlThread
@@ -21,16 +34,17 @@ public:
 			system_clock::time_point clock_now = system_clock::now();
 
 			if (mtx.try_lock()) {
-				Instruction newInstruction(coordinatesStack.top());
-				coordinatesStack.pop();
+				Instruction newInstruction(instructionsStack.top());
+				instructionsStack.pop();
 				mtx.unlock();
+
 				if (newInstruction.action == 1) {
 					control.goStraight(newInstruction.distance, newInstruction.power);
 				} else if (newInstruction.action == 0) {
 					control.makeTurn(newInstruction.distance, newInstruction.power);
 				}
 
-				if (coordinatesStack.empty()) {
+				if (instructionsStack.empty()) {
 					control.stay();
 				}
 			} else {
@@ -49,3 +63,5 @@ public:
 		}
 	}
 };
+
+#endif //KETCHUPHOUSE_CONTROLTHREAD_H

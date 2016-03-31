@@ -1,6 +1,12 @@
+//
+// Created by Martin Mikšík
+//
+
+#ifndef KETCHUPHOUSE_LOGICTHREAD_H
+#define KETCHUPHOUSE_LOGICTHREAD_H
+
 #include <iostream>
-#include <thread>
-#include <vector>
+
 #include "../Config.h"
 #include "../grid/Position.h"
 
@@ -44,3 +50,5 @@ public:
 		}
 	}
 };
+
+#endif //KETCHUPHOUSE_LOGICTHREAD_H

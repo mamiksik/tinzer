@@ -1,12 +1,12 @@
 //
-// Created by Martin Mikšík on 13/03/16.
+// Created by Martin Mikšík
 //
 
 #ifndef KETCHUPHOUSE_POSITION_H
 #define KETCHUPHOUSE_POSITION_H
 
-#include "../control/Control.h"
 #include "../Config.h"
+#include "../control/Control.h"
 
 //   1
 // 0 # 2

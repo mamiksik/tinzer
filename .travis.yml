@@ -1,12 +1,18 @@
+sudo: required
+dist: trusty
+
 # Enable C++ support
 language: cpp
 # Compiler selection
 compiler:
   - clang
   - gcc
+
 # Build steps
 script:
-  - cd bin
-  - mkdir travis
-  - cd travis
-  - cmake ../.. && make
+  - $CXX --version
+  - echo $PWD
+  - ls
+  - cmake .
+  - ls
+  - make

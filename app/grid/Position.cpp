@@ -1,5 +1,5 @@
 //
-// Created by Martin Mikšík on 13/03/16.
+// Created by Martin Mikšík
 //
 
 #include "Position.h"
@@ -56,7 +56,7 @@ void Position::moveToPosition(Coordinates coordinates)
 		}
 		current.angle = 2;
 		current.x = x;
-		control.goStraight(newX, forwardPower);
+		makeMove(Instruction(1, newX, forwardPower));
 	}
 
 
@@ -90,7 +90,7 @@ void Position::moveToPosition(Coordinates coordinates)
 void Position::makeMove(Instruction instruction)
 {
 	mtx.lock();
-	coordinatesStack.push(instruction);
+	instructionsStack.push(instruction);
 	mtx.unlock();
 }
 
