@@ -5,7 +5,6 @@
 #include "app/threads/LogicThread.h"
 #include "app/threads/ControlThread.h"
 
-
 using namespace std;
 
 std::mutex mtx;
