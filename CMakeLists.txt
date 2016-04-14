@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 project(KetchupHouse CXX)
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-#find_package(OpenCV REQUIRED)
-#find_library(LIBSTDCXX NAMES stdc++)
+set(FRAMEWORK_FILES
+    main.cpp)
 
 set(SOURCE_FILES
-    main.cpp
     app/Config.h
     app/control/Control.cpp
     app/control/Control.h
@@ -20,10 +18,9 @@ set(SOURCE_FILES
     app/structures/Coordinates.h
     app/structures/Instruction.h
     app/structures/SensorsArray.h
-    app/LineSensore/LineSensore.cpp
-    app/LineSensore/LineSensore.h)
+    app/threads/sensors/EncoderSensor.cpp
+    app/threads/sensors/EncoderSensor.h)
 
-#add_compile_options(-stdlib=libstdc++)
-add_executable(KetchupHouse ${SOURCE_FILES})
-#target_link_libraries(KetchupHouse ${OpenCV_LIBS})
+
+add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 

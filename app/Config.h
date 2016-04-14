@@ -26,8 +26,6 @@ const static Coordinates startCoordinates(4, 4, 0);
 const static int gameTime = 10; //v sec
 const static int maxTimeLoop = 30; //v ms
 
-
-
 extern std::mutex mtx;
 extern std::stack<Instruction> instructionsStack;
 
