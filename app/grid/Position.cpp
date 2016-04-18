@@ -4,7 +4,7 @@
 
 #include "Position.h"
 
-void Position::moveToPosition(Coordinates coordinates)
+void Position::moveToPosition(Coordinate coordinates)
 {
 	int leightOfLine = 90;
 

@@ -5,11 +5,14 @@
 #ifndef KETCHUPHOUSE_ABSTRACTCONTROL_H
 #define KETCHUPHOUSE_ABSTRACTCONTROL_H
 
+#include "Stack.h"
 
 class AbstractControl
 {
 public:
 	Stack stack;
+
+	virtual void process() = 0;
 };
 
 

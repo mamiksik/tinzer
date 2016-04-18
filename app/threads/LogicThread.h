@@ -31,7 +31,7 @@ public:
 		while (update) {
 			system_clock::time_point clock_now = system_clock::now();
 
-			position.moveToPosition(Coordinates(1, 1, 0));
+			position.moveToPosition(Coordinate(1, 1, 0));
 
 			if (system_clock::to_time_t(clock_now) >= stopTime) {
 				position.moveToHome();

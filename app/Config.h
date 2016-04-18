@@ -8,7 +8,7 @@
 #include <mutex>
 #include <stack>
 
-#include "structures/Coordinates.h"
+#include "Coordinate.h"
 #include "structures/Instruction.h"
 
 //Control
@@ -20,7 +20,7 @@ const static int wheelsDistance = 30;
 const static int width = 7;
 const static int height = 7;
 
-const static Coordinates startCoordinates(4, 4, 0);
+const static Coordinate startCoordinates(4, 4, 0);
 
 //Chrono
 const static int gameTime = 10; //v sec

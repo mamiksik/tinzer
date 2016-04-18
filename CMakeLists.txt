@@ -4,6 +4,8 @@ project(KetchupHouse CXX)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(FRAMEWORK_FILES
+    framework/control/AbstractControl.h
+    framework/control/Stack.cpp
     main.cpp)
 
 set(SOURCE_FILES
@@ -15,11 +17,12 @@ set(SOURCE_FILES
     app/grid/Position.h
     app/threads/ControlThread.h
     app/threads/LogicThread.h
-    app/structures/Coordinates.h
-    app/structures/Instruction.h
+    framework/structures/Coordinate.h
+    framework/structures/Instruction.h
     app/structures/SensorsArray.h
     app/threads/sensors/EncoderSensor.cpp
-    app/threads/sensors/EncoderSensor.h)
+    app/threads/sensors/EncoderSensor.h
+    app/threads/controls/EngineControl.cpp)
 
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
