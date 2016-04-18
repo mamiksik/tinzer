@@ -22,7 +22,8 @@ set(SOURCE_FILES
     app/structures/SensorsArray.h
     app/threads/sensors/EncoderSensor.cpp
     app/threads/sensors/EncoderSensor.h
-    app/threads/controls/EngineControl.cpp)
+    app/threads/controls/EngineControl.cpp
+    app/threads/controls/EngineStack.h)
 
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})

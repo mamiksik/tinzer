@@ -7,10 +7,9 @@
 namespace structure {
 	struct Instruction
 	{
-		Instruction(int engine, double distance, int power) : engine(engine), distance(distance), power(power)
+		Instruction(double distance, int power) : distance(distance), power(power)
 		{ }
 
-		int engine;
 		double distance;
 		int power;
 	};

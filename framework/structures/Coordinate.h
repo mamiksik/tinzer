@@ -8,13 +8,13 @@ namespace structure {
 		typedef short int position;
 		typedef double radian;
 
-		Coordinate(int angle, position y, position x)
+		Coordinate(int angle, position x, position y)
 				: angle(angle), y(y),
 				  x(x)
 		{ }
 
-		position y;
 		position x;
+		position y;
 
 		//1 = full rotation
 		//Why we wanted to store it as rad?

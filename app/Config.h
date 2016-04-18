@@ -5,28 +5,10 @@
 #ifndef KETCHUPHOUSE_CONFIG_H
 #define KETCHUPHOUSE_CONFIG_H
 
-#include <mutex>
-#include <stack>
 
-#include "Coordinate.h"
-#include "structures/Instruction.h"
+const int DEFAULT_X_POSITION = 0;
+const int DEFAULT_Y_POSITION = 0;
+const int DEFAULT_ROTATION = 0;
 
-//Control
-//TODO: static?
-const static int wheelDiameter = 12;
-const static int wheelsDistance = 30;
-
-//Position
-const static int width = 7;
-const static int height = 7;
-
-const static Coordinate startCoordinates(4, 4, 0);
-
-//Chrono
-const static int gameTime = 10; //v sec
-const static int maxTimeLoop = 30; //v ms
-
-extern std::mutex mtx;
-extern std::stack<Instruction> instructionsStack;
-
+const int LINE_LEIGHT = 90; //mm
 #endif //KETCHUPHOUSE_CONFIG_H
