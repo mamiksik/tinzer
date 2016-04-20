@@ -6,31 +6,48 @@
 
 void EngineControl::process(pair<int, int>)
 {
+	vector<Instruction> instructions = itemStack.top();
+	leftEngine.setPosition(instructions[1].distance, instructions[1].power);
+	leftEngine.setPosition(instructions[1].distance, instructions[1].power);
 }
 
 void EngineControl::push(Coordinate newCoordinate)
 {
-	double newRotation = newCoordinate.angle - currentCoordinate.angle;
-	int newX = newCoordinate.x - currentCoordinate.x;
-	int newY = newCoordinate.y - currentCoordinate.y;
+	double newRotation = newCoordinate.angle - stackCoordinate.angle;
+	int newX = abs(newCoordinate.x - stackCoordinate.x);
+	int newY = abs(newCoordinate.y - stackCoordinate.y);
 
 
-	vector<Instruction> fisrtMakeTurn(2);
-	Instruction leftEngine(100, 5);
-	Instruction rightEngine(500, 6);
+	if (stackCoordinate.x > newCoordinate.x) {
+		vector<Instruction> item(2);
+		item[0] = Instruction(0, 0); //LeftEngine TODO
+		item[1] = Instruction(0, 0); //RightEngine  TODO
+		itemStack.push(item);
+	}
 
-	fisrtMakeTurn[0] = leftEngine;
-	fisrtMakeTurn[1] = rightEngine;
+	{
+		vector<Instruction> item(2);
+		int distance = LINE_LEIGHT * newX;
+		item[0] = Instruction(distance, power); //LeftEngine
+		item[1] = Instruction(distance, power); //RightEngine
+		itemStack.push(item);
+		stackCoordinate.x = newX;
+	}
 
-	itemStack.push(fisrtMakeTurn);
+	if (stackCoordinate.y > newCoordinate.y) {
+		vector<Instruction> item(2);
+		item[0] = Instruction(0, 0); //LeftEngine TODO
+		item[1] = Instruction(0, 0); //RightEngine  TODO
+		itemStack.push(item);
+	}
 
-	InstructionVector thenGoStraight(2);
-	Instruction leftEngine2(100, 5);
-	Instruction rightEngine2(500, 6);
-
-	thenGoStraight[0] = leftEngine2;
-	thenGoStraight[1] = rightEngine2;
-
-	itemStack.push(thenGoStraight);
-};
+	{
+		vector<Instruction> item(2);
+		int distance = LINE_LEIGHT * newY;
+		item[0] = Instruction(distance, power); //LeftEngine
+		item[1] = Instruction(distance, power); //RightEngine
+		itemStack.push(item);
+		stackCoordinate.y = newY;
+	}
 }
+

@@ -5,7 +5,7 @@ namespace structure {
 
 	struct Coordinate
 	{
-		typedef short int position;
+		typedef int position;
 		typedef double radian;
 
 		Coordinate(int angle, position x, position y)
@@ -15,9 +15,6 @@ namespace structure {
 
 		position x;
 		position y;
-
-		//1 = full rotation
-		//Why we wanted to store it as rad?
 		radian angle;
 	};
 }

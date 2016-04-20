@@ -11,8 +11,8 @@ void EncoderSensor::update()
 	//Do some stuff
 
 	//Call all callbacks
-	for (auto callback: controlsCallbacks) {
-		callback(make_pair(leftEncoder, rightEncoder));
+	for (IEncoderSensor callback: controlsCallbacks) {
+		callback.process(make_pair(leftEncoder, rightEncoder));
 	}
 }
 

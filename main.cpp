@@ -9,10 +9,10 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-	cout << "Starting logic thread" << endl;
-	thread logicT(logicThread);
+	//cout << "Starting logic thread" << endl;
+	//thread logicT(logicThread);
 
-	logicT.join();
+	//logicT.join();
 
 	return 0;
 }

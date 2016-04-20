@@ -7,22 +7,21 @@
 
 #include <functional>
 #include <vector>
+#include "IEncoderCallback.h"
 
 using namespace std;
 
 class EncoderSensor
 {
 public:
-	EncoderSensor(vector<function<void(pair<int, int>)> > &controlsCallbacks) : controlsCallbacks(
+	EncoderSensor(vector<IEncoderCallback> &controlsCallbacks) : controlsCallbacks(
 			controlsCallbacks)
 	{ }
 
 	pair<int, int> read();
 
 protected:
-
-	//vector<function<pair<int, int>()> > controlsCallbacks;
-	vector<function<void(pair<int, int>)> > controlsCallbacks;
+	vector<IEncoderCallback> controlsCallbacks;
 
 	int leftEncoder;
 	int rightEncoder;

@@ -19,8 +19,6 @@ class AbstractControl
 public:
 	virtual void push(Coordinate item) = 0;
 
-	virtual void process() = 0;
-
 	void pause();
 
 	void resume();
