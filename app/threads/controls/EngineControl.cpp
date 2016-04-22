@@ -4,11 +4,13 @@
 
 #include "EngineControl.h"
 
-void EngineControl::process(pair<int, int>)
+void EngineControl::run()
 {
-	vector<Instruction> instructions = itemStack.top();
-	leftEngine.setPosition(instructions[1].distance, instructions[1].power);
-	leftEngine.setPosition(instructions[1].distance, instructions[1].power);
+	InstructionVector instructions = itemStack.top();
+	itemStack.pop();
+
+	leftEngine.setPosition(instructions[0].distance, instructions[0].power);
+	rightEngine.setPosition(instructions[1].distance, instructions[1].power);
 }
 
 void EngineControl::push(Coordinate newCoordinate)
@@ -19,14 +21,14 @@ void EngineControl::push(Coordinate newCoordinate)
 
 
 	if (stackCoordinate.x > newCoordinate.x) {
-		vector<Instruction> item(2);
+		InstructionVector item(2);
 		item[0] = Instruction(0, 0); //LeftEngine TODO
 		item[1] = Instruction(0, 0); //RightEngine  TODO
 		itemStack.push(item);
 	}
 
 	{
-		vector<Instruction> item(2);
+		InstructionVector item(2);
 		int distance = LINE_LEIGHT * newX;
 		item[0] = Instruction(distance, power); //LeftEngine
 		item[1] = Instruction(distance, power); //RightEngine
@@ -35,14 +37,14 @@ void EngineControl::push(Coordinate newCoordinate)
 	}
 
 	if (stackCoordinate.y > newCoordinate.y) {
-		vector<Instruction> item(2);
+		InstructionVector item(2);
 		item[0] = Instruction(0, 0); //LeftEngine TODO
 		item[1] = Instruction(0, 0); //RightEngine  TODO
 		itemStack.push(item);
 	}
 
 	{
-		vector<Instruction> item(2);
+		InstructionVector item(2);
 		int distance = LINE_LEIGHT * newY;
 		item[0] = Instruction(distance, power); //LeftEngine
 		item[1] = Instruction(distance, power); //RightEngine
@@ -51,3 +53,9 @@ void EngineControl::push(Coordinate newCoordinate)
 	}
 }
 
+
+void EngineControl::encoderProcess(pair<int, int> encoderPair)
+{
+	leftEncoder = encoderPair.first;
+	rightEncoder = encoderPair.second;
+}

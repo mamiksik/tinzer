@@ -5,11 +5,11 @@
 #ifndef KETCHUPHOUSE_ABSTRACTCONTROL_H
 #define KETCHUPHOUSE_ABSTRACTCONTROL_H
 
-#include "../../app/Config.h"
+#include "../../../app/Config.h"
 #include <stack>
 #include <vector>
-#include "../structures/Coordinate.h"
-#include "../structures/Instruction.h"
+#include "../../structures/Instruction.h"
+#include "../../structures/Coordinate.h"
 
 using namespace std;
 using namespace structure;

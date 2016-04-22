@@ -14,7 +14,7 @@ public:
 	virtual ~IEncoderCallback()
 	{ }
 
-	virtual void process(std::pair<int, int>) = 0;
+	virtual void encoderProcess(std::pair<int, int>) = 0;
 };
 
 #endif //KETCHUPHOUSE_IENCODERSENSORE_H
