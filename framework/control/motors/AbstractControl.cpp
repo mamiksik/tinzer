@@ -31,7 +31,7 @@ bool AbstractControl::isReady()
 	return lock;
 }
 
-auto AbstractControl::getPosition()
+vector<Instruction> AbstractControl::getPosition()
 {
-	return itemStack.pop();
+	return itemStack.top();
 }

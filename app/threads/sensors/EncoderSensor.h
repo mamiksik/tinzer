@@ -5,7 +5,7 @@
 #ifndef KETCHUPHOUSE_ENCODERSENSOR_H
 #define KETCHUPHOUSE_ENCODERSENSOR_H
 
-#include <functional>
+//#include <functional>
 #include <vector>
 #include "IEncoderCallback.h"
 
@@ -21,7 +21,7 @@ public:
 	pair<int, int> read();
 
 protected:
-	vector<IEncoderCallback> controlsCallbacks;
+	vector<IEncoderCallback> &controlsCallbacks;
 
 	int leftEncoder;
 	int rightEncoder;

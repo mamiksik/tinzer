@@ -10,7 +10,7 @@ set(FRAMEWORK_FILES
 set(SOURCE_FILES
     app/hardware/motors/Motor.cpp
     app/threads/sensors/EncoderSensor.cpp
-    app/threads/controls/EngineControl.cpp)
+    app/threads/controls/MotorControl.cpp)
 
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})

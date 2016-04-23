@@ -16,6 +16,7 @@ using namespace structure;
 
 class AbstractControl
 {
+
 public:
 	virtual void push(Coordinate item) = 0;
 
@@ -29,16 +30,12 @@ public:
 
 	void aboard();
 
-	InstructionVector getPosition(); // universality?
+	vector<Instruction> getPosition(); // universality?
 
 protected:
-	typedef vector<Instruction> InstructionVector;
-
 	bool lock;
-
 	Coordinate currentCoordinate = Coordinate(DEFAULT_ROTATION, DEFAULT_X_POSITION, DEFAULT_Y_POSITION);
-
-	stack itemStack<InstructionVector>;
+	stack<vector<Instruction> > itemStack;
 };
 
 

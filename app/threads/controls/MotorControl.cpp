@@ -2,11 +2,12 @@
 // Created by Martin Mikšík on 14/04/16.
 //
 
-#include "EngineControl.h"
+#include <cmath>
+#include "MotorControl.h"
 
-void EngineControl::run()
+void MotorControl::run()
 {
-	InstructionVector instructions = itemStack.top();
+	vector<Instruction> instructions = itemStack.top();
 	itemStack.pop();
 
 	leftEngine.setPower(instructions[0].power);
@@ -30,48 +31,52 @@ void EngineControl::run()
 	} while (!stop);
 }
 
-void EngineControl::push(Coordinate newCoordinate)
+void MotorControl::push(Coordinate newCoordinate)
 {
 	double newRotation = newCoordinate.angle - stackCoordinate.angle;
-	int newX = abs(newCoordinate.x - stackCoordinate.x);
-	int newY = abs(newCoordinate.y - stackCoordinate.y);
+	int newX = fabs(newCoordinate.x - stackCoordinate.x); //TODO: ABS?
+	int newY = fabs(newCoordinate.y - stackCoordinate.y); //TODO: ABS?
 
 
 	if (stackCoordinate.x > newCoordinate.x) {
-		InstructionVector item(2);
-		item[0] = Instruction(0, 0); //LeftEngine TODO
-		item[1] = Instruction(0, 0); //RightEngine  TODO
+		vector<Instruction> item = {
+				Instruction(0, 0), //LeftEngine TODO
+				Instruction(0, 0) //RightEngine  TODO
+		};
 		itemStack.push(item);
 	}
 
 	{
-		InstructionVector item(2);
 		int distance = LINE_LEIGHT * newX;
-		item[0] = Instruction(distance, power); //LeftEngine
-		item[1] = Instruction(distance, power); //RightEngine
+		vector<Instruction> item = {
+				Instruction(distance, power), //LeftEngine
+				Instruction(distance, power)  //RightEngine
+		};
 		itemStack.push(item);
 		stackCoordinate.x = newX;
 	}
 
 	if (stackCoordinate.y > newCoordinate.y) {
-		InstructionVector item(2);
-		item[0] = Instruction(0, 0); //LeftEngine TODO
-		item[1] = Instruction(0, 0); //RightEngine  TODO
+		vector<Instruction> item = {
+				Instruction(0, 0), //LeftEngine TODO
+				Instruction(0, 0)  //RightEngine  TODO
+		};
 		itemStack.push(item);
 	}
 
 	{
-		InstructionVector item(2);
 		int distance = LINE_LEIGHT * newY;
-		item[0] = Instruction(distance, power); //LeftEngine
-		item[1] = Instruction(distance, power); //RightEngine
+		vector<Instruction> item = {
+				Instruction(distance, power), //LeftEngine
+				Instruction(distance, power)  //RightEngine
+		};
 		itemStack.push(item);
 		stackCoordinate.y = newY;
 	}
 }
 
 
-void EngineControl::encoderProcess(pair<int, int> encoderPair)
+void MotorControl::encoderProcess(pair<int, int> encoderPair)
 {
 	leftEncoder = encoderPair.first;
 	rightEncoder = encoderPair.second;

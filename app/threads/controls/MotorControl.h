@@ -5,39 +5,42 @@
 #ifndef KETCHUPHOUSE_MOTORCONTROL_H
 #define KETCHUPHOUSE_MOTORCONTROL_H
 
-#include <cmath>
+//#include <cmath>
 
 #include "../sensors/IEncoderCallback.h"
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/control/motors/AbstractControl.h"
 #include "../../../framework/hardware/IMotor.h"
 
-class EngineControl : public AbstractControl, public IEncoderCallback
+class MotorControl : public AbstractControl, public IEncoderCallback
 {
 public:
 
-	EngineControl(const Coordinate &currentCoordinate) : currentCoordinate(currentCoordinate)
+public:
+	MotorControl(IMotor &leftEngine, IMotor &rightEngine, const Coordinate &currentCoordinate) :
+			leftEngine(leftEngine),
+			rightEngine(rightEngine),
+			currentCoordinate(currentCoordinate)
 	{ }
 
-	virtual void encoderProcess(pair<int, int> pair1); //TODO: Virtual
+
+	void encoderProcess(pair<int, int> encoderPair); //TODO: Virtual
 
 	void run();
 
 private:
 
-	void push(Coordinate newCoordinate);
-
-private:
 	Coordinate currentCoordinate;
 	Coordinate stackCoordinate = currentCoordinate;
 
-	IMotor leftEngine;
-	IMotor rightEngine;
+	IMotor &leftEngine;
+	IMotor &rightEngine;
 
 	int leftEncoder;
 	int rightEncoder;
-
 	int power;
+
+	void push(Coordinate newCoordinate);
 };
 
 
