@@ -24,7 +24,7 @@ public:
 	{ }
 
 
-	void encoderProcess(pair<int, int> encoderPair); //TODO: Virtual
+	void encoderProcess(int leftEncoder, int rightEncoder); //TODO: Virtual
 
 	void run();
 

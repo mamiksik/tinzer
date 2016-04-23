@@ -12,7 +12,7 @@ void EncoderSensor::update()
 
 	//Call all callbacks
 	for (IEncoderCallback &callback: controlsCallbacks) {
-		callback.encoderProcess(make_pair(leftEncoder, rightEncoder));
+		callback.encoderProcess(leftEncoder, rightEncoder);
 	}
 }
 

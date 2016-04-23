@@ -76,8 +76,8 @@ void MotorControl::push(Coordinate newCoordinate)
 }
 
 
-void MotorControl::encoderProcess(pair<int, int> encoderPair)
+void MotorControl::encoderProcess(int updatedLeftEncoder, int updatedRightEncoder)
 {
-	leftEncoder = encoderPair.first;
-	rightEncoder = encoderPair.second;
+	leftEncoder = updatedLeftEncoder;
+	rightEncoder = updatedRightEncoder;
 }
