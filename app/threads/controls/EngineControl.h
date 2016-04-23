@@ -9,8 +9,8 @@
 
 #include "../sensors/IEncoderCallback.h"
 #include "../../../framework/structures/Coordinate.h"
-#include "../../../framework/control/engine/AbstractControl.h"
-#include "../../../framework/hardware/IEngine.h"
+#include "../../../framework/control/motors/AbstractControl.h"
+#include "../../../framework/hardware/IMotor.h"
 
 class EngineControl : public AbstractControl, public IEncoderCallback
 {
@@ -31,8 +31,8 @@ private:
 	Coordinate currentCoordinate;
 	Coordinate stackCoordinate = currentCoordinate;
 
-	IEngine leftEngine;
-	IEngine rightEngine;
+	IMotor leftEngine;
+	IMotor rightEngine;
 
 	int leftEncoder;
 	int rightEncoder;

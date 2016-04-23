@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="app\api\Engine.cpp" />
+    <ClCompile Include="app\api\Motor.cpp" />
     <ClCompile Include="app\control\Control.cpp" />
     <ClCompile Include="app\grid\Position.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app\api\Engine.h" />
+    <ClInclude Include="app\api\Motor.h" />
     <ClInclude Include="app\control\Control.h" />
     <ClInclude Include="app\grid\Position.h" />
   </ItemGroup>

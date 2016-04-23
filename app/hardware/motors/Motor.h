@@ -6,15 +6,15 @@
 #define KETCHUPHOUSE_ENGINE_H
 
 
-class Engine
+#include "../../../framework/hardware/IMotor.h"
+
+class Motor : public IMotor
 {
+
 public:
-	int getEncoderRel(void);
+	virtual void setPower(int power);
 
-	void setPosition(double, int);
-
-private:
-	int lastEncoder;
+	virtual void stop();
 };
 
 

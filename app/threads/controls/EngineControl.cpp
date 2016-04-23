@@ -9,8 +9,25 @@ void EngineControl::run()
 	InstructionVector instructions = itemStack.top();
 	itemStack.pop();
 
-	leftEngine.setPosition(instructions[0].distance, instructions[0].power);
-	rightEngine.setPosition(instructions[1].distance, instructions[1].power);
+	leftEngine.setPower(instructions[0].power);
+	rightEngine.setPower(instructions[1].power);
+
+	bool stop = false;
+	do {
+		if (leftEncoder >= instructions[0].distance) {
+			leftEngine.setPower(0);
+		}
+
+		if (rightEncoder >= instructions[1].distance) {
+			rightEngine.setPower(0);
+		}
+
+
+		if (rightEncoder >= instructions[1].distance && leftEncoder >= instructions[0].distance) {
+			stop = true;
+		}
+
+	} while (!stop);
 }
 
 void EngineControl::push(Coordinate newCoordinate)
