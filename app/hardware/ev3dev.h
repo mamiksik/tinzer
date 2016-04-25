@@ -3,7 +3,7 @@
 // revision: ec58e508f2c8e5488e3bd3d9e806168365247732 (2016-02-04)
 
 /*
- * C++ API to the sensors, motors, buttons, LEDs and battery of the ev3dev
+ * C++ API to the sensors, motor, buttons, LEDs and battery of the ev3dev
  * Linux kernel for the LEGO Mindstorms EV3 hardware
  *
  * Copyright (c) 2014 - Franz Detro
@@ -641,9 +641,9 @@ namespace ev3dev {
 
 //~autogen generic-class-description classes.motor>currentClass
 
-// The motor class provides a uniform interface for using motors with
-// positional and directional feedback such as the EV3 and NXT motors.
-// This feedback allows for precise control of the motors. This is the
+// The motor class provides a uniform interface for using motor with
+// positional and directional feedback such as the EV3 and NXT motor.
+// This feedback allows for precise control of the motor. This is the
 // most common type of motor, so we just call it `motor`.
 
 //~autogen
@@ -720,7 +720,7 @@ namespace ev3dev {
 
 		// Power will be removed from the motor and a passive electrical load will
 		// be placed on the motor. This is usually done by shorting the motor terminals
-		// together. This load will absorb the energy from the rotation of the motors and
+		// together. This load will absorb the energy from the rotation of the motor and
 		// cause the motor to stop more quickly than coasting.
 		static const std::string stop_command_brake;
 
@@ -801,7 +801,7 @@ namespace ev3dev {
 
 		// Encoder Polarity: read/write
 		// Sets the polarity of the rotary encoder. This is an advanced feature to all
-		// use of motors that send inversed encoder signals to the EV3. This should
+		// use of motor that send inversed encoder signals to the EV3. This should
 		// be set correctly by the driver of a device. It You only need to change this
 		// value if you are using a unsupported device. Valid values are `normal` and
 		// `inversed`.
@@ -896,7 +896,7 @@ namespace ev3dev {
 
 		// Speed: read-only
 		// Returns the current motor speed in tacho counts per second. Not, this is
-		// not necessarily degrees (although it is for LEGO motors). Use the `count_per_rot`
+		// not necessarily degrees (although it is for LEGO motor). Use the `count_per_rot`
 		// attribute to convert this value to RPM or deg/sec.
 		int speed() const
 		{ return get_attr_int("speed"); }
@@ -1000,8 +1000,8 @@ namespace ev3dev {
 
 		// Stop Command: read/write
 		// Reading returns the current stop command. Writing sets the stop command.
-		// The value determines the motors behavior when `command` is set to `stop`.
-		// Also, it determines the motors behavior when a run command completes. See
+		// The value determines the motor behavior when `command` is set to `stop`.
+		// Also, it determines the motor behavior when a run command completes. See
 		// `stop_commands` for a list of possible values.
 		std::string stop_command() const
 		{ return get_attr_string("stop_command"); }
@@ -1018,7 +1018,7 @@ namespace ev3dev {
 		// be removed from the motor and it will freely coast to a stop. `brake` means
 		// that power will be removed from the motor and a passive electrical load will
 		// be placed on the motor. This is usually done by shorting the motor terminals
-		// together. This load will absorb the energy from the rotation of the motors and
+		// together. This load will absorb the energy from the rotation of the motor and
 		// cause the motor to stop more quickly than coasting. `hold` does not remove
 		// power from the motor. Instead it actively try to hold the motor at the current
 		// position. If an external force tries to turn the motor, the motor will 'push
@@ -1113,9 +1113,9 @@ namespace ev3dev {
 
 //~autogen generic-class-description classes.dcMotor>currentClass
 
-// The DC motor class provides a uniform interface for using regular DC motors
-// with no fancy controls or feedback. This includes LEGO MINDSTORMS RCX motors
-// and LEGO Power Functions motors.
+// The DC motor class provides a uniform interface for using regular DC motor
+// with no fancy controls or feedback. This includes LEGO MINDSTORMS RCX motor
+// and LEGO Power Functions motor.
 
 //~autogen
 	class dc_motor : protected device
@@ -1157,7 +1157,7 @@ namespace ev3dev {
 
 		// Power will be removed from the motor and a passive electrical load will
 		// be placed on the motor. This is usually done by shorting the motor terminals
-		// together. This load will absorb the energy from the rotation of the motors and
+		// together. This load will absorb the energy from the rotation of the motor and
 		// cause the motor to stop more quickly than coasting.
 		static const std::string stop_command_brake;
 
@@ -1320,7 +1320,7 @@ namespace ev3dev {
 //~autogen generic-class-description classes.servoMotor>currentClass
 
 // The servo motor class provides a uniform interface for using hobby type
-// servo motors.
+// servo motor.
 
 //~autogen
 	class servo_motor : protected device
@@ -1864,7 +1864,7 @@ namespace ev3dev {
 
 // The `lego-port` class provides an interface for working with input and
 // output ports that are compatible with LEGO MINDSTORMS RCX/NXT/EV3, LEGO
-// WeDo and LEGO Power Functions sensors and motors. Supported devices include
+// WeDo and LEGO Power Functions sensors and motor. Supported devices include
 // the LEGO MINDSTORMS EV3 Intelligent Brick, the LEGO WeDo USB hub and
 // various sensor multiplexers from 3rd party manufacturers.
 // 

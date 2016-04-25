@@ -12,12 +12,17 @@ void EncoderSensor::update()
 
 	//Call all callbacks
 	for (IEncoderCallback &callback: controlsCallbacks) {
-		callback.encoderProcess(leftEncoder, rightEncoder);
+		callback.encoderProcess(leftEncoder.getRelPosition(), rightEncoder.getRelPosition());
 	}
 }
 
 
-pair<int, int> EncoderSensor::read()
+int EncoderSensor::readLeftEncoder()
 {
-	return make_pair(leftEncoder, rightEncoder);
+	return leftEncoder.getRelPosition();
+}
+
+int EncoderSensor::readRightEncoder()
+{
+	return rightEncoder.getRelPosition();
 }

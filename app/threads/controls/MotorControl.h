@@ -15,8 +15,6 @@
 class MotorControl : public AbstractControl, public IEncoderCallback
 {
 public:
-
-public:
 	MotorControl(IMotor &leftEngine, IMotor &rightEngine, const Coordinate &currentCoordinate) :
 			leftEngine(leftEngine),
 			rightEngine(rightEngine),

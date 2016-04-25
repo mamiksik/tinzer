@@ -39,6 +39,7 @@ void MotorControl::push(Coordinate newCoordinate)
 
 
 	if (stackCoordinate.x > newCoordinate.x) {
+		// ->
 		vector<Instruction> item = {
 				Instruction(0, 0), //LeftEngine TODO
 				Instruction(0, 0) //RightEngine  TODO
@@ -57,6 +58,7 @@ void MotorControl::push(Coordinate newCoordinate)
 	}
 
 	if (stackCoordinate.y > newCoordinate.y) {
+		// <-
 		vector<Instruction> item = {
 				Instruction(0, 0), //LeftEngine TODO
 				Instruction(0, 0)  //RightEngine  TODO

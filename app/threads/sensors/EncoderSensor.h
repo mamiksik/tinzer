@@ -8,23 +8,28 @@
 //#include <functional>
 #include <vector>
 #include "IEncoderCallback.h"
+#include "IEncoder.h"
 
 using namespace std;
 
 class EncoderSensor
 {
 public:
-	EncoderSensor(vector<IEncoderCallback> &controlsCallbacks) : controlsCallbacks(
-			controlsCallbacks)
+	EncoderSensor(IEncoder &leftEncoder, IEncoder &rightEncoder, vector<IEncoderCallback> &controlsCallbacks)
+			: leftEncoder(leftEncoder),
+			  rightEncoder(rightEncoder),
+			  controlsCallbacks(controlsCallbacks)
 	{ }
 
-	pair<int, int> read();
+	int readLeftEncoder();
+
+	int readRightEncoder();
 
 protected:
 	vector<IEncoderCallback> &controlsCallbacks;
 
-	int leftEncoder;
-	int rightEncoder;
+	IEncoder &leftEncoder;
+	IEncoder &rightEncoder;
 
 	void update();
 };

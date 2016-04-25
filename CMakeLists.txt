@@ -8,7 +8,7 @@ set(FRAMEWORK_FILES
     main.cpp)
 
 set(SOURCE_FILES
-    app/hardware/motors/Motor.cpp
+    app/hardware/motor/Motor.cpp
     app/threads/sensors/EncoderSensor.cpp
     app/threads/controls/MotorControl.cpp)
 
