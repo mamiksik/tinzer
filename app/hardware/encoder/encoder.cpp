@@ -7,5 +7,5 @@
 
 int Encoder::getRelPosition()
 {
-	return motor.count_per_rot();
+	//return motor.count_per_rot();
 }

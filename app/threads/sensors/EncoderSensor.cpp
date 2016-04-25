@@ -7,12 +7,14 @@
 void EncoderSensor::update()
 {
 	//Read from hardware
+	int rightEncoderVal = rightEncoder.getRelPosition();
+	int leftEncoderVal = leftEncoder.getRelPosition();
 
 	//Do some stuff
 
 	//Call all callbacks
 	for (IEncoderCallback &callback: controlsCallbacks) {
-		callback.encoderProcess(leftEncoder.getRelPosition(), rightEncoder.getRelPosition());
+		callback.encoderProcess(leftEncoderVal, rightEncoderVal);
 	}
 }
 

@@ -8,11 +8,12 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+	LogicThread logicThread;
 
-	//cout << "Starting logic thread" << endl;
-	//thread logicT(logicThread);
+	cout << "Starting logic thread" << endl;
+	thread logicT(logicThread);
 
-	//logicT.join();
+	logicT.join();
 
 	return 0;
 }
