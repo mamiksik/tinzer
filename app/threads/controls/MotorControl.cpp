@@ -15,16 +15,16 @@ void MotorControl::run()
 
 	bool stop = false;
 	do {
-		if (leftEncoder >= instructions[0].distance) {
+		if (leftEncoder >= instructions[0].tic) {
 			leftEngine.setPower(0);
 		}
 
-		if (rightEncoder >= instructions[1].distance) {
+		if (rightEncoder >= instructions[1].tic) {
 			rightEngine.setPower(0);
 		}
 
 
-		if (rightEncoder >= instructions[1].distance && leftEncoder >= instructions[0].distance) {
+		if (rightEncoder >= instructions[1].tic && leftEncoder >= instructions[0].tic) {
 			stop = true;
 		}
 
@@ -33,32 +33,31 @@ void MotorControl::run()
 
 void MotorControl::push(Coordinate newCoordinate)
 {
-	double newRotation = newCoordinate.angle - stackCoordinate.angle;
+	//double newRotation = newCoordinate.angle - stackCoordinate.angle;
 	int newX = fabs(newCoordinate.x - stackCoordinate.x); //TODO: ABS?
 	int newY = fabs(newCoordinate.y - stackCoordinate.y); //TODO: ABS?
 
-
-	if (stackCoordinate.x > newCoordinate.x) {
-		// ->
+	{
+		double newRotation = M_PI - stackCoordinate.angle;
+		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
 		vector<Instruction> item = {
-				Instruction(0, 0), //LeftEngine TODO
-				Instruction(0, 0) //RightEngine  TODO
+				Instruction(distance, 0), //LeftEngine TODO
+				Instruction(-distance, 0) //RightEngine  TODO
 		};
 		itemStack.push(item);
 	}
 
 	{
-		int distance = LINE_LEIGHT * newX;
+		double ticX = (360 * LINE_LEIGHT * newX) / WHEEL_PERIMETER;
 		vector<Instruction> item = {
-				Instruction(distance, power), //LeftEngine
-				Instruction(distance, power)  //RightEngine
+				Instruction(ticX, power), //LeftEngine
+				Instruction(ticX, power)  //RightEngine
 		};
 		itemStack.push(item);
 		stackCoordinate.x = newX;
 	}
 
 	if (stackCoordinate.y > newCoordinate.y) {
-		// <-
 		vector<Instruction> item = {
 				Instruction(0, 0), //LeftEngine TODO
 				Instruction(0, 0)  //RightEngine  TODO
@@ -67,10 +66,10 @@ void MotorControl::push(Coordinate newCoordinate)
 	}
 
 	{
-		int distance = LINE_LEIGHT * newY;
+		double ticY = (360 * LINE_LEIGHT * newY) / WHEEL_PERIMETER;
 		vector<Instruction> item = {
-				Instruction(distance, power), //LeftEngine
-				Instruction(distance, power)  //RightEngine
+				Instruction(ticY, power), //LeftEngine
+				Instruction(ticY, power)  //RightEngine
 		};
 		itemStack.push(item);
 		stackCoordinate.y = newY;

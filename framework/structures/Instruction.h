@@ -7,10 +7,10 @@
 namespace structure {
 	struct Instruction
 	{
-		Instruction(double distance, int power) : distance(distance), power(power)
+		Instruction(double tic, int power) : tic(tic), power(power)
 		{ }
 
-		double distance;
+		double tic;
 		int power;
 	};
 }
