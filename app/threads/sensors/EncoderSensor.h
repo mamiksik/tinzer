@@ -26,6 +26,11 @@ public:
 
 	int readRightEncoder();
 
+	std::thread updateThread()
+	{
+		return std::thread([=] { update(); });
+	}
+
 protected:
 	vector<MotorControl> &controlsCallbacks;
 

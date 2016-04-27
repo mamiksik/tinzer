@@ -5,6 +5,7 @@
 #ifndef KETCHUPHOUSE_MOTORCONTROL_H
 #define KETCHUPHOUSE_MOTORCONTROL_H
 
+#include <thread>
 #include "../sensors/IEncoderCallback.h"
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/control/motors/AbstractControl.h"
@@ -26,6 +27,11 @@ public:
 	void push(Coordinate newCoordinate);
 
 	void run();
+
+	std::thread runThread()
+	{
+		return std::thread([=] { run(); });
+	}
 
 private:
 	const Coordinate currentCoordinate;

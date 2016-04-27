@@ -12,6 +12,7 @@
 #include "../hardware/encoder/Encoder.h"
 #include "../threads/sensors/EncoderSensor.h"
 #include "controls/MotorControl.h"
+#include <thread>
 
 class LogicThread
 {
@@ -29,13 +30,21 @@ public:
 
 		MotorControl motorControl(leftMotor, rightMotor, Coordinate(0, 0, 1));
 
+		thread motorT = motorControl.runThread();
+
 		vector<MotorControl> callbacks = {
 				motorControl
 		};
 
 		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
 
+		thread encoderT = encoderSensor.updateThread();
+
 		motorControl.push(Coordinate(4, 8, 1));
+
+		motorT.join();
+		encoderT.join();
+
 	}
 };
 

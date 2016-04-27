@@ -16,6 +16,8 @@ void EncoderSensor::update()
 	for (MotorControl &callback: controlsCallbacks) {
 		callback.encoderProcess(leftEncoderVal, rightEncoderVal);
 	}
+
+	update();
 }
 
 

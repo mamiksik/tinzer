@@ -30,6 +30,8 @@ void MotorControl::run()
 		}
 
 	} while (!stop);
+
+	run();
 }
 
 void MotorControl::push(Coordinate newCoordinate)
