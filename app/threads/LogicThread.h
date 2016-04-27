@@ -18,19 +18,18 @@ class LogicThread
 public:
 	void operator()()
 	{
-
-		/*using ev3dev::OUTPUT_A;
+		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
 
 		Motor leftMotor(OUTPUT_A);
 		Motor rightMotor(OUTPUT_B);
 
 		Encoder leftEncoder(OUTPUT_A);
-		Encoder rightEncoder(OUTPUT_B);*/
+		Encoder rightEncoder(OUTPUT_B);
 
-		/*MotorControl motorControl(leftMotor, rightMotor, Coordinate(0, 0, 1));
+		MotorControl motorControl(leftMotor, rightMotor, Coordinate(0, 0, 1));
 
-		vector<IEncoderCallback> callbacks = {
+		/*vector<IEncoderCallback> callbacks = {
 				motorControl
 		};
 

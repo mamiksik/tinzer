@@ -2,6 +2,7 @@
 // Created by Martin Mikšík on 14/04/16.
 //
 
+#include <cstdlib>
 #include <cmath>
 #include "MotorControl.h"
 
@@ -33,18 +34,19 @@ void MotorControl::run()
 
 void MotorControl::push(Coordinate newCoordinate)
 {
-	//double newRotation = newCoordinate.angle - stackCoordinate.angle;
-	int newX = fabs(newCoordinate.x - stackCoordinate.x); //TODO: ABS?
-	int newY = fabs(newCoordinate.y - stackCoordinate.y); //TODO: ABS?
+	int newX = std::abs(newCoordinate.x - stackCoordinate.x); //TODO: ABS?
+	int newY = std::abs(newCoordinate.y - stackCoordinate.y); //TODO: ABS?
 
 	{
-		double newRotation = M_PI - stackCoordinate.angle;
+		double newRotation = 3.14 - stackCoordinate.angle;
 		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
 		vector<Instruction> item = {
 				Instruction(distance, 0), //LeftEngine TODO
 				Instruction(-distance, 0) //RightEngine  TODO
 		};
 		itemStack.push(item);
+
+		//TODO: Save to stack
 	}
 
 	{
@@ -57,13 +59,7 @@ void MotorControl::push(Coordinate newCoordinate)
 		stackCoordinate.x = newX;
 	}
 
-	if (stackCoordinate.y > newCoordinate.y) {
-		vector<Instruction> item = {
-				Instruction(0, 0), //LeftEngine TODO
-				Instruction(0, 0)  //RightEngine  TODO
-		};
-		itemStack.push(item);
-	}
+	//TODO: Y rotation
 
 	{
 		double ticY = (360 * LINE_LEIGHT * newY) / WHEEL_PERIMETER;

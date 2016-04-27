@@ -5,9 +5,6 @@
 #ifndef KETCHUPHOUSE_IENCODERSENSORE_H
 #define KETCHUPHOUSE_IENCODERSENSORE_H
 
-using namespace std;
-
-
 class IEncoderCallback
 {
 public:

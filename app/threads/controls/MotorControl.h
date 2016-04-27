@@ -5,8 +5,6 @@
 #ifndef KETCHUPHOUSE_MOTORCONTROL_H
 #define KETCHUPHOUSE_MOTORCONTROL_H
 
-//#include <cmath>
-
 #include "../sensors/IEncoderCallback.h"
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/control/motors/AbstractControl.h"
@@ -18,7 +16,8 @@ public:
 	MotorControl(IMotor &leftEngine, IMotor &rightEngine, const Coordinate &currentCoordinate) :
 			leftEngine(leftEngine),
 			rightEngine(rightEngine),
-			currentCoordinate(currentCoordinate)
+			currentCoordinate(currentCoordinate),
+			stackCoordinate(currentCoordinate)
 	{ }
 
 
@@ -28,8 +27,8 @@ public:
 
 private:
 
-	Coordinate currentCoordinate;
-	Coordinate stackCoordinate = currentCoordinate;
+	const Coordinate currentCoordinate;
+	Coordinate stackCoordinate;
 
 	IMotor &leftEngine;
 	IMotor &rightEngine;
