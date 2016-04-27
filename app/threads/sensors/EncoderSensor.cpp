@@ -13,7 +13,7 @@ void EncoderSensor::update()
 	//Do some stuff
 
 	//Call all callbacks
-	for (IEncoderCallback &callback: controlsCallbacks) {
+	for (MotorControl &callback: controlsCallbacks) {
 		callback.encoderProcess(leftEncoderVal, rightEncoderVal);
 	}
 }

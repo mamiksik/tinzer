@@ -9,13 +9,14 @@
 #include <vector>
 #include "IEncoderCallback.h"
 #include "IEncoder.h"
+#include "../controls/MotorControl.h"
 
 using namespace std;
 
 class EncoderSensor
 {
 public:
-	EncoderSensor(IEncoder &leftEncoder, IEncoder &rightEncoder, vector<IEncoderCallback> &controlsCallbacks)
+	EncoderSensor(IEncoder &leftEncoder, IEncoder &rightEncoder, vector<MotorControl> &controlsCallbacks)
 			: leftEncoder(leftEncoder),
 			  rightEncoder(rightEncoder),
 			  controlsCallbacks(controlsCallbacks)
@@ -26,7 +27,7 @@ public:
 	int readRightEncoder();
 
 protected:
-	vector<IEncoderCallback> &controlsCallbacks;
+	vector<MotorControl> &controlsCallbacks;
 
 	IEncoder &leftEncoder;
 	IEncoder &rightEncoder;

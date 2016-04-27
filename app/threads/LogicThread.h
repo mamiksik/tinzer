@@ -29,11 +29,13 @@ public:
 
 		MotorControl motorControl(leftMotor, rightMotor, Coordinate(0, 0, 1));
 
-		/*vector<IEncoderCallback> callbacks = {
+		vector<MotorControl> callbacks = {
 				motorControl
 		};
 
-		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);*/
+		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
+
+		motorControl.push(Coordinate(4, 8, 1));
 	}
 };
 

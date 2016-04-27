@@ -23,21 +23,21 @@ public:
 
 	void encoderProcess(int leftEncoder, int rightEncoder); //TODO: Virtual
 
+	void push(Coordinate newCoordinate);
+
 	void run();
 
 private:
-
 	const Coordinate currentCoordinate;
+
 	Coordinate stackCoordinate;
-
 	IMotor &leftEngine;
-	IMotor &rightEngine;
 
+	IMotor &rightEngine;
 	int leftEncoder;
 	int rightEncoder;
-	int power;
 
-	void push(Coordinate newCoordinate);
+	int power;
 };
 
 
