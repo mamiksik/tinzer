@@ -78,3 +78,4 @@ void MotorControl::encoderProcess(int updatedLeftEncoder, int updatedRightEncode
 	leftEncoder = updatedLeftEncoder;
 	rightEncoder = updatedRightEncoder;
 }
+
