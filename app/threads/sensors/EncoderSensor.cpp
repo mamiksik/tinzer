@@ -1,23 +1,37 @@
 //
-// Created by Martin Mikšík on 11/04/16.
+// Created by Martin Mikšík
 //
 
+#include <chrono>
 #include "EncoderSensor.h"
+#include "../../../framework/looper/looper.h"
 
-void EncoderSensor::update()
+using namespace std;
+using namespace chrono;
+
+
+void EncoderSensor::run()
 {
-	//Read from hardware
-	int rightEncoderVal = rightEncoder.getRelPosition();
-	int leftEncoderVal = leftEncoder.getRelPosition();
+	looper loop(ENCODER_SENSORS_UPDATE_RATE);
+	bool run = true;
 
-	//Do some stuff
+	while (run) {
+		std::cout << "EncoderSensor run loop" << std::endl;
+		loop.start();
 
-	//Call all callbacks
-	for (MotorControl &callback: controlsCallbacks) {
-		callback.encoderProcess(leftEncoderVal, rightEncoderVal);
+		//Read from hardware
+		int rightEncoderVal = rightEncoder.getRelPosition();
+		int leftEncoderVal = leftEncoder.getRelPosition();
+
+		//Do some stuff
+
+		//Call all callbacks
+		for (MotorControl &callback: controlsCallbacks) {
+			callback.encoderProcess(leftEncoderVal, rightEncoderVal);
+		}
+
+		loop.compare();
 	}
-
-	update();
 }
 
 

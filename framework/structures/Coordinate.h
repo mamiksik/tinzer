@@ -8,14 +8,13 @@ namespace structure {
 		typedef int position;
 		typedef double radian;
 
-		Coordinate(int angle, position x, position y)
-				: angle(angle), y(y),
-				  x(x)
+		Coordinate(radian angle, position x, position y)
+				: rotation(angle), x(x), y(y)
 		{ }
 
+		radian rotation;
 		position x;
 		position y;
-		radian angle;
 	};
 }
 

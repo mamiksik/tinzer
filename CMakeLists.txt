@@ -1,37 +1,39 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 2.8)
 project(KetchupHouse CXX)
-
-#set(TOOLCHAIN_DIR /usr/local/Cellar/gcc-arm-none-eabi/20140805/bin)
-set(TOOLCHAIN_DIR /usr/local/Cellar/gcc-arm-none-eabi-49/20150609/bin)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-
-#set(CMAKE_CXX_COMPILER "${TOOLCHAIN_DIR}/arm-none-eabi-g++")
-#set(CMAKE_CXX_FLAGS " -std=c++11 -lpthread")
 
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
+SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -D_GLIBCXX_USE_NANOSLEEP -pthread")
 
-#[[
-include(CMakeForceCompiler)
-CMAKE_FORCE_C_COMPILER(${TOOLCHAIN_DIR}/arm-none-eabi-gcc-4.9.3 GNU)
-CMAKE_FORCE_CXX_COMPILER(${TOOLCHAIN_DIR}/arm-none-eabi-g++ GNU)
-]]
-
-message("Cross-compiling")
-message(${CMAKE_CXX_FLAGS})
-
+#if ()
+#message(STATUS "Cross-compiling")
+#include(CMakeForceCompiler)
+#CMAKE_FORCE_CXX_COMPILER(/Volumes/xtools/arm-none-linux-gnueabi/bin/arm-none-linux-gnueabi-g++ GNU)
+#CMAKE_FORCE_CXX_COMPILER(/Volumes/EV3-EABI/arm-none-linux-gnueabi/bin/arm-none-linux-gnueabi-g++ GNU)
+#endif ()
 
 set(FRAMEWORK_FILES
-    framework/control/motors/AbstractControl.cpp
-    main.cpp)
+    framework/hardware/IMotor.h
+    framework/structures/Coordinate.h
+    framework/structures/Instruction.h
+    framework/sensor/AbstractSensor.cpp
+    framework/control/motors/AbstractMotor.cpp
+    framework/looper/looper.cpp
+    app/Config.h
+    main.cpp
+    )
 
 set(SOURCE_FILES
+    app/threads/sensors/IEncoder.h
+    app/threads/sensors/IEncoderCallback.h
+    app/hardware/ev3dev.cpp
     app/hardware/motor/Motor.cpp
-    app/threads/LogicThread.h
+    app/hardware/encoder/Encoder.cpp
+    app/threads/controls/MotorControl.cpp
     app/threads/sensors/EncoderSensor.cpp
-    app/threads/controls/MotorControl.cpp)
+    app/threads/LogicThread.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/")
 

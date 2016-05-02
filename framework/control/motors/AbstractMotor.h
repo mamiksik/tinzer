@@ -5,19 +5,24 @@
 #ifndef KETCHUPHOUSE_ABSTRACTCONTROL_H
 #define KETCHUPHOUSE_ABSTRACTCONTROL_H
 
-#include "../../../app/Config.h"
 #include <stack>
 #include <vector>
+#include <thread>
+
+#include "../../../app/Config.h"
 #include "../../structures/Instruction.h"
 #include "../../structures/Coordinate.h"
 
 using namespace std;
 using namespace structure;
 
-class AbstractControl
+class AbstractMotor
 {
 
 public:
+	virtual ~AbstractMotor()
+	{ }
+
 	virtual void push(Coordinate item) = 0;
 
 	void pause();
@@ -30,12 +35,15 @@ public:
 
 	void aboard();
 
-	vector<Instruction> getPosition(); // universality?
+	vector <Instruction> getPosition();
+
+	std::thread threadRun();
 
 protected:
 	bool lock;
-	Coordinate currentCoordinate = Coordinate(DEFAULT_ROTATION, DEFAULT_X_POSITION, DEFAULT_Y_POSITION);
 	stack<vector<Instruction> > itemStack;
+
+	virtual void run() = 0;
 };
 
 

@@ -3,11 +3,12 @@
 //
 
 #include "Motor.h"
-#include <stdlib.h> //TODO: ???
+#include <stdexcept>
+#include <stdlib.h>
 
 void Motor::setPower(int power)
 {
-	/*if (power < -100 || power > 100) {
+	if (power < -100 || power > 100) {
 		throw std::runtime_error("Power out of range: " + std::to_string(abs(power)) + "/100");
 	}
 
@@ -16,10 +17,5 @@ void Motor::setPower(int power)
 	}
 
 	motor.set_duty_cycle_sp(power);
-	motor.run_forever();*/
-}
-
-void Motor::stop()
-{
-
+	motor.run_forever();
 }

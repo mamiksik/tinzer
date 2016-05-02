@@ -18,9 +18,7 @@ public:
 	Motor(address_type motor_pin) : motor(motor_pin)
 	{ }
 
-	virtual void setPower(int power);
-
-	virtual void stop();
+	void setPower(int power);
 
 private:
 	ev3dev::motor motor;

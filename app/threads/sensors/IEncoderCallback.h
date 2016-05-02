@@ -8,9 +8,6 @@
 class IEncoderCallback
 {
 public:
-	IEncoderCallback()
-	{ }
-
 	virtual ~IEncoderCallback()
 	{ }
 

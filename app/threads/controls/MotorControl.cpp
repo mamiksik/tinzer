@@ -4,51 +4,68 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <thread>
 #include "MotorControl.h"
+#include "../../../framework/looper/looper.h"
 
 void MotorControl::run()
 {
-	vector<Instruction> instructions = itemStack.top();
-	itemStack.pop();
+	//looper loop(MOTOR_CONTROL_UPADTE_RATE);
+	bool run = true;
 
-	leftEngine.setPower(instructions[0].power);
-	rightEngine.setPower(instructions[1].power);
+	while (run) {
+		std::cout << "MotorControl run loop" << std::endl;
+		//loop.start();
 
-	bool stop = false;
-	do {
-		if (leftEncoder >= instructions[0].tic) {
-			leftEngine.setPower(0);
+		if (itemStack.empty()) {
+			continue;
 		}
 
-		if (rightEncoder >= instructions[1].tic) {
-			rightEngine.setPower(0);
-		}
+		vector <Instruction> instructions = itemStack.top();
+		itemStack.pop();
 
+		std::cout << instructions[0].power << std::endl;
+		std::cout << instructions[1].power << std::endl;
 
-		if (rightEncoder >= instructions[1].tic && leftEncoder >= instructions[0].tic) {
-			stop = true;
-		}
+		leftEngine.setPower(instructions[0].power);
+		rightEngine.setPower(instructions[1].power);
 
-	} while (!stop);
+		bool stop = false;
+		do {
+			if (leftEncoder >= instructions[0].tic) {
+				leftEngine.setPower(0);
+			}
 
-	run();
+			if (rightEncoder >= instructions[1].tic) {
+				rightEngine.setPower(0);
+			}
+
+			if (rightEncoder >= instructions[1].tic && leftEncoder >= instructions[0].tic) {
+				stop = true;
+			}
+
+		} while (!stop);
+		//loop.compare();
+	}
 }
 
 void MotorControl::push(Coordinate newCoordinate)
 {
+	std::cout << "Push coordinates called" << std::endl;
+
 	int newX = std::abs(newCoordinate.x - stackCoordinate.x); //TODO: ABS?
 	int newY = std::abs(newCoordinate.y - stackCoordinate.y); //TODO: ABS?
 
 	{
-		double newRotation = 3.14 - stackCoordinate.angle;
+		double newRotation = M_PI - stackCoordinate.rotation;
 		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
 		vector<Instruction> item = {
-				Instruction(distance, 0), //LeftEngine TODO
-				Instruction(-distance, 0) //RightEngine  TODO
+				Instruction(distance, power), //LeftEngine TODO
+				Instruction(-distance, power) //RightEngine  TODO
 		};
 		itemStack.push(item);
-
 		//TODO: Save to stack
+		stackCoordinate.rotation = newRotation;
 	}
 
 	{
@@ -61,7 +78,17 @@ void MotorControl::push(Coordinate newCoordinate)
 		stackCoordinate.x = newX;
 	}
 
-	//TODO: Y rotation
+	{
+		double newRotation = M_PI - stackCoordinate.rotation;
+		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
+		vector <Instruction> item = {
+				Instruction(distance, power), //LeftEngine TODO
+				Instruction(-distance, power) //RightEngine  TODO
+		};
+		itemStack.push(item);
+		//TODO: Save to stack
+		stackCoordinate.rotation = newRotation;
+	}
 
 	{
 		double ticY = (360 * LINE_LEIGHT * newY) / WHEEL_PERIMETER;
@@ -72,12 +99,21 @@ void MotorControl::push(Coordinate newCoordinate)
 		itemStack.push(item);
 		stackCoordinate.y = newY;
 	}
+
+	std::cout << "Push coordinates called ends" << std::endl;
 }
 
 
 void MotorControl::encoderProcess(int updatedLeftEncoder, int updatedRightEncoder)
 {
+	std::cout << "Encoder process called" << std::endl;
+
 	leftEncoder = updatedLeftEncoder;
 	rightEncoder = updatedRightEncoder;
+
+	std::cout << leftEncoder << std::endl;
+	std::cout << rightEncoder << std::endl;
 }
+
+
 

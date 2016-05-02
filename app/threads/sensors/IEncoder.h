@@ -8,6 +8,13 @@
 class IEncoder
 {
 public:
+
+	IEncoder()
+	{ }
+
+	virtual ~IEncoder()
+	{ }
+
 	virtual int getRelPosition() = 0;
 };
 
