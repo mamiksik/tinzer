@@ -6,6 +6,7 @@
 #define KETCHUPHOUSE_MOTORCONTROL_H
 
 #include <iostream>
+#include <atomic>
 #include "../sensors/IEncoderCallback.h"
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/control/motors/AbstractMotor.h"
@@ -21,15 +22,21 @@ public:
 			stackCoordinate(currentCoordinate)
 	{
 		power = 40;
+		stopThread = false;
 	}
 
-
 	virtual ~MotorControl()
-	{ }
+	{
+		stopRunThread();
+	}
 
-	virtual void encoderProcess(int leftEncoder, int rightEncoder);
+	void startRunThread();
+
+	void stopRunThread();
 
 	virtual void push(Coordinate newCoordinate);
+
+	virtual void encoderProcess(int leftEncoder, int rightEncoder);
 
 private:
 
@@ -39,11 +46,16 @@ private:
 	const Coordinate currentCoordinate;
 	Coordinate stackCoordinate;
 
-	int leftEncoder;
-	int rightEncoder;
+	std::atomic<int> leftEncoder;
+	std::atomic<int> rightEncoder;
 	int power;
 
-	virtual void run();
+	bool stopThread;
+	std::thread runThread;
+
+	void run();
+
+	double calculateRotation(double newRotation, double currenRotation);
 };
 
 

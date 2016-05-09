@@ -14,7 +14,6 @@ public:
 	virtual ~IMotor()
 	{ }
 
-	//Set power to motor in range of 0 to 100
 	virtual void setPower(int power) = 0;
 };
 

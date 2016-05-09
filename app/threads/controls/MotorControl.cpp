@@ -3,40 +3,50 @@
 //
 
 #include <cstdlib>
+#include <chrono>
 #include <cmath>
 #include <thread>
 #include "MotorControl.h"
-#include "../../../framework/looper/looper.h"
 
 void MotorControl::run()
 {
-	//looper loop(MOTOR_CONTROL_UPADTE_RATE);
-	bool run = true;
-
-	while (run) {
-		std::cout << "MotorControl run loop" << std::endl;
-		//loop.start();
+	while (!stopThread) {
+		//std::cout << "MotorControl run loop" << std::endl;
+		//std::cout << itemStack.size() << std::endl;
 
 		if (itemStack.empty()) {
 			continue;
 		}
 
-		vector <Instruction> instructions = itemStack.top();
+		vector<Instruction> instructions = itemStack.top();
 		itemStack.pop();
 
-		std::cout << instructions[0].power << std::endl;
-		std::cout << instructions[1].power << std::endl;
-
 		leftEngine.setPower(instructions[0].power);
-		rightEngine.setPower(instructions[1].power);
+		rightEngine.setPower(instructions[0].power);
 
 		bool stop = false;
 		do {
+			//std::cout << "--------------" << std::endl;
+			//std::cout << leftEncoder << std::endl;
+			//std::cout << instructions[0].tic << std::endl;
+
 			if (leftEncoder >= instructions[0].tic) {
+				leftEncoder = 0;
+				leftEngine.setPower(0);
+			}
+
+			if (instructions[0].tic == 0) {
+				leftEncoder = 0;
 				leftEngine.setPower(0);
 			}
 
 			if (rightEncoder >= instructions[1].tic) {
+				rightEncoder = 0;
+				rightEngine.setPower(0);
+			}
+
+			if (instructions[1].tic == 0) {
+				rightEncoder = 0;
 				rightEngine.setPower(0);
 			}
 
@@ -45,7 +55,19 @@ void MotorControl::run()
 			}
 
 		} while (!stop);
-		//loop.compare();
+	}
+}
+
+void  MotorControl::startRunThread()
+{
+	runThread = std::thread([&] { run(); });
+}
+
+void MotorControl::stopRunThread()
+{
+	stopThread = true;
+	if (runThread.joinable()) {
+		runThread.join();
 	}
 }
 
@@ -53,23 +75,54 @@ void MotorControl::push(Coordinate newCoordinate)
 {
 	std::cout << "Push coordinates called" << std::endl;
 
-	int newX = std::abs(newCoordinate.x - stackCoordinate.x); //TODO: ABS?
-	int newY = std::abs(newCoordinate.y - stackCoordinate.y); //TODO: ABS?
+	int newX = newCoordinate.x - stackCoordinate.x;
+	int newY = newCoordinate.y - stackCoordinate.y;
+	double actualRotation = stackCoordinate.rotation;
 
-	{
-		double newRotation = M_PI - stackCoordinate.rotation;
-		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
-		vector<Instruction> item = {
-				Instruction(distance, power), //LeftEngine TODO
-				Instruction(-distance, power) //RightEngine  TODO
-		};
-		itemStack.push(item);
-		//TODO: Save to stack
-		stackCoordinate.rotation = newRotation;
+	std::cout << newX << std::endl;
+	std::cout << newY << std::endl;
+	std::cout << stackCoordinate.rotation << std::endl;
+
+
+	//std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+
+	double newXRotation;
+	double newYRotation;
+
+	if (newX > 0) {
+		newXRotation = 0;
+	} else {
+		newXRotation = M_PI;
+	}
+
+	if (newY > 0) {
+		newYRotation = 0.5 * M_PI;
+	} else {
+		newYRotation = 1.5 * M_PI;
 	}
 
 	{
-		double ticX = (360 * LINE_LEIGHT * newX) / WHEEL_PERIMETER;
+		double newRotation = calculateRotation(newXRotation, stackCoordinate.rotation);
+		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
+
+		std::cout << "NewRotation" << std::endl;
+		std::cout << newRotation << std::endl;
+		std::cout << distance << std::endl;
+		std::cout << "----------" << std::endl;
+
+		vector<Instruction> item = {
+				Instruction(distance, power), //LeftEngine TODO
+				Instruction(-distance, -power) //RightEngine  TODO
+		};
+		itemStack.push(item);
+		//TODO: Save to stack
+		stackCoordinate.rotation = newXRotation;
+	}
+/*
+	{
+		double ticX = abs(360 * LINE_LEIGHT * newX) / WHEEL_PERIMETER;
+		std::cout << ticX << std::endl;
 		vector<Instruction> item = {
 				Instruction(ticX, power), //LeftEngine
 				Instruction(ticX, power)  //RightEngine
@@ -79,40 +132,49 @@ void MotorControl::push(Coordinate newCoordinate)
 	}
 
 	{
-		double newRotation = M_PI - stackCoordinate.rotation;
+		double newRotation = calculateRotation(newYRotation, stackCoordinate.rotation);
 		double distance = (ROBOT_PERIMETER * newRotation) / WHEEL_PERIMETER;
-		vector <Instruction> item = {
+		std::cout << distance << std::endl;
+		vector<Instruction> item = {
 				Instruction(distance, power), //LeftEngine TODO
-				Instruction(-distance, power) //RightEngine  TODO
+				Instruction(-distance, -power) //RightEngine  TODO
 		};
 		itemStack.push(item);
 		//TODO: Save to stack
-		stackCoordinate.rotation = newRotation;
+		stackCoordinate.rotation = newYRotation;
 	}
 
 	{
-		double ticY = (360 * LINE_LEIGHT * newY) / WHEEL_PERIMETER;
+		double ticY = abs(360 * LINE_LEIGHT * newY) / WHEEL_PERIMETER;
+		std::cout << ticY << std::endl;
 		vector<Instruction> item = {
 				Instruction(ticY, power), //LeftEngine
 				Instruction(ticY, power)  //RightEngine
 		};
 		itemStack.push(item);
 		stackCoordinate.y = newY;
-	}
+	}*/
 
-	std::cout << "Push coordinates called ends" << std::endl;
+	//std::cout << "Push coordinates called ends" << std::endl;
 }
 
 
 void MotorControl::encoderProcess(int updatedLeftEncoder, int updatedRightEncoder)
 {
-	std::cout << "Encoder process called" << std::endl;
-
+	//std::cout << "Encoder process called" << std::endl;
 	leftEncoder = updatedLeftEncoder;
 	rightEncoder = updatedRightEncoder;
 
-	std::cout << leftEncoder << std::endl;
-	std::cout << rightEncoder << std::endl;
+	//std::cout << updatedLeftEncoder << std::endl;
+	//std::cout << leftEncoder << std::endl;
+
+}
+
+double MotorControl::calculateRotation(double newRotation, double currenRotation)
+{
+	return abs(newRotation - currenRotation) < abs(newRotation + 2 * M_PI - currenRotation) ? (newRotation -
+	                                                                                           currenRotation) : (
+			       newRotation + 2 * M_PI - currenRotation);
 }
 
 

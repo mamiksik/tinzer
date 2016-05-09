@@ -19,7 +19,7 @@ void  looper::compare()
 		//TODO: Sleep
 		std::this_thread::sleep_for(milliseconds((clock() - watch)));
 	}
-	else {
+	else if (maxLoopTime < (clock() - watch)) {
 		//throw std::runtime_error("Time overflow");
 	}
 

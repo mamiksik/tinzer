@@ -17,7 +17,7 @@ public:
 	virtual ~AbstractSensor()
 	{ }
 
-	std::thread threadRun();
+	//std::thread threadRun();
 
 protected:
 	virtual void run() = 0;

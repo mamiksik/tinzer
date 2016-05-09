@@ -67,14 +67,22 @@
 #define FSTREAM_CACHE_SIZE 16
 #endif
 
-#ifndef NO_LINUX_HEADERS
+//#define NO_LINUX_HEADERS 1;
 
-#include <linux/fb.h>
-#include <linux/input.h>
+//#ifndef NO_LINUX_HEADERS
 
-#else
+//#include <linux/fb.h>
+//#include <linux/input.h>
+
+//#else
 #define KEY_CNT 8
-#endif
+#define KEY_BACKSPACE 8
+#define KEY_LEFT 8
+#define KEY_RIGHT 8
+#define KEY_UP 8
+#define KEY_DOWN 8
+#define KEY_ENTER 8
+//#endif
 static const int bits_per_long = sizeof(long) * 8;
 
 //-----------------------------------------------------------------------------
@@ -951,9 +959,9 @@ namespace ev3dev {
 	bool button::pressed() const
 	{
 #ifndef NO_LINUX_HEADERS
-		if (ioctl(*_fd, EVIOCGKEY(_buf.size()), _buf.data()) < 0) {
+		//if (ioctl(*_fd, EVIOCGKEY(_buf.size()), _buf.data()) < 0) {
 			// handle error
-		}
+		//}
 #endif
 		// bit in bytes is 1 when released and 0 when pressed
 		return !(_buf[_bit / bits_per_long] & 1 << (_bit % bits_per_long));

@@ -2,8 +2,8 @@
 // Created by Martin Mikšík on 12/03/16.
 //
 
-#ifndef KETCHUPHOUSE_ENGINE_H
-#define KETCHUPHOUSE_ENGINE_H
+//#ifndef KETCHUPHOUSE_ENGINE_H
+//#define KETCHUPHOUSE_ENGINE_H
 
 #include "../../../framework/hardware/IMotor.h"
 #include "../ev3dev.h"
@@ -22,7 +22,8 @@ public:
 
 private:
 	ev3dev::motor motor;
+	//address_type motor;
 };
 
 
-#endif //KETCHUPHOUSE_ENGINE_H
+//#endif //KETCHUPHOUSE_ENGINE_H

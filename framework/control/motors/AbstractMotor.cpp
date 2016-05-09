@@ -36,7 +36,11 @@ vector <Instruction> AbstractMotor::getPosition()
 	return itemStack.top();
 }
 
+/*
 std::thread AbstractMotor::threadRun()
 {
-	return std::thread([=] { run(); });
-}
+	//return std::thread([=] { run(); });
+	//return new std::thread([this]{run();});
+	std::thread test(&AbstractMotor::run, this);
+	return test;
+}*/

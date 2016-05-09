@@ -37,13 +37,14 @@ public:
 
 	vector <Instruction> getPosition();
 
-	std::thread threadRun();
+	//std::thread threadRun();
 
 protected:
 	bool lock;
+	//TODO
 	stack<vector<Instruction> > itemStack;
 
-	virtual void run() = 0;
+	//virtual void run(MotorControl *mClass) = 0;
 };
 
 

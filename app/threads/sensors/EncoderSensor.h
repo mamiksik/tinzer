@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <thread>
 #include "IEncoderCallback.h"
 #include "IEncoder.h"
 #include "../controls/MotorControl.h"
@@ -14,26 +15,42 @@
 
 using namespace std;
 
-class EncoderSensor : public AbstractSensor
+class EncoderSensor //: public AbstractSensor
 {
 public:
-	EncoderSensor(IEncoder &leftEncoder, IEncoder &rightEncoder, vector<MotorControl> &controlsCallbacks)
+	//TODO: CallBacks
+	EncoderSensor(IEncoder &leftEncoder, IEncoder &rightEncoder, vector<IEncoderCallback *> &controlsCallbacks)
 			: leftEncoder(leftEncoder),
 			  rightEncoder(rightEncoder),
 			  controlsCallbacks(controlsCallbacks)
-	{ }
+	{
+		stopThread = false;
+	}
+
+
+	virtual ~EncoderSensor()
+	{
+		stopRunThread();
+	}
 
 	int readLeftEncoder();
 
 	int readRightEncoder();
 
+	void startRunThread();
+
+	void stopRunThread();
+
 protected:
 	IEncoder &leftEncoder;
 	IEncoder &rightEncoder;
 
-	vector <MotorControl> &controlsCallbacks;
+	vector<IEncoderCallback *> &controlsCallbacks;
 
-	virtual void run();
+	bool stopThread;
+	std::thread runThread;
+
+	void run();
 };
 
 #endif //KETCHUPHOUSE_ENCODERSENSOR_H

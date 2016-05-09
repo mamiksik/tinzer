@@ -10,6 +10,8 @@
 #include <chrono>
 
 #include "../Config.h"
+//#include "../hardware/motor/FakeMotor.h"
+//#include "../hardware/encoder/FakeEncoder.h"
 #include "../hardware/motor/Motor.h"
 #include "../hardware/encoder/Encoder.h"
 #include "../threads/sensors/EncoderSensor.h"
@@ -26,51 +28,48 @@ public:
 		cout << "Creating motors" << endl;
 		Motor leftMotor(OUTPUT_A);
 		Motor rightMotor(OUTPUT_B);
+
+		//FakeMotor leftMotor;
+		//FakeMotor rightMotor;
 		cout << "Motors created" << endl;
-
-
-		leftMotor.setPower(50);
-		rightMotor.setPower(50);
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-		leftMotor.setPower(0);
-		rightMotor.setPower(0);
 
 		cout << "Creating encoders" << endl;
 		Encoder leftEncoder(OUTPUT_A);
 		Encoder rightEncoder(OUTPUT_B);
+
+		//FakeEncoder leftEncoder;
+		//FakeEncoder rightEncoder;
 		cout << "Encoders created" << endl;
 
-		cout << "Creating motorControl" << endl;
-		MotorControl motorControl(leftMotor, rightMotor, Coordinate(0, 0, 1));
+		//Reset encoders
 
-		vector<MotorControl> callbacks = {
-				motorControl
+		cout << "Creating motorControl" << endl;
+		MotorControl motorControl(leftMotor, rightMotor,
+		                          Coordinate(DEFAULT_ROTATION, DEFAULT_X_POSITION, DEFAULT_Y_POSITION));
+
+		vector<IEncoderCallback *> callbacks = {
+				&motorControl
 		};
 
 		cout << "Creating encoderSensore" << endl;
 		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
 
-
 		cout << "Pushing coordinates" << endl;
-		motorControl.push(Coordinate(4, 8, 1));
+		motorControl.push(Coordinate(M_PI, 5, 15));
 
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 		cout << "starting control run thread" << endl;
-		thread motorControlRun = motorControl.threadRun();
+		motorControl.startRunThread();
 
 		cout << "starting encoder run thread" << endl;
-		thread encoderSensorRun = encoderSensor.threadRun();
+		encoderSensor.startRunThread();
 
+		//motorControl.push(Coordinate(DEFAULT_ROTATION, 8, 1));
 
-		cout << "Pushing coordinates" << endl;
-		motorControl.push(Coordinate(2, 5, 1));
+		//cout << "Pushing coordinates" << endl;
+		//motorControl.push(Coordinate(DEFAULT_ROTATION, 0, 1));
 
-
-		motorControlRun.join();
-		encoderSensorRun.join();
-
-		cout << "Test" << endl;
 
 	}
 };

@@ -4,15 +4,10 @@ project(KetchupHouse CXX)
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
-SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -D_GLIBCXX_USE_NANOSLEEP -pthread")
-
-#if ()
-#message(STATUS "Cross-compiling")
-#include(CMakeForceCompiler)
-#CMAKE_FORCE_CXX_COMPILER(/Volumes/xtools/arm-none-linux-gnueabi/bin/arm-none-linux-gnueabi-g++ GNU)
-#CMAKE_FORCE_CXX_COMPILER(/Volumes/EV3-EABI/arm-none-linux-gnueabi/bin/arm-none-linux-gnueabi-g++ GNU)
-#endif ()
+#SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
+SET(CMAKE_CXX_COMPILER /Volumes/ARM-LINUX/arm-unknown-linux-gnueabi/bin/arm-unknown-linux-gnueabi-g++)
+#SET(CMAKE_CXX_COMPILER g++)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -pthread")
 
 set(FRAMEWORK_FILES
     framework/hardware/IMotor.h
@@ -33,9 +28,7 @@ set(SOURCE_FILES
     app/hardware/encoder/Encoder.cpp
     app/threads/controls/MotorControl.cpp
     app/threads/sensors/EncoderSensor.cpp
-    app/threads/LogicThread.h)
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/")
+    app/threads/LogicThread.h framework/CLog.cpp framework/CLog.h)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 

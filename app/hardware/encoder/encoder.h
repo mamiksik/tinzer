@@ -14,12 +14,15 @@ class Encoder : public IEncoder
 {
 public:
 	Encoder(address_type motor_pin) : motor(motor_pin)
-	{ }
+	{
+		motor.set_position(0);
+	}
 
 	virtual int getRelPosition();
 
 private:
 	ev3dev::motor motor;
+	//address_type motor;
 };
 
 
