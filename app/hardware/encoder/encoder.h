@@ -5,6 +5,7 @@
 #ifndef KETCHUPHOUSE_ENCODER_H
 #define KETCHUPHOUSE_ENCODER_H
 
+#include <iostream>
 #include "../ev3dev.h"
 #include "../../threads/sensors/IEncoder.h"
 
@@ -18,11 +19,12 @@ public:
 		motor.set_position(0);
 	}
 
-	virtual int getRelPosition();
+	virtual int getAbsPosition();
+
+	virtual void set(int position);
 
 private:
 	ev3dev::motor motor;
-	//address_type motor;
 };
 
 

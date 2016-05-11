@@ -12,18 +12,24 @@ using namespace chrono;
 
 void EncoderSensor::run()
 {
-	//looper loop(ENCODER_SENSORS_UPDATE_RATE);
+	looper loop(ENCODER_SENSORS_UPDATE_RATE);
 	std::cout << "RUN" << std::endl;
 	std::cout << stopThread << std::endl;
+
+	leftEncoder.set(0);
+	rightEncoder.set(0);
+
 	while (!stopThread) {
 
 		//std::cout << "EncoderSensor run loop" << std::endl;
-		//loop.start();
+		loop.start();
 
 		//Read from hardware
-		int rightEncoderVal = rightEncoder.getRelPosition();
-		int leftEncoderVal = leftEncoder.getRelPosition();
+		int leftEncoderVal = leftEncoder.getAbsPosition();
+		int rightEncoderVal = rightEncoder.getAbsPosition();
 
+
+		//rightEncoderVal = leftEncoderVal;
 		//std::cout << leftEncoderVal << std::endl;
 
 		//Do some stuff
@@ -34,7 +40,7 @@ void EncoderSensor::run()
 		}
 		//stopThread = false;
 
-		//loop.compare();
+		loop.compare();
 	}
 }
 
@@ -56,10 +62,10 @@ void EncoderSensor::stopRunThread()
 
 int EncoderSensor::readLeftEncoder()
 {
-	return leftEncoder.getRelPosition();
+	return leftEncoder.getAbsPosition();
 }
 
 int EncoderSensor::readRightEncoder()
 {
-	return rightEncoder.getRelPosition();
+	return rightEncoder.getAbsPosition();
 }

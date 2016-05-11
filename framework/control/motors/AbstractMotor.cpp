@@ -33,7 +33,7 @@ bool AbstractMotor::isReady()
 
 vector <Instruction> AbstractMotor::getPosition()
 {
-	return itemStack.top();
+	return itemStack.front();
 }
 
 /*

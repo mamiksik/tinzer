@@ -15,7 +15,9 @@ public:
 	virtual ~IEncoder()
 	{ }
 
-	virtual int getRelPosition() = 0;
+	virtual int getAbsPosition() = 0;
+
+	virtual void set(int position) = 0;
 };
 
 #endif //KETCHUPHOUSE_IENCODER_H

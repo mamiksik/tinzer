@@ -8,6 +8,7 @@
 #include <stack>
 #include <vector>
 #include <thread>
+#include <queue>
 
 #include "../../../app/Config.h"
 #include "../../structures/Instruction.h"
@@ -42,7 +43,7 @@ public:
 protected:
 	bool lock;
 	//TODO
-	stack<vector<Instruction> > itemStack;
+	queue<vector<Instruction> > itemStack;
 
 	//virtual void run(MotorControl *mClass) = 0;
 };

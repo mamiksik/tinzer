@@ -56,6 +56,7 @@ public:
 
 		cout << "Pushing coordinates" << endl;
 		motorControl.push(Coordinate(M_PI, 5, 15));
+		motorControl.push(Coordinate(M_PI, 0, 15));
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
