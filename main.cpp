@@ -1,15 +1,14 @@
 #include <iostream>
 #include <thread>
 
-#include "app/threads/LogicThread.h"
+#include "app/threads/MainThread.h"
 
 int main(int argc, char *argv[])
 {
-	LogicThread logicThread;
+	MainThread logicThread;
 
-	std::cout << "Starting logic thread" << std::endl;
 	std::thread logicT(logicThread);
-
 	logicT.join();
+
 	return 0;
 }

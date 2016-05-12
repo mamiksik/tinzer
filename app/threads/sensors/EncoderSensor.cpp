@@ -20,17 +20,11 @@ void EncoderSensor::run()
 	rightEncoder.set(0);
 
 	while (!stopThread) {
-
-		//std::cout << "EncoderSensor run loop" << std::endl;
 		loop.start();
 
 		//Read from hardware
 		int leftEncoderVal = leftEncoder.getAbsPosition();
 		int rightEncoderVal = rightEncoder.getAbsPosition();
-
-
-		//rightEncoderVal = leftEncoderVal;
-		//std::cout << leftEncoderVal << std::endl;
 
 		//Do some stuff
 
@@ -38,8 +32,6 @@ void EncoderSensor::run()
 		for (IEncoderCallback *callback: controlsCallbacks) {
 			callback->encoderProcess(leftEncoderVal, rightEncoderVal);
 		}
-		//stopThread = false;
-
 		loop.compare();
 	}
 }

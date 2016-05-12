@@ -6,8 +6,8 @@
 
 void AbstractMotor::aboard()
 {
-	while (!itemStack.empty()) {
-		itemStack.pop();
+	while (!stepQueue.empty()) {
+		stepQueue.pop();
 	}
 }
 
@@ -23,7 +23,7 @@ void AbstractMotor::resume()
 
 bool AbstractMotor::isEmpty()
 {
-	return itemStack.empty();
+	return stepQueue.empty();
 }
 
 bool AbstractMotor::isReady()
@@ -33,14 +33,18 @@ bool AbstractMotor::isReady()
 
 vector <Instruction> AbstractMotor::getPosition()
 {
-	return itemStack.front();
+	return stepQueue.front();
 }
 
-/*
-std::thread AbstractMotor::threadRun()
+void  AbstractMotor::startRunThread()
 {
-	//return std::thread([=] { run(); });
-	//return new std::thread([this]{run();});
-	std::thread test(&AbstractMotor::run, this);
-	return test;
-}*/
+	runThread = std::thread([&] { run(); });
+}
+
+void AbstractMotor::stopRunThread()
+{
+	stopThread = true;
+	if (runThread.joinable()) {
+		runThread.join();
+	}
+}

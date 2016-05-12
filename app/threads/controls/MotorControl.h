@@ -18,21 +18,12 @@ public:
 	MotorControl(IMotor &leftEngine, IMotor &rightEngine, const Coordinate currentCoordinate) :
 			leftEngine(leftEngine),
 			rightEngine(rightEngine),
-			currentCoordinate(currentCoordinate),
-			stackCoordinate(currentCoordinate)
+			startCoordinate(currentCoordinate),
+			currentCoordinate(currentCoordinate)
 	{
 		power = 40;
 		stopThread = false;
 	}
-
-	virtual ~MotorControl()
-	{
-		stopRunThread();
-	}
-
-	void startRunThread();
-
-	void stopRunThread();
 
 	virtual void push(Coordinate newCoordinate);
 
@@ -43,19 +34,20 @@ private:
 	IMotor &leftEngine;
 	IMotor &rightEngine;
 
-	const Coordinate currentCoordinate;
-	Coordinate stackCoordinate;
+	const Coordinate startCoordinate;
+	Coordinate currentCoordinate;
 
 	std::atomic<int> leftEncoder;
 	std::atomic<int> rightEncoder;
 	int power;
 
-	bool stopThread;
-	std::thread runThread;
-
 	void run();
 
-	double calculateRotation(double newRotation, double currenRotation);
+	void rotate(double startRotation, double endRotation, int power);
+
+	void straight(double block, int power);
+
+	double calculateRotationDiff(double startRotation, double endRotation);
 };
 
 

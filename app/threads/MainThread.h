@@ -17,7 +17,7 @@
 #include "../threads/sensors/EncoderSensor.h"
 #include "controls/MotorControl.h"
 
-class LogicThread
+class MainThread
 {
 public:
 	void operator()()

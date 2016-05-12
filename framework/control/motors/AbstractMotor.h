@@ -22,7 +22,9 @@ class AbstractMotor
 
 public:
 	virtual ~AbstractMotor()
-	{ }
+	{
+		stopRunThread();
+	}
 
 	virtual void push(Coordinate item) = 0;
 
@@ -36,16 +38,20 @@ public:
 
 	void aboard();
 
-	vector <Instruction> getPosition();
+	vector<Instruction> getPosition();
 
-	//std::thread threadRun();
+	void startRunThread();
+
+	void stopRunThread();
 
 protected:
 	bool lock;
-	//TODO
-	queue<vector<Instruction> > itemStack;
+	bool stopThread;
+	std::thread runThread;
+	//TODO lock for multi threading
+	queue<vector<Instruction> > stepQueue;
 
-	//virtual void run(MotorControl *mClass) = 0;
+	virtual void run() = 0;
 };
 
 

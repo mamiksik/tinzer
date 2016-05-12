@@ -5,9 +5,13 @@
 #include "Encoder.h"
 
 
-int Encoder::getRelPosition()
+int Encoder::getAbsPosition()
 {
-	int motorPos = motor.position();
+	return motor.position();
 	//motor.set_position(0);
-	return motorPos;
+}
+
+void Encoder::set(int position)
+{
+	motor.set_position(position);
 }
