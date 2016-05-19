@@ -3,10 +3,12 @@ dist: trusty
 
 # Enable C++ support
 language: cpp
-# Compiler selection
-compiler:
-  - clang
-  - gcc
+
+#Before compile
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install gcc-arm-linux-gnueabi
+  - sudo apt-get install g++-arm-linux-gnueabi
 
 # Build steps
 script:
