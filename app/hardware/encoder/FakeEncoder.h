@@ -2,8 +2,8 @@
 // Created by Martin Mikšík on 25/04/16.
 //
 
-//#ifndef KETCHUPHOUSE_ENCODER_H
-//#define KETCHUPHOUSE_ENCODER_H
+#ifndef KETCHUPHOUSE_FAKE_ENCODER_H
+#define KETCHUPHOUSE_FAKE_ENCODER_H
 
 #include "../ev3dev.h"
 #include "../../threads/sensors/IEncoder.h"
@@ -17,7 +17,11 @@ public:
 	{
 		return std::rand();
 	}
+
+	virtual void set(int position)
+	{
+
+	}
 };
 
-
-//#endif //KETCHUPHOUSE_ENCODER_H
+#endif //KETCHUPHOUSE_FAKE_ENCODER_H

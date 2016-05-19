@@ -28,7 +28,7 @@ set(SOURCE_FILES
     app/hardware/encoder/Encoder.cpp
     app/threads/controls/MotorControl.cpp
     app/threads/sensors/EncoderSensor.cpp
-    app/threads/MainThread.h framework/CLog.cpp framework/CLog.h)
+    app/threads/MainThread.h framework/Log.cpp framework/Log.h framework/hardware/EncoderSync.cpp framework/hardware/EncoderSync.h)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 

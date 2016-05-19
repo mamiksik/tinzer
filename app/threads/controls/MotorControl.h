@@ -34,11 +34,14 @@ private:
 	IMotor &leftEngine;
 	IMotor &rightEngine;
 
+	int oldLeft;
+	int oldRight;
+
 	const Coordinate startCoordinate;
 	Coordinate currentCoordinate;
 
-	std::atomic<int> leftEncoder;
-	std::atomic<int> rightEncoder;
+	std::atomic<int> leftEncoderVal;
+	std::atomic<int> rightEncoderVal;
 	int power;
 
 	void run();

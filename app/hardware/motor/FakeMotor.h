@@ -2,8 +2,8 @@
 // Created by Martin Mikšík on 12/03/16.
 //
 
-#ifndef KETCHUPHOUSE_ENGINE_H
-#define KETCHUPHOUSE_ENGINE_H
+#ifndef KETCHUPHOUSE_FAKE_MOTOR_H
+#define KETCHUPHOUSE_FAKE_MOTOR_H
 
 #include "../../../framework/hardware/IMotor.h"
 #include "../ev3dev.h"
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //KETCHUPHOUSE_ENGINE_H
+#endif //KETCHUPHOUSE_FAKE_MOTOR_H

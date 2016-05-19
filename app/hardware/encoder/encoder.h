@@ -14,16 +14,17 @@ using ev3dev::address_type;
 class Encoder : public IEncoder
 {
 public:
-	Encoder(address_type motor_pin) : motor(motor_pin)
+	Encoder(address_type motor_pin, const int fixValue) : motor(motor_pin), fixValue(fixValue)
 	{
 		motor.set_position(0);
 	}
 
-	virtual int getAbsPosition();
+	virtual int getRelPosition();
 
 	virtual void set(int position);
 
 private:
+	const int fixValue;
 	ev3dev::motor motor;
 };
 

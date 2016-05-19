@@ -15,7 +15,7 @@ public:
 	virtual ~IEncoder()
 	{ }
 
-	virtual int getAbsPosition() = 0;
+	virtual int getRelPosition() = 0;
 
 	virtual void set(int position) = 0;
 };

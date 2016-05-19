@@ -23,8 +23,8 @@ void EncoderSensor::run()
 		loop.start();
 
 		//Read from hardware
-		int leftEncoderVal = leftEncoder.getAbsPosition();
-		int rightEncoderVal = rightEncoder.getAbsPosition();
+		int leftEncoderVal = leftEncoder.getRelPosition();
+		int rightEncoderVal = rightEncoder.getRelPosition();
 
 		//Do some stuff
 
@@ -54,10 +54,10 @@ void EncoderSensor::stopRunThread()
 
 int EncoderSensor::readLeftEncoder()
 {
-	return leftEncoder.getAbsPosition();
+	return leftEncoder.getRelPosition();
 }
 
 int EncoderSensor::readRightEncoder()
 {
-	return rightEncoder.getAbsPosition();
+	return rightEncoder.getRelPosition();
 }

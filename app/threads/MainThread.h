@@ -10,12 +10,13 @@
 #include <chrono>
 
 #include "../Config.h"
-//#include "../hardware/motor/FakeMotor.h"
-//#include "../hardware/encoder/FakeEncoder.h"
 #include "../hardware/motor/Motor.h"
 #include "../hardware/encoder/Encoder.h"
 #include "../threads/sensors/EncoderSensor.h"
 #include "controls/MotorControl.h"
+#include "../../framework/Log.h"
+#include "../hardware/motor/Motor.h"
+#include "../hardware/encoder/Encoder.h"
 
 class MainThread
 {
@@ -25,23 +26,20 @@ public:
 		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
 
-		cout << "Creating motors" << endl;
+		//Log::dump(Log::All, "Creating motors");
 		Motor leftMotor(OUTPUT_A);
 		Motor rightMotor(OUTPUT_B);
 
-		//FakeMotor leftMotor;
-		//FakeMotor rightMotor;
-		cout << "Motors created" << endl;
+		//cout << "Creating encoders" << endl;
+		Encoder leftEncoder(OUTPUT_A, LEFT_ENCODER_FIX);
+		Encoder rightEncoder(OUTPUT_B, RIGHT_ENCODER_FIX);
 
-		cout << "Creating encoders" << endl;
-		Encoder leftEncoder(OUTPUT_A);
-		Encoder rightEncoder(OUTPUT_B);
-
-		//FakeEncoder leftEncoder;
-		//FakeEncoder rightEncoder;
 		cout << "Encoders created" << endl;
+		cout << leftEncoder.getRelPosition() << endl;
 
 		//Reset encoders
+		leftEncoder.set(0);
+		rightEncoder.set(0);
 
 		cout << "Creating motorControl" << endl;
 		MotorControl motorControl(leftMotor, rightMotor,
@@ -55,8 +53,8 @@ public:
 		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
 
 		cout << "Pushing coordinates" << endl;
-		motorControl.push(Coordinate(M_PI, 5, 15));
-		motorControl.push(Coordinate(M_PI, 0, 15));
+		motorControl.push(Coordinate(0, 3, 10));
+		//motorControl.push(Coordinate(M_PI, 0, 10));
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 

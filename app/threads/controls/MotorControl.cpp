@@ -1,5 +1,5 @@
 //
-// Created by Martin Mikšík on 14/04/16.
+// Created by Martin Mikšík
 //
 
 #include <cstdlib>
@@ -30,9 +30,12 @@ void MotorControl::push(Coordinate newCoordinate)
 		yRotation = 1.5 * M_PI;
 	}
 
+	//rotate(rotation, xRotation, power);
+	//currentCoordinate.rotation = xRotation;
+
 	if (yRotation > xRotation) {
 		rotate(rotation, xRotation, power);
-		currentCoordinate.rotation = xRotation;
+		rotation = currentCoordinate.rotation = xRotation;
 
 		straight(x, power);
 		currentCoordinate.x = x;
@@ -40,36 +43,48 @@ void MotorControl::push(Coordinate newCoordinate)
 		rotate(rotation, yRotation, power);
 		currentCoordinate.rotation = yRotation;
 
-		straight(y, power);
-		currentCoordinate.y = y;
+		//straight(y, power);
+		//currentCoordinate.y = y;
 
 	} else {
-		rotate(rotation, yRotation, power);
-		currentCoordinate.rotation = yRotation;
-
-		straight(y, power);
-		currentCoordinate.y = y;
-
-		rotate(rotation, xRotation, power);
-		currentCoordinate.rotation = xRotation;
-
-		straight(x, power);
-		currentCoordinate.x = x;
+//		rotate(rotation, yRotation, power);
+//		currentCoordinate.rotation = yRotation;
+//
+//		straight(y, power);
+//		currentCoordinate.y = y;
+//
+//		rotate(rotation, xRotation, power);
+//		currentCoordinate.rotation = xRotation;
+//
+//		straight(x, power);
+//		currentCoordinate.x = x;
 	}
+
+	//TODO: Final rotation
 }
 
 void MotorControl::encoderProcess(int updatedLeftEncoder, int updatedRightEncoder)
 {
-	leftEncoder = abs(updatedLeftEncoder);
-	rightEncoder = abs(updatedRightEncoder);
+	leftEncoderVal = updatedLeftEncoder - oldLeft;
+	rightEncoderVal = updatedRightEncoder - oldRight;
+
+	cout << "$$$$$$$$$$$$$$$$$$$$$" << endl;
+	cout << leftEncoderVal << endl;
+	cout << rightEncoderVal << endl;
 }
 
 void MotorControl::run()
 {
 	while (!stopThread) {
-		if (stepQueue.empty() || lock) {
+		if (lock || stepQueue.empty()) {
 			continue;
 		}
+
+		int encLeftStart = leftEncoderVal;
+		int encRightStart = rightEncoderVal;
+
+		bool leftDone = false;
+		bool rightDone = false;
 
 		vector<Instruction> instructions = stepQueue.front();
 		stepQueue.pop();
@@ -77,31 +92,21 @@ void MotorControl::run()
 		leftEngine.setPower(instructions[0].power);
 		rightEngine.setPower(instructions[1].power);
 
-		bool stop = false;
 		do {
-			if (leftEncoder >= instructions[0].tic) {
+
+			if (encLeftStart + instructions[0].tic >= leftEncoderVal ||
+			    encLeftStart - instructions[0].tic >= leftEncoderVal) {
 				leftEngine.setPower(0);
+				leftDone = true;
 			}
 
-			//if (instructions[0].tic == 0) {
-			//	leftEngine.setPower(0);
-			//}
-
-			if (rightEncoder >= instructions[1].tic) {
+			if (encRightStart + instructions[1].tic >= rightEncoderVal ||
+			    encRightStart - instructions[1].tic >= rightEncoderVal) {
 				rightEngine.setPower(0);
+				rightDone = true;
 			}
 
-			//if (instructions[1].tic == 0) {
-			//	rightEngine.setPower(0);
-			//}
-
-			if (rightEncoder >= instructions[1].tic && leftEncoder >= instructions[0].tic) {
-				leftEncoder = 0;
-				rightEncoder = 0;
-				stop = true;
-			}
-
-		} while (!stop);
+		} while (leftDone && rightDone);
 	}
 }
 
@@ -109,7 +114,7 @@ void MotorControl::run()
 void MotorControl::rotate(double startRotation, double endRotation, int power)
 {
 	double rotation = calculateRotationDiff(endRotation, startRotation);
-	double distance = (ROBOT_PERIMETER * (rotation * (180 / M_PI))) / WHEEL_PERIMETER;
+	double distance = (WHEEL_DISTANCE * (rotation * (180 / M_PI))) / WHEEL_DIAMETER;
 
 	vector<Instruction> item = {
 			Instruction(distance, power), //LeftEngine
@@ -121,7 +126,8 @@ void MotorControl::rotate(double startRotation, double endRotation, int power)
 
 void MotorControl::straight(double block, int power)
 {
-	double tics = abs(360 * LINE_LEIGHT * block) / WHEEL_PERIMETER;
+	double tics = ENCODER_RESOLUTION * LINE_LEIGHT * abs(block) / (WHEEL_DIAMETER * M_PI);
+
 	vector<Instruction> item = {
 			Instruction(tics, power), //LeftEngine
 			Instruction(tics, power)  //RightEngine
