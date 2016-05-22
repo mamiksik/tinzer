@@ -5,8 +5,8 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
 #SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
-SET(CMAKE_CXX_COMPILER /Volumes/ARM-LINUX/arm-unknown-linux-gnueabi/bin/arm-unknown-linux-gnueabi-g++)
-#SET(CMAKE_CXX_COMPILER g++)
+#SET(CMAKE_CXX_COMPILER /Volumes/ARM-LINUX/arm-unknown-linux-gnueabi/bin/arm-unknown-linux-gnueabi-g++)
+SET(CMAKE_CXX_COMPILER g++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -pthread")
 
 set(FRAMEWORK_FILES
@@ -16,6 +16,10 @@ set(FRAMEWORK_FILES
     framework/sensor/AbstractSensor.cpp
     framework/control/motors/AbstractMotor.cpp
     framework/looper/looper.cpp
+    framework/Log.cpp
+    framework/Log.h
+    framework/hardware/EncoderSync.cpp
+    framework/hardware/EncoderSync.h
     app/Config.h
     main.cpp
     )
@@ -28,7 +32,8 @@ set(SOURCE_FILES
     app/hardware/encoder/Encoder.cpp
     app/threads/controls/MotorControl.cpp
     app/threads/sensors/EncoderSensor.cpp
-    app/threads/MainThread.h framework/Log.cpp framework/Log.h framework/hardware/EncoderSync.cpp framework/hardware/EncoderSync.h)
+    app/threads/MainThread.h
+    )
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 

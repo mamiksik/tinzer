@@ -13,10 +13,10 @@ class Log
 public:
 	enum
 	{
-		All = 0, Debug, Info, Warning, Error, Fatal, None
+		All = 0, Debug, Info, Warning, Error
 	};
 
-	static void dump(int logLevel, const char *szFormat, ...);
+	static void dump(int logLevel, const char *string, ...);
 
 protected:
 	static int logLevel();
