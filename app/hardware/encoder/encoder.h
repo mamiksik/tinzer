@@ -19,7 +19,7 @@ public:
 		motor.set_position(0);
 	}
 
-	virtual int getRelPosition();
+	virtual int getAbsPosition();
 
 	virtual void set(int position);
 

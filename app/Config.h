@@ -6,10 +6,10 @@
 #define KETCHUPHOUSE_CONFIG_H
 
 #include <math.h>
-#include "../framework/Log.h"
+#include "../framework/Helpers.h"
 
 //Debuging
-const int LOG_LEVEL = Log::All;
+const int LOG_LEVEL = Helpers::All;
 
 //Grid Position
 const int DEFAULT_X_POSITION = 0;
