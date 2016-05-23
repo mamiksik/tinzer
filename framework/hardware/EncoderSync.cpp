@@ -4,7 +4,7 @@
 
 #include <thread>
 #include "EncoderSync.h"
-#include "../Log.h"
+#include "../Helpers.h"
 
 void EncoderSync::sync()
 {
@@ -22,10 +22,10 @@ void EncoderSync::sync()
 	leftEncoder.set(0);
 	rightEncoder.set(0);
 
-	int leftEncoderValue = leftEncoder.getRelPosition();
-	int rightEncoderValue = rightEncoder.getRelPosition();
+	int leftEncoderValue = leftEncoder.getAbsPosition();
+	int rightEncoderValue = rightEncoder.getAbsPosition();
 
-	int diff = abs(leftEncoderValue - rightEncoderValue);
+	/*//int diff = abs(leftEncoderValue - rightEncoderValue);
 
 	if (leftEncoderValue > rightEncoderValue) {
 		double fix = diff / leftEncoderValue;
@@ -34,5 +34,5 @@ void EncoderSync::sync()
 	} else {
 		double fix = diff / rightEncoderValue;
 		Log::dump(Log::All, "Left encoder fix is ", fix);
-	}
+	}*/
 }

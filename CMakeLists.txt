@@ -16,13 +16,11 @@ set(FRAMEWORK_FILES
     framework/sensor/AbstractSensor.cpp
     framework/control/motors/AbstractMotor.cpp
     framework/looper/looper.cpp
-    framework/Log.cpp
-    framework/Log.h
     framework/hardware/EncoderSync.cpp
     framework/hardware/EncoderSync.h
     app/Config.h
     main.cpp
-    )
+    framework/Helpers.cpp framework/Helpers.h)
 
 set(SOURCE_FILES
     app/threads/sensors/IEncoder.h
