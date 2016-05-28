@@ -10,7 +10,6 @@
 
 void MotorControl::push(Coordinate newCoordinate)
 {
-	std::cout << "Push coordinates called" << std::endl;
 
 	int x = newCoordinate.x - currentCoordinate.x;
 	int y = newCoordinate.y - currentCoordinate.y;
@@ -30,34 +29,35 @@ void MotorControl::push(Coordinate newCoordinate)
 		yRotation = 1.5 * M_PI;
 	}
 
-	//rotate(rotation, xRotation, power);
-	//currentCoordinate.rotation = xRotation;
-
 	if (yRotation > xRotation) {
+		Helpers::dump(Helpers::Debug, "Rotate x");
 		rotate(rotation, xRotation, power);
 		rotation = currentCoordinate.rotation = xRotation;
 
+		Helpers::dump(Helpers::Debug, "Straight x");
 		straight(x, power);
 		currentCoordinate.x = x;
 
+		Helpers::dump(Helpers::Debug, "Rotate y");
 		rotate(rotation, yRotation, power);
 		currentCoordinate.rotation = yRotation;
 
-		//straight(y, power);
-		//currentCoordinate.y = y;
+		Helpers::dump(Helpers::Debug, "Straight y");
+		straight(y, power);
+		currentCoordinate.y = y;
 
 	} else {
-//		rotate(rotation, yRotation, power);
-//		currentCoordinate.rotation = yRotation;
-//
-//		straight(y, power);
-//		currentCoordinate.y = y;
-//
-//		rotate(rotation, xRotation, power);
-//		currentCoordinate.rotation = xRotation;
-//
-//		straight(x, power);
-//		currentCoordinate.x = x;
+		rotate(rotation, yRotation, power);
+		currentCoordinate.rotation = yRotation;
+
+		straight(y, power);
+		currentCoordinate.y = y;
+
+		rotate(rotation, xRotation, power);
+		currentCoordinate.rotation = xRotation;
+
+		straight(x, power);
+		currentCoordinate.x = x;
 	}
 
 	//TODO: Final rotation
@@ -65,20 +65,19 @@ void MotorControl::push(Coordinate newCoordinate)
 
 void MotorControl::encoderProcess(int updatedLeftEncoder, int updatedRightEncoder)
 {
-	leftEncoderVal = updatedLeftEncoder - oldLeft;
-	rightEncoderVal = updatedRightEncoder - oldRight;
-
-	cout << "$$$$$$$$$$$$$$$$$$$$$" << endl;
-	cout << leftEncoderVal << endl;
-	cout << rightEncoderVal << endl;
+	rightEncoderVal = updatedRightEncoder;
+	leftEncoderVal = updatedLeftEncoder;
 }
 
 void MotorControl::run()
 {
 	while (!stopThread) {
 		if (lock || stepQueue.empty()) {
+			Helpers::dump(Helpers::Debug, "Empty");
 			continue;
 		}
+
+		Helpers::delay(2000);
 
 		int encLeftStart = leftEncoderVal;
 		int encRightStart = rightEncoderVal;
@@ -93,20 +92,20 @@ void MotorControl::run()
 		rightEngine.setPower(instructions[1].power);
 
 		do {
-
-			if (encLeftStart + instructions[0].tic >= leftEncoderVal ||
+			if (encLeftStart + instructions[0].tic <= leftEncoderVal ||
 			    encLeftStart - instructions[0].tic >= leftEncoderVal) {
 				leftEngine.setPower(0);
+				rightEngine.setPower(0);
 				leftDone = true;
 			}
 
-			if (encRightStart + instructions[1].tic >= rightEncoderVal ||
+			if (encRightStart + instructions[1].tic <= rightEncoderVal ||
 			    encRightStart - instructions[1].tic >= rightEncoderVal) {
-				rightEngine.setPower(0);
+				//TODO Right val error
 				rightDone = true;
 			}
 
-		} while (leftDone && rightDone);
+		} while (!leftDone and !rightDone);
 	}
 }
 
@@ -126,7 +125,14 @@ void MotorControl::rotate(double startRotation, double endRotation, int power)
 
 void MotorControl::straight(double block, int power)
 {
+	//double dump = block;
+	//Helpers::dump(Helpers::Debug, "block: %d", dump);
+	cout << block;
+
 	double tics = ENCODER_RESOLUTION * LINE_LEIGHT * abs(block) / (WHEEL_DIAMETER * M_PI);
+
+	Helpers::dump(Helpers::Debug, "tics: ");
+	cout << tics << endl;
 
 	vector<Instruction> item = {
 			Instruction(tics, power), //LeftEngine

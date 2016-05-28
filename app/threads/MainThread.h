@@ -23,9 +23,7 @@ class MainThread
 public:
 	void operator()()
 	{
-		//Log::dump(Log::Debug, "Call with %d variable argument.", 1);
-		//Log::dump(Log::Info, "Call with %d variable argument.", 1);
-		//Log::dump(Log::Warning, "Call with %d variable argument.", 1);
+		//Helpers::dump(Helpers::Warning, "Call with %d variable argument.", 1);
 
 		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
@@ -53,10 +51,10 @@ public:
 
 		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
 
-		Helpers::dump(Helpers::Debug, "Pushing coordinates [0, 3, 10]");
-		motorControl.push(Coordinate(0, 3, 10));
+		Helpers::dump(Helpers::Debug, "Pushing coordinates [0, 2, 2]");
+		motorControl.push(Coordinate(0, 2, 2));
 
-		Helpers::dump(Helpers::Debug, "Pushing coordinates [0, 3, 10]");
+		//Helpers::dump(Helpers::Debug, "Pushing coordinates [0, 3, 10]");
 		Helpers::delay(1000);
 
 		cout << "starting control run thread" << endl;

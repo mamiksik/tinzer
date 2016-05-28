@@ -9,7 +9,7 @@
 #include <vector>
 #include <thread>
 #include "IEncoderCallback.h"
-#include "IEncoder.h"
+#include "../../../framework/hardware/IEncoder.h"
 #include "../controls/MotorControl.h"
 #include "../../../framework/sensor/AbstractSensor.h"
 

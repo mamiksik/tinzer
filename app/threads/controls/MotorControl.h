@@ -23,6 +23,9 @@ public:
 	{
 		power = 40;
 		stopThread = false;
+		lock = false;
+		leftEncoderVal = 0;
+		rightEncoderVal = 0;
 	}
 
 	virtual void push(Coordinate newCoordinate);
@@ -33,9 +36,6 @@ private:
 
 	IMotor &leftEngine;
 	IMotor &rightEngine;
-
-	int oldLeft;
-	int oldRight;
 
 	const Coordinate startCoordinate;
 	Coordinate currentCoordinate;

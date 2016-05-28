@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "../ev3dev.h"
-#include "../../threads/sensors/IEncoder.h"
+#include "../../../framework/hardware/IEncoder.h"
 
 using ev3dev::address_type;
 

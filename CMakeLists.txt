@@ -5,8 +5,8 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
 #SET(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
-#SET(CMAKE_CXX_COMPILER /Volumes/ARM-LINUX/arm-unknown-linux-gnueabi/bin/arm-unknown-linux-gnueabi-g++)
-SET(CMAKE_CXX_COMPILER g++)
+SET(CMAKE_CXX_COMPILER /Volumes/ARM-LINUX/arm-unknown-linux-gnueabi/bin/arm-unknown-linux-gnueabi-g++)
+#SET(CMAKE_CXX_COMPILER g++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -pthread")
 
 set(FRAMEWORK_FILES
@@ -23,7 +23,7 @@ set(FRAMEWORK_FILES
     framework/Helpers.cpp framework/Helpers.h)
 
 set(SOURCE_FILES
-    app/threads/sensors/IEncoder.h
+    framework/hardware/IEncoder.h
     app/threads/sensors/IEncoderCallback.h
     app/hardware/ev3dev.cpp
     app/hardware/motor/Motor.cpp

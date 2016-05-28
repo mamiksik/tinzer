@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <thread>
+#include <stdarg.h>
 #include "Helpers.h"
 #include "../app/Config.h"
 

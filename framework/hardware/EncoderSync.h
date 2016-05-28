@@ -6,7 +6,7 @@
 #define KETCHUPHOUSE_ENCODERSYNC_H
 
 
-#include "../../app/threads/sensors/IEncoder.h"
+#include "IEncoder.h"
 #include "IMotor.h"
 
 class EncoderSync

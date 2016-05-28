@@ -33,6 +33,7 @@ void EncoderSensor::run()
 			callback->encoderProcess(leftEncoderVal, rightEncoderVal);
 		}
 		loop.compare();
+		stopThread = false;
 	}
 }
 

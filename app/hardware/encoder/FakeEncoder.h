@@ -6,7 +6,7 @@
 #define KETCHUPHOUSE_FAKE_ENCODER_H
 
 #include "../ev3dev.h"
-#include "../../threads/sensors/IEncoder.h"
+#include "../../../framework/hardware/IEncoder.h"
 
 using ev3dev::address_type;
 
