@@ -2,28 +2,18 @@
 #include <thread>
 
 
-#include "app/threads/LogicThread.h"
-#include "app/threads/ControlThread.h"
+#include "app/threads/MainThread.h"
 
 
 using namespace std;
 
-std::mutex mtx;
-std::stack<Instruction> instructionsStack;
-
 int main(int argc, char *argv[])
 {
-	LogicThread logicThread;
-	ControlThread controlThread;
+	MainThread mainThread;
 
-	cout << "Starting logic thread" << endl;
-	thread logicT(logicThread);
-
-	cout << "Starting control thread" << endl;
-	thread controlT(controlThread);
+	thread logicT(mainThread);
 
 	logicT.join();
-	controlT.join();
 
 	return 0;
 }
