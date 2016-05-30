@@ -28,23 +28,10 @@ bool AbstractMotor::isEmpty()
 
 bool AbstractMotor::isReady()
 {
-	return lock;
+	return !lock;
 }
 
 vector<Instruction> AbstractMotor::getPosition()
 {
 	return stepQueue.front();
-}
-
-void AbstractMotor::startRunThread()
-{
-	runThread = std::thread([&] { run(); });
-}
-
-void AbstractMotor::stopRunThread()
-{
-	stopThread = true;
-	if (runThread.joinable()) {
-		runThread.join();
-	}
 }
