@@ -13,24 +13,16 @@
 #include "../../../app/Config.h"
 #include "../../structures/Instruction.h"
 #include "../../structures/Coordinate.h"
+#include "../../threading/Threading.h"
 
 using namespace std;
 using namespace structure;
 
-class AbstractMotor
+class AbstractMotor : public Threading
 {
-
 public:
-	AbstractMotor()
-	{
-		stopThread = false;
-		lock = false;
-	}
-
-	virtual ~AbstractMotor()
-	{
-		stopRunThread();
-	}
+	AbstractMotor() : lock(false)
+	{}
 
 	virtual void push(Coordinate item) = 0;
 
@@ -46,19 +38,11 @@ public:
 
 	vector<Instruction> getPosition();
 
-	void startRunThread();
-
-	void stopRunThread();
-
 protected:
 	bool lock;
-	bool stopThread;
-	std::thread runThread;
 
 	//TODO lock for multi threading
 	queue<vector<Instruction> > stepQueue;
-
-	virtual void run() = 0;
 };
 
 

@@ -11,18 +11,16 @@
 
 void looper::start()
 {
-	watch = clock();
+	stopWatch.start();
 }
 
 void looper::compare()
 {
-	if (maxLoopTime > (clock() - watch)) {
-		std::this_thread::sleep_for(milliseconds((clock() - watch)));
-	}
-	else if (maxLoopTime < (clock() - watch)) {
+	stopWatch.stop();
+	if (maxLoopTime > stopWatch.getMs()) {
+		std::this_thread::sleep_for(milliseconds(stopWatch.getMs()));
+	} else if (maxLoopTime < stopWatch.getMs()) {
 		Helpers::dump(Helpers::Error, "Time overflow");
 		throw std::runtime_error("Time overflow");
 	}
-
-	watch = clock();
 }

@@ -7,8 +7,10 @@ namespace structure {
 		typedef int position;
 		typedef double radian;
 
-		Coordinate(radian rotation, position x, position y)
-				: rotation(rotation), x(x), y(y)
+
+		//WARNING: Fixed switched axes
+		Coordinate(position x, position y, radian rotation)
+				: rotation(rotation), x(y), y(x)
 		{}
 
 		radian rotation;

@@ -7,6 +7,7 @@
 #define KETCHUPHOUSE_LOOPER_H
 
 #include <chrono>
+#include "StopWatch.h"
 
 using namespace std::chrono;
 
@@ -23,7 +24,7 @@ public:
 
 private:
 	int maxLoopTime;
-	clock_t watch = clock();
+	StopWatch stopWatch;
 };
 
 
