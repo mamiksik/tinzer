@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <atomic>
-#include "../sensors/IEncoderCallback.h"
+#include "../sensors/motorEncoder/IEncoderCallback.h"
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/control/motors/AbstractMotor.h"
 #include "../../../framework/hardware/IMotor.h"

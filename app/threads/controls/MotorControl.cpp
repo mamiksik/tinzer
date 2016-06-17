@@ -113,7 +113,7 @@ void MotorControl::threadTask()
 		leftEngine.setPower(instructions[0].power);
 		rightEngine.setPower(instructions[1].power);
 
-		//TODO: Drive using right encoder too
+		//TODO: Drive using right motorEncoder too
 		do {
 			if ((instructions[0].power > 0 && encLeftDest <= leftEncoderVal) ||
 			    (instructions[0].power < 0 && encLeftDest >= leftEncoderVal)) {

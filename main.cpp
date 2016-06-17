@@ -2,18 +2,15 @@
 #include <thread>
 
 
-#include "app/threads/MainThread.h"
+#include "app/threads/Boostrap.h"
 
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-	MainThread mainThread;
+	Boostrap boostrap;
 
-	thread logicT(mainThread);
-
-	logicT.join();
-
+	boostrap.init();
 	return 0;
 }

@@ -9,8 +9,8 @@
 #include <vector>
 #include <thread>
 #include "IEncoderCallback.h"
-#include "../../../framework/hardware/IEncoder.h"
-#include "../controls/MotorControl.h"
+#include "../../../../framework/hardware/IEncoder.h"
+#include "../../controls/MotorControl.h"
 
 using namespace std;
 

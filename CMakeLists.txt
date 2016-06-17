@@ -19,26 +19,30 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -pthread  -D_GLIBCXX_USE_NA
 set(FRAMEWORK_FILES
     main.cpp
     app/Config.h
-    app/threads/MainThread.h
+    app/threads/Boostrap.h
     framework/looper/looper.cpp
     framework/hardware/IEncoder.h
     framework/hardware/IMotor.h
     framework/Helpers/Helpers.cpp
     framework/control/motors/AbstractMotor.cpp
     framework/threading/Threading.cpp
-    framework/looper/StopWatch.h)
+    framework/looper/StopWatch.h
+    app/threads/BrainThread.cpp
+    app/threads/BrainThread.h)
 
 set(SOURCE_FILES
     app/hardware/ev3dev.cpp
-    app/threads/sensors/EncoderSensor.cpp
+    app/threads/sensors/motorEncoder/EncoderSensor.cpp
     app/threads/controls/MotorControl.cpp
     app/hardware/encoder/Encoder.cpp
     app/hardware/motor/Motor.cpp
+    app/hardware/button/Button.cpp
 
-    app/threads/MainThread.h
     framework/structures/Coordinate.h
     framework/structures/Instruction.h
-    )
+    app/threads/sensors/stopButton/StopButtonSensor.cpp
+    app/threads/BrainThread.cpp
+    app/threads/BrainThread.h)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 
