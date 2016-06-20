@@ -20,7 +20,7 @@ void looper::compare()
 	if (maxLoopTime > stopWatch.getMs()) {
 		std::this_thread::sleep_for(milliseconds(stopWatch.getMs()));
 	} else if (maxLoopTime < stopWatch.getMs()) {
-		Helpers::dump(Helpers::Error, "Time overflow");
-		throw std::runtime_error("Time overflow");
+		//Helpers::dump(Helpers::Error, "Time overflow");
+		//throw std::runtime_error("Time overflow");
 	}
 }

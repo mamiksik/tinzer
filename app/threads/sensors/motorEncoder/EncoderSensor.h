@@ -10,7 +10,7 @@
 #include <thread>
 #include "IEncoderCallback.h"
 #include "../../../../framework/hardware/IEncoder.h"
-#include "../../controls/MotorControl.h"
+#include "../../controls/motorControl/MotorControl.h"
 
 using namespace std;
 

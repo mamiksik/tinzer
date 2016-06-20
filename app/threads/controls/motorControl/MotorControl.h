@@ -7,10 +7,10 @@
 
 #include <iostream>
 #include <atomic>
-#include "../sensors/motorEncoder/IEncoderCallback.h"
-#include "../../../framework/structures/Coordinate.h"
-#include "../../../framework/control/motors/AbstractMotor.h"
-#include "../../../framework/hardware/IMotor.h"
+#include "../../sensors/motorEncoder/IEncoderCallback.h"
+#include "../../../../framework/structures/Coordinate.h"
+#include "../../../../framework/control/motors/AbstractMotor.h"
+#include "../../../../framework/hardware/IMotor.h"
 
 class MotorControl : public AbstractMotor, public IEncoderCallback
 {

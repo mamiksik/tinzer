@@ -286,7 +286,7 @@ namespace ev3dev {
 					return result;
 				} catch (...) {
 					// This could mean the sysfs attribute was recreated and the
-					// corresponding file handle got stale. Lets close the file and try
+					// corresponding file handle got stale. Lets interruption the file and try
 					// again (once):
 					if (attempt != 0) throw;
 
@@ -313,7 +313,7 @@ namespace ev3dev {
 				if (os << value) return;
 
 				// An error could mean that sysfs attribute was recreated and the cached
-				// file handle is stale. Lets close the file and try again (once):
+				// file handle is stale. Lets interruption the file and try again (once):
 				if (attempt == 0 && errno == ENODEV) {
 					os.close();
 					os.clear();
@@ -606,7 +606,7 @@ namespace ev3dev {
 
 //-----------------------------------------------------------------------------
 
-//~autogen generic-define-property-value specialSensorTypes.colorSensor>currentClass
+//~autogen generic-define-property-value specialSensorTypes.gateSensor>currentClass
 
 	const std::string color_sensor::mode_col_reflect{"COL-REFLECT"};
 	const std::string color_sensor::mode_col_ambient{"COL-AMBIENT"};
@@ -702,7 +702,7 @@ namespace ev3dev {
 
 //-----------------------------------------------------------------------------
 
-//~autogen generic-define-property-value specialSensorTypes.lightSensor>currentClass
+//~autogen generic-define-property-value specialSensorTypes.LightSensor>currentClass
 
 	const std::string light_sensor::mode_reflect{"REFLECT"};
 	const std::string light_sensor::mode_ambient{"AMBIENT"};
@@ -1126,7 +1126,7 @@ namespace ev3dev {
 		using namespace std;
 
 #ifdef _LINUX_FB_H
-		int fbf = open("/dev/fb0", O_RDWR);
+		int fbf = connection("/dev/fb0", O_RDWR);
 		if (fbf < 0)
 		  return;
 

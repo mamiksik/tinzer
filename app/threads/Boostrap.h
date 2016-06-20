@@ -10,16 +10,23 @@
 #include <chrono>
 #include <signal.h>
 #include <csignal>
+#include <fstream>
 
 #include "../Config.h"
 #include "../../framework/Helpers/Helpers.h"
 #include "../hardware/motor/Motor.h"
 #include "../hardware/encoder/Encoder.h"
 #include "sensors/motorEncoder/EncoderSensor.h"
-#include "controls/MotorControl.h"
+#include "controls/motorControl/MotorControl.h"
 #include "../hardware/button/Button.h"
 #include "sensors/stopButton/StopButtonSensor.h"
 #include "BrainThread.h"
+#include "controls/gateControl/GateControl.h"
+#include "../hardware/motor/FakeMotor.h"
+#include "sensors/gateSensor/GateSensor.h"
+#include "../hardware/lightSensor/LightSensor.h"
+#include "../hardware/diode/Diode.h"
+#include "../hardware/ultrasonicSensor/UltrasonicSensor.h"
 
 class Boostrap
 {
@@ -37,24 +44,29 @@ public:
 
 		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
+		using ev3dev::OUTPUT_C;
+		using ev3dev::OUTPUT_D;
 
 		using ev3dev::INPUT_1;
+		using ev3dev::INPUT_2;
+		using ev3dev::INPUT_3;
 
-		Button stopButton(INPUT_1);
+		/*Button stopButton(INPUT_1);
+
+		UltrasonicSensor gateUltrasonicSensor(INPUT_3, true);
+		Diode gateDiode(INPUT_2);
 
 		Helpers::dump(Helpers::Info, "Init motors");
-		Motor leftMotor(OUTPUT_A);
-		Motor rightMotor(OUTPUT_B);
+		Motor leftMotor(OUTPUT_D);
+		Motor rightMotor(OUTPUT_C);
 
-		//FakeMotor leftMotor;
-		//FakeMotor rightMotor;
+		Motor gateLeftMotor(OUTPUT_A);
+		Motor gateRightMotor(OUTPUT_B);
 
 		Helpers::dump(Helpers::Info, "Init encoders");
 		Encoder leftEncoder(OUTPUT_A);
 		Encoder rightEncoder(OUTPUT_B);
 
-		//FakeEncoder leftEncoder;
-		//FakeEncoder rightEncoder;
 
 		//Reset encoders
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");
@@ -71,17 +83,33 @@ public:
 
 		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
 
+		GateControl gateControl(gateLeftMotor, gateRightMotor, 6);
+
+		vector<IGateSensorCallback *> gateCallbacks = {
+				&gateControl
+		};
+
+		GateSensor gateSensor(gateUltrasonicSensor, gateDiode, gateCallbacks, 3);
+
 		StopButtonSensor stopButtonSensor(stopButton);
-		BrainThread brainThread(motorControl, encoderSensor);
+		BrainThread brainThread(motorControl, encoderSensor, gateControl, gateSensor);
+
+
 
 		try {
 			stopButtonSensor.startThread();
-			Helpers::delay(1000);
 			brainThread.startThread();
-		} catch (...) {
-			brainThread.stopThread();
-		}
 
+			Helpers::delay(1000);
+
+			while(true){
+				//cout << ultrasonicSensor.getDistanceInCm() << endl;
+			}
+			//brainThread.startThread();
+		} catch (...) {
+			//brainThread.stopThread();
+		}
+*/
 		teardown(-1);
 	}
 

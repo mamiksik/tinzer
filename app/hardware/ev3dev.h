@@ -350,7 +350,7 @@ namespace ev3dev {
 
 //-----------------------------------------------------------------------------
 
-//~autogen special-sensor-declaration specialSensorTypes.colorSensor>currentClass
+//~autogen special-sensor-declaration specialSensorTypes.gateSensor>currentClass
 
 // LEGO EV3 color sensor.
 	class color_sensor : public sensor
@@ -604,7 +604,7 @@ namespace ev3dev {
 
 //-----------------------------------------------------------------------------
 
-//~autogen special-sensor-declaration specialSensorTypes.lightSensor>currentClass
+//~autogen special-sensor-declaration specialSensorTypes.LightSensor>currentClass
 
 // LEGO NXT Light Sensor
 	class light_sensor : public sensor

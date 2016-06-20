@@ -7,19 +7,24 @@
 
 void BrainThread::threadTask()
 {
-	cout << "starting control run thread" << endl;
+	//cout << "starting control run thread" << endl;
 	motorControl.startThread();
 
-	cout << "starting motorEncoder run thread" << endl;
+	//cout << "starting motorEncoder run thread" << endl;
 	encoderSensor.startThread();
 
-	motorControl.push(Coordinate(3, 3, M_PI_2));
-	motorControl.push(Coordinate(-3, 1, M_PI_2));
+	cout << "starting gateControl run thread" << endl;
+	gateSensor.startThread();
+	gateControl.startThread();
+
+
+	motorControl.push(Coordinate(0, 4, 0));
 
 	repeatTask = true;
 	while (repeatTask) {
-		if (motorControl.isEmpty()) {
-			throw std::runtime_error("Out of tasks");
+		//if (motorControl.isEmpty()) {
+		if (false) {
+			//throw std::runtime_error("Out of tasks");
 		} else {
 			Helpers::delay(10);
 			repeatTask = true;

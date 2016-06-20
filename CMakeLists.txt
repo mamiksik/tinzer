@@ -28,12 +28,12 @@ set(FRAMEWORK_FILES
     framework/threading/Threading.cpp
     framework/looper/StopWatch.h
     app/threads/BrainThread.cpp
-    app/threads/BrainThread.h)
+    framework/hardware/IUltrasonicSensor.h)
 
 set(SOURCE_FILES
     app/hardware/ev3dev.cpp
     app/threads/sensors/motorEncoder/EncoderSensor.cpp
-    app/threads/controls/MotorControl.cpp
+    app/threads/controls/motorControl/MotorControl.cpp
     app/hardware/encoder/Encoder.cpp
     app/hardware/motor/Motor.cpp
     app/hardware/button/Button.cpp
@@ -42,7 +42,11 @@ set(SOURCE_FILES
     framework/structures/Instruction.h
     app/threads/sensors/stopButton/StopButtonSensor.cpp
     app/threads/BrainThread.cpp
-    app/threads/BrainThread.h)
+    app/threads/BrainThread.h
+    app/threads/controls/gateControl/GateControl.cpp
+    app/hardware/lightSensor/LightSensor.cpp
+    app/threads/sensors/gateSensor/GateSensor.cpp
+    app/hardware/diode/Diode.cpp app/hardware/diode/Diode.h app/hardware/ultrasonicSensor/UltrasonicSensor.cpp app/hardware/ultrasonicSensor/UltrasonicSensor.h app/hardware/infraredSensor/InfraredSensor.cpp app/hardware/infraredSensor/InfraredSensor.h)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 
