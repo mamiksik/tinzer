@@ -10,9 +10,6 @@ void BrainThread::threadTask()
 	cout << "starting control run thread" << endl;
 	motorControl.startThread();
 
-	cout << "starting motorEncoder run thread" << endl;
-	encoderSensor.startThread();
-
 	motorControl.push(Coordinate(3, 3, M_PI_2));
 	motorControl.push(Coordinate(-3, 1, M_PI_2));
 

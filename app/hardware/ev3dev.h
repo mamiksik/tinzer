@@ -694,10 +694,10 @@ namespace ev3dev {
 		// This will also have the effect of stopping the motor.
 		static const std::string command_reset;
 
-		// Sets the normal polarity of the rotary motorEncoder.
+		// Sets the normal polarity of the rotary encoder.
 		static const std::string encoder_polarity_normal;
 
-		// Sets the inversed polarity of the rotary motorEncoder.
+		// Sets the inversed polarity of the rotary encoder.
 		static const std::string encoder_polarity_inversed;
 
 		// With `normal` polarity, a positive duty cycle will
@@ -800,8 +800,8 @@ namespace ev3dev {
 		}
 
 		// Encoder Polarity: read/write
-		// Sets the polarity of the rotary motorEncoder. This is an advanced feature to all
-		// use of motor that send inversed motorEncoder signals to the EV3. This should
+		// Sets the polarity of the rotary encoder. This is an advanced feature to all
+		// use of motor that send inversed encoder signals to the EV3. This should
 		// be set correctly by the driver of a device. It You only need to change this
 		// value if you are using a unsupported device. Valid values are `normal` and
 		// `inversed`.
@@ -835,7 +835,7 @@ namespace ev3dev {
 
 		// Position: read/write
 		// Returns the current position of the motor in pulses of the rotary
-		// motorEncoder. When the motor rotates clockwise, the position will increase.
+		// encoder. When the motor rotates clockwise, the position will increase.
 		// Likewise, rotating counter-clockwise causes the position to decrease.
 		// Writing will set the position to that value.
 		int position() const
@@ -1114,7 +1114,7 @@ namespace ev3dev {
 //~autogen generic-class-description classes.dcMotor>currentClass
 
 // The DC motor class provides a uniform interface for using regular DC motor
-// with no fancy controls or feedback. This includes LEGO MINDSTORMS RCX motor
+// with no fancy controllers or feedback. This includes LEGO MINDSTORMS RCX motor
 // and LEGO Power Functions motor.
 
 //~autogen

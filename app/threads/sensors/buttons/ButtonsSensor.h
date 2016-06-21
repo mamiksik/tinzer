@@ -13,21 +13,16 @@
 
 using namespace std;
 
-class StopButtonSensor : public Threading
+class ButtonsSensor
 {
 public:
-	StopButtonSensor(IButton &button) : button(button)
+	ButtonsSensor(IButton &stopButtom) : stopButton(stopButtom)
 	{}
 
-	virtual ~StopButtonSensor()
-	{
-		stopThread();
-	}
+	bool getStopButton();
 
 private:
-	IButton &button;
-
-	virtual void threadTask();
+	IButton &stopButton;
 };
 
 #endif //KETCHUPHOUSE_BUTTONSENSOR_H

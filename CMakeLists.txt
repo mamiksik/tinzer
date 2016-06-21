@@ -32,15 +32,15 @@ set(FRAMEWORK_FILES
 
 set(SOURCE_FILES
     app/hardware/ev3dev.cpp
-    app/threads/sensors/motorEncoder/EncoderSensor.cpp
-    app/threads/controls/MotorControl.cpp
+    app/threads/sensors/encoder/EncodersSensor.cpp
+    app/threads/controllers/motors/MotorController.cpp
     app/hardware/encoder/Encoder.cpp
     app/hardware/motor/Motor.cpp
     app/hardware/button/Button.cpp
 
     framework/structures/Coordinate.h
     framework/structures/Instruction.h
-    app/threads/sensors/stopButton/StopButtonSensor.cpp
+    app/threads/sensors/buttons/ButtonsSensor.cpp
     app/threads/BrainThread.cpp
     app/threads/BrainThread.h)
 

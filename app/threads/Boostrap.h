@@ -15,10 +15,10 @@
 #include "../../framework/Helpers/Helpers.h"
 #include "../hardware/motor/Motor.h"
 #include "../hardware/encoder/Encoder.h"
-#include "sensors/motorEncoder/EncoderSensor.h"
-#include "controls/MotorControl.h"
 #include "../hardware/button/Button.h"
-#include "sensors/stopButton/StopButtonSensor.h"
+#include "sensors/encoder/EncodersSensor.h"
+#include "sensors/buttons/ButtonsSensor.h"
+#include "controllers/motors/MotorController.h"
 #include "BrainThread.h"
 
 class Boostrap
@@ -46,38 +46,36 @@ public:
 		Motor leftMotor(OUTPUT_A);
 		Motor rightMotor(OUTPUT_B);
 
-		//FakeMotor leftMotor;
-		//FakeMotor rightMotor;
-
 		Helpers::dump(Helpers::Info, "Init encoders");
 		Encoder leftEncoder(OUTPUT_A);
 		Encoder rightEncoder(OUTPUT_B);
-
-		//FakeEncoder leftEncoder;
-		//FakeEncoder rightEncoder;
 
 		//Reset encoders
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");
 		leftEncoder.set(0);
 		rightEncoder.set(0);
 
-		MotorControl motorControl(leftMotor,
-		                          rightMotor,
-		                          Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION));
+		//Init model layer
+		EncodersSensor encodersSensor(leftEncoder, rightEncoder);
+		ButtonsSensor buttonSensor(stopButton);
 
-		vector<IEncoderCallback *> callbacks = {
-				&motorControl
-		};
+		//Init controllers layer
+		MotorController motorControl(leftMotor, rightMotor, encodersSensor,
+		                             Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40);
 
-		EncoderSensor encoderSensor(leftEncoder, rightEncoder, callbacks);
 
-		StopButtonSensor stopButtonSensor(stopButton);
-		BrainThread brainThread(motorControl, encoderSensor);
+		//Init main controller
+		BrainThread brainThread(motorControl);
 
 		try {
-			stopButtonSensor.startThread();
-			Helpers::delay(1000);
 			brainThread.startThread();
+
+			while (true) {
+				if (buttonSensor.getStopButton()) {
+					throw std::runtime_error("Stop button pressed");
+				}
+			}
+
 		} catch (...) {
 			brainThread.stopThread();
 		}

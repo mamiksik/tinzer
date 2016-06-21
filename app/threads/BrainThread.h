@@ -7,24 +7,22 @@
 
 
 #include "../../framework/threading/Threading.h"
-#include "controls/MotorControl.h"
-#include "sensors/motorEncoder/EncoderSensor.h"
+#include "controllers/motors/MotorController.h"
 
 class BrainThread : public Threading
 {
 public:
-	BrainThread(MotorControl &motorControl, EncoderSensor &encoderSensor) : motorControl(motorControl),
-	                                                                        encoderSensor(encoderSensor)
+	BrainThread(MotorController &motorControl) : motorControl(motorControl)
 	{}
 
 	virtual ~BrainThread()
 	{
+		motorControl.stopThread();
 		stopThread();
 	}
 
 private:
-	MotorControl &motorControl;
-	EncoderSensor &encoderSensor;
+	MotorController &motorControl;
 
 	virtual void threadTask();
 };

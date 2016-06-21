@@ -7,44 +7,52 @@
 
 #include <iostream>
 #include <atomic>
-#include "../sensors/motorEncoder/IEncoderCallback.h"
-#include "../../../framework/structures/Coordinate.h"
-#include "../../../framework/control/motors/AbstractMotor.h"
-#include "../../../framework/hardware/IMotor.h"
+#include "../../../../framework/structures/Coordinate.h"
+#include "../../../../framework/control/motors/AbstractMotor.h"
+#include "../../../../framework/hardware/IMotor.h"
+#include "../../sensors/encoder/EncodersSensor.h"
 
-class MotorControl : public AbstractMotor, public IEncoderCallback
+class MotorController : public AbstractMotor
 {
 public:
-	MotorControl(IMotor &leftEngine, IMotor &rightEngine, const Coordinate currentCoordinate) :
+	MotorController(IMotor &leftEngine, IMotor &rightEngine, EncodersSensor &encodersSensor,
+	                const Coordinate currentCoordinate, int power) :
 			leftEngine(leftEngine),
 			rightEngine(rightEngine),
+			encodersSensor(encodersSensor),
 			startCoordinate(currentCoordinate),
 			currentCoordinate(currentCoordinate),
-			power(40),
-			leftEncoderVal(0),
-			rightEncoderVal(0)
+			power(power)
 	{}
 
-	virtual ~MotorControl()
+	virtual ~MotorController()
 	{
 		stopThread();
 	}
 
-	virtual void push(Coordinate newCoordinate);
+	int getPower()
+	{
+		return power;
+	}
 
-	virtual void encoderProcess(int leftEncoder, int rightEncoder);
+	void setPower(int power)
+	{
+		MotorController::power = power;
+	}
+
+	virtual void push(Coordinate newCoordinate);
 
 private:
 
 	IMotor &leftEngine;
 	IMotor &rightEngine;
 
+	EncodersSensor &encodersSensor;
+
 	const Coordinate startCoordinate;
 	Coordinate currentCoordinate;
 
-	std::atomic<int> leftEncoderVal;
-	std::atomic<int> rightEncoderVal;
-	int power;
+	atomic<int> power;
 
 	virtual void threadTask();
 
