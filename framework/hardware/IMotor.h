@@ -5,16 +5,20 @@
 #ifndef KETCHUPHOUSE_IENGINE_H
 #define KETCHUPHOUSE_IENGINE_H
 
-class IMotor
-{
-public:
-	IMotor()
-	{}
+namespace Interfaces {
+	namespace Hardware {
+		class IMotor
+		{
+		public:
+			IMotor()
+			{}
 
-	virtual ~IMotor()
-	{}
+			virtual ~IMotor()
+			{}
 
-	virtual void setPower(int power) = 0;
-};
+			virtual void setPower(int power) = 0;
+		};
+	}
+}
 
 #endif //KETCHUPHOUSE_IENGINE_H

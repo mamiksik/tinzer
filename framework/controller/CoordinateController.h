@@ -10,21 +10,25 @@
 #include <thread>
 #include <queue>
 
-#include "../../../app/Config.h"
-#include "../../structures/Instruction.h"
-#include "../../structures/Coordinate.h"
-#include "../../threading/Threading.h"
+#include "../../app/Config.h"
+#include "../structures/Instruction.h"
+#include "../structures/Coordinate.h"
+#include "../threading/Threading.h"
 
 using namespace std;
-using namespace structure;
+using namespace Structure;
 
-class AbstractMotor : public Threading
+class CoordinateController : public Threading
 {
 public:
-	AbstractMotor() : lock(false)
+	CoordinateController() : lock(false)
 	{}
 
 	virtual void push(Coordinate item) = 0;
+
+	virtual Coordinate getPosition() = 0;
+
+	void aboard();
 
 	void pause();
 
@@ -34,15 +38,13 @@ public:
 
 	bool isReady();
 
-	void aboard();
-
-	vector<Instruction> getPosition();
-
 protected:
+	virtual void threadTask() = 0;
+
 	bool lock;
 
-	//TODO lock for multi threading
-	queue<vector<Instruction> > stepQueue;
+	//ToDo: Thread safe
+	queue<Coordinate> stepQueue;
 };
 
 

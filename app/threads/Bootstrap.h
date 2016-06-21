@@ -13,15 +13,22 @@
 
 #include "../Config.h"
 #include "../../framework/Helpers/Helpers.h"
+
 #include "../hardware/motor/Motor.h"
 #include "../hardware/encoder/Encoder.h"
 #include "../hardware/button/Button.h"
-#include "sensors/encoder/EncodersSensor.h"
-#include "sensors/buttons/ButtonsSensor.h"
-#include "controllers/motors/MotorController.h"
-#include "BrainThread.h"
+#include "../hardware/ultrasonicSensor/UltrasonicSensor.h"
 
-class Boostrap
+#include "../model/encoder/EncodersModel.h"
+#include "../model/buttons/ButtonsModel.h"
+
+#include "controller/Controller.h"
+#include "logic/LogicThread.h"
+
+using namespace Model;
+using namespace Hardware;
+
+class Bootstrap
 {
 public:
 	void init()
@@ -37,38 +44,55 @@ public:
 
 		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
+		using ev3dev::OUTPUT_C;
+		using ev3dev::OUTPUT_D;
 
 		using ev3dev::INPUT_1;
+		using ev3dev::INPUT_2;
 
 		Button stopButton(INPUT_1);
 
 		Helpers::dump(Helpers::Info, "Init motors");
-		Motor leftMotor(OUTPUT_A);
-		Motor rightMotor(OUTPUT_B);
+		Motor leftChassisMotor(OUTPUT_C);
+		Motor rightChassisMotor(OUTPUT_D);
+
+		Motor leftGateMotor(OUTPUT_B);
+		Motor rightGateMotor(OUTPUT_B);
 
 		Helpers::dump(Helpers::Info, "Init encoders");
-		Encoder leftEncoder(OUTPUT_A);
-		Encoder rightEncoder(OUTPUT_B);
+		Encoder leftChassisEncoder(OUTPUT_C);
+		Encoder rightChassisEncoder(OUTPUT_D);
+
+		Encoder leftGateEncoder(OUTPUT_A);
+		Encoder rightGateEncoder(OUTPUT_B);
+
+		Helpers::dump(Helpers::Info, "Init ultrasonic");
+		UltrasonicSensor gateUltrasonicSensor(INPUT_2, true);
 
 		//Reset encoders
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");
-		leftEncoder.set(0);
-		rightEncoder.set(0);
+		leftChassisEncoder.set(0);
+		rightChassisEncoder.set(0);
 
 		//Init model layer
-		EncodersSensor encodersSensor(leftEncoder, rightEncoder);
-		ButtonsSensor buttonSensor(stopButton);
+		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
+		ButtonsModel buttonSensor(stopButton);
+		UltrasonicSensor ultrasonicSensor(gateUltrasonicSensor);
 
-		//Init controllers layer
-		MotorController motorControl(leftMotor, rightMotor, encodersSensor,
-		                             Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40);
+		//Init controller layer
+		Controller motorControl(Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40,
+		                        encodersSensor,
+		                        leftChassisMotor,
+		                        rightChassisMotor,
+		                        leftGateMotor,
+		                        rightGateMotor);
 
 
 		//Init main controller
-		BrainThread brainThread(motorControl);
+		LogicThread logicThread(motorControl);
 
 		try {
-			brainThread.startThread();
+			logicThread.startThread();
 
 			while (true) {
 				if (buttonSensor.getStopButton()) {
@@ -77,7 +101,7 @@ public:
 			}
 
 		} catch (...) {
-			brainThread.stopThread();
+			logicThread.stopThread();
 		}
 
 		teardown(-1);

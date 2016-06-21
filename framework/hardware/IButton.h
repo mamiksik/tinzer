@@ -5,16 +5,20 @@
 #ifndef KETCHUPHOUSE_IBUTTON_H
 #define KETCHUPHOUSE_IBUTTON_H
 
-class IButton
-{
-public:
-	IButton()
-	{}
+namespace Interfaces {
+	namespace Hardware {
 
-	virtual ~IButton()
-	{}
+		class IButton
+		{
+		public:
+			IButton()
+			{}
 
-	virtual bool isPressed() = 0;
-};
+			virtual ~IButton()
+			{}
 
+			virtual bool isPressed() = 0;
+		};
+	}
+}
 #endif //KETCHUPHOUSE_IBUTTON_H

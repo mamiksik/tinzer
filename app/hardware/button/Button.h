@@ -10,19 +10,22 @@
 #include "../../../framework/hardware/IButton.h"
 
 using ev3dev::address_type;
+using namespace Interfaces::Hardware;
 
-class Button : public IButton
-{
-public:
+namespace Hardware {
+	class Button : public IButton
+	{
+	public:
 
-	Button(address_type motor_pin) : button(motor_pin)
-	{}
+		Button(address_type motor_pin) : button(motor_pin)
+		{}
 
-	bool isPressed();
+		bool isPressed();
 
-private:
-	ev3dev::touch_sensor button;
+	private:
+		ev3dev::touch_sensor button;
 
-};
+	};
 
+}
 #endif //KETCHUPHOUSE_BUTTON_H

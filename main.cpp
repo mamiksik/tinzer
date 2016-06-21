@@ -2,15 +2,15 @@
 #include <thread>
 
 
-#include "app/threads/Boostrap.h"
+#include "app/threads/Bootstrap.h"
 
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-	Boostrap boostrap;
+	Bootstrap bootstrap;
 
-	boostrap.init();
+	bootstrap.init();
 	return 0;
 }

@@ -9,19 +9,21 @@
 #include "../ev3dev.h"
 
 using ev3dev::address_type;
+using namespace Interfaces::Hardware;
 
+namespace Hardware {
+	class Motor : public IMotor
+	{
+	public:
 
-class Motor : public IMotor
-{
-public:
+		Motor(address_type motor_pin) : motor(motor_pin)
+		{}
 
-	Motor(address_type motor_pin) : motor(motor_pin)
-	{}
+		void setPower(int power);
 
-	void setPower(int power);
-
-private:
-	ev3dev::motor motor;
-};
+	private:
+		ev3dev::motor motor;
+	};
+}
 
 #endif //KETCHUPHOUSE_MOTOR_H

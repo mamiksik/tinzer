@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <stdlib.h>
 
-void Motor::setPower(int power)
+void Hardware::Motor::setPower(int power)
 {
 	if (power < -100 || power > 100) {
 		throw std::runtime_error("Power out of range: " + std::to_string(abs(power)) + "/100");

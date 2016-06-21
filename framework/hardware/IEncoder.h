@@ -5,19 +5,23 @@
 #ifndef KETCHUPHOUSE_IENCODER_H
 #define KETCHUPHOUSE_IENCODER_H
 
-class IEncoder
-{
-public:
+namespace Interfaces {
+	namespace Hardware {
+		class IEncoder
+		{
+		public:
 
-	IEncoder()
-	{}
+			IEncoder()
+			{}
 
-	virtual ~IEncoder()
-	{}
+			virtual ~IEncoder()
+			{}
 
-	virtual int getAbsPosition() = 0;
+			virtual int getAbsPosition() = 0;
 
-	virtual void set(int position) = 0;
-};
+			virtual void set(int position) = 0;
+		};
+	}
+}
 
 #endif //KETCHUPHOUSE_IENCODER_H

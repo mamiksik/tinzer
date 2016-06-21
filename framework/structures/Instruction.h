@@ -4,7 +4,7 @@
 
 #ifndef KETCHUPHOUSE_INSTRUCTION_H
 #define KETCHUPHOUSE_INSTRUCTION_H
-namespace structure {
+namespace Structure {
 	struct Instruction
 	{
 		Instruction(double tics, int power) : tics(tics), power(power)

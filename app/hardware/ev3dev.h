@@ -3,7 +3,7 @@
 // revision: ec58e508f2c8e5488e3bd3d9e806168365247732 (2016-02-04)
 
 /*
- * C++ API to the sensors, motor, buttons, LEDs and battery of the ev3dev
+ * C++ API to the model, motor, buttons, LEDs and battery of the ev3dev
  * Linux kernel for the LEGO Mindstorms EV3 hardware
  *
  * Copyright (c) 2014 - Franz Detro
@@ -126,8 +126,8 @@ namespace ev3dev {
 //~autogen generic-class-description classes.sensor>currentClass
 
 // The sensor class provides a uniform interface for using most of the
-// sensors available for the EV3. The various underlying device drivers will
-// create a `lego-sensor` device for interacting with the sensors.
+// model available for the EV3. The various underlying device drivers will
+// create a `lego-sensor` device for interacting with the model.
 // 
 // Sensors are primarily controlled by setting the `mode` and monitored by
 // reading the `value<N>` attributes. Values can be converted to floating point
@@ -233,7 +233,7 @@ namespace ev3dev {
 
 		// Driver Name: read-only
 		// Returns the name of the sensor device/driver. See the list of [supported
-		// sensors] for a complete list of drivers.
+		// model] for a complete list of drivers.
 		std::string driver_name() const
 		{ return get_attr_string("driver_name"); }
 
@@ -262,7 +262,7 @@ namespace ev3dev {
 
 		// Address: read-only
 		// Returns the name of the port that the sensor is connected to, e.g. `ev3:in1`.
-		// I2C sensors also include the I2C address (decimal), e.g. `ev3:in1:i2c8`.
+		// I2C model also include the I2C address (decimal), e.g. `ev3:in1:i2c8`.
 		std::string address() const
 		{ return get_attr_string("address"); }
 
@@ -288,7 +288,7 @@ namespace ev3dev {
 
 //~autogen generic-class-description classes.i2cSensor>currentClass
 
-// A generic interface to control I2C-type EV3 sensors.
+// A generic interface to controller I2C-type EV3 model.
 
 //~autogen
 	class i2c_sensor : public sensor
@@ -300,7 +300,7 @@ namespace ev3dev {
 
 		// FW Version: read-only
 		// Returns the firmware version of the sensor if available. Currently only
-		// I2C/NXT sensors support this.
+		// I2C/NXT model support this.
 		std::string fw_version() const
 		{ return get_attr_string("fw_version"); }
 
@@ -308,7 +308,7 @@ namespace ev3dev {
 		// Returns the polling period of the sensor in milliseconds. Writing sets the
 		// polling period. Setting to 0 disables polling. Minimum value is hard
 		// coded as 50 msec. Returns -EOPNOTSUPP if changing polling is not supported.
-		// Currently only I2C/NXT sensors support changing the polling period.
+		// Currently only I2C/NXT model support changing the polling period.
 		int poll_ms() const
 		{ return get_attr_int("poll_ms"); }
 
@@ -643,7 +643,7 @@ namespace ev3dev {
 
 // The motor class provides a uniform interface for using motor with
 // positional and directional feedback such as the EV3 and NXT motor.
-// This feedback allows for precise control of the motor. This is the
+// This feedback allows for precise controller of the motor. This is the
 // most common type of motor, so we just call it `motor`.
 
 //~autogen
@@ -1114,7 +1114,7 @@ namespace ev3dev {
 //~autogen generic-class-description classes.dcMotor>currentClass
 
 // The DC motor class provides a uniform interface for using regular DC motor
-// with no fancy controllers or feedback. This includes LEGO MINDSTORMS RCX motor
+// with no fancy controller or feedback. This includes LEGO MINDSTORMS RCX motor
 // and LEGO Power Functions motor.
 
 //~autogen
@@ -1449,7 +1449,7 @@ namespace ev3dev {
 		// Sets the rate_sp at which the servo travels from 0 to 100.0% (half of the full
 		// range of the servo). Units are in milliseconds. Example: Setting the rate_sp
 		// to 1000 means that it will take a 180 degree servo 2 second to move from 0
-		// to 180 degrees. Note: Some servo controllers may not support this in which
+		// to 180 degrees. Note: Some servo controller may not support this in which
 		// case reading and writing will fail with `-EOPNOTSUPP`. In continuous rotation
 		// servos, this value will affect the rate_sp at which the speed ramps up or down.
 		int rate_sp() const
@@ -1814,7 +1814,7 @@ namespace ev3dev {
 
 //-----------------------------------------------------------------------------
 
-// EV3 remote control
+// EV3 remote controller
 	class remote_control
 	{
 	public:
@@ -1864,14 +1864,14 @@ namespace ev3dev {
 
 // The `lego-port` class provides an interface for working with input and
 // output ports that are compatible with LEGO MINDSTORMS RCX/NXT/EV3, LEGO
-// WeDo and LEGO Power Functions sensors and motor. Supported devices include
+// WeDo and LEGO Power Functions model and motor. Supported devices include
 // the LEGO MINDSTORMS EV3 Intelligent Brick, the LEGO WeDo USB hub and
 // various sensor multiplexers from 3rd party manufacturers.
 // 
 // Some types of ports may have multiple modes of operation. For example, the
-// input ports on the EV3 brick can communicate with sensors using UART, I2C
+// input ports on the EV3 brick can communicate with model using UART, I2C
 // or analog validate signals - but not all at the same time. Therefore there
-// are multiple modes available to connect to the different types of sensors.
+// are multiple modes available to connect to the different types of model.
 // 
 // In most cases, ports are able to automatically detect what type of sensor
 // or motor is connected. In some cases though, this must be manually specified
@@ -1933,7 +1933,7 @@ namespace ev3dev {
 		// Set Device: write-only
 		// For modes that support it, writing the name of a driver will cause a new
 		// device to be registered for that driver and attached to this port. For
-		// example, since NXT/Analog sensors cannot be auto-detected, you must use
+		// example, since NXT/Analog model cannot be auto-detected, you must use
 		// this attribute to load the correct driver. Returns -EOPNOTSUPP if setting a
 		// device is not supported.
 		auto set_set_device(std::string v) -> decltype(*this)

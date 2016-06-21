@@ -3,7 +3,7 @@
 // revision: ec58e508f2c8e5488e3bd3d9e806168365247732 (2016-02-04)
 
 /*
- * C++ API to the sensors, motor, buttons, LEDs and battery of the ev3dev
+ * C++ API to the model, motor, buttons, LEDs and battery of the ev3dev
  * Linux kernel for the LEGO Mindstorms EV3 hardware
  *
  * Copyright (c) 2014 - Franz Detro

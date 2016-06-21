@@ -16,7 +16,6 @@ const double DEFAULT_ROTATION = 0;
 const int LINE_LEIGHT = 200; //mm
 
 //Encoder settings
-const int ENCODER_SENSORS_UPDATE_RATE = 50; //ms
 const int ENCODER_RESOLUTION = 360; //Ticks peer rev...
 
 //Robot settings

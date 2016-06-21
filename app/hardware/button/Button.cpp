@@ -4,7 +4,7 @@
 
 #include "Button.h"
 
-bool Button::isPressed()
+bool Hardware::Button::isPressed()
 {
 	return button.is_pressed();
 }

@@ -5,12 +5,12 @@
 #include "Encoder.h"
 
 
-int Encoder::getAbsPosition()
+int Hardware::Encoder::getAbsPosition()
 {
 	return motor.position();
 }
 
-void Encoder::set(int position)
+void Hardware::Encoder::set(int position)
 {
 	motor.set_position(position);
 }

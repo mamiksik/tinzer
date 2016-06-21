@@ -1,7 +1,7 @@
 #ifndef KETCHUPHOUSE_COORDINATES_H
 #define KETCHUPHOUSE_COORDINATES_H
 
-namespace structure {
+namespace Structure {
 	struct Coordinate
 	{
 		typedef int position;
