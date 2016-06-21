@@ -28,7 +28,7 @@ set(FRAMEWORK_FILES
     framework/threading/Threading.cpp
     framework/looper/StopWatch.h
     app/threads/BrainThread.cpp
-    app/threads/BrainThread.h)
+    app/threads/BrainThread.h app/threads/sensors/reflectiveSensorBar/IReflectiveSensorBarCallback.h)
 
 set(SOURCE_FILES
     app/hardware/ev3dev.cpp
@@ -42,7 +42,7 @@ set(SOURCE_FILES
     framework/structures/Instruction.h
     app/threads/sensors/stopButton/StopButtonSensor.cpp
     app/threads/BrainThread.cpp
-    app/threads/BrainThread.h)
+    app/threads/BrainThread.h app/hardware/reflectiveBar/ReflectiveBar.cpp app/hardware/reflectiveBar/ReflectiveBar.h app/threads/sensors/reflectiveSensorBar/ReflectiveSensorBar.cpp app/threads/sensors/reflectiveSensorBar/ReflectiveSensorBar.h framework/hardware/IReflectiveBar.h)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 
