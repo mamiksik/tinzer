@@ -5,8 +5,8 @@
 #ifndef KETCHUPHOUSE_IENCODER_H
 #define KETCHUPHOUSE_IENCODER_H
 
-namespace Interfaces {
-	namespace Hardware {
+/*namespace Interfaces {
+	namespace Hardware {*/
 		class IEncoder
 		{
 		public:
@@ -21,7 +21,7 @@ namespace Interfaces {
 
 			virtual void set(int position) = 0;
 		};
-	}
-}
+//	}
+//}
 
 #endif //KETCHUPHOUSE_IENCODER_H

@@ -5,7 +5,7 @@
 #include "UltrasonicModel.h"
 
 
-bool Model::UltrasonicModel::isGatePenetrated()
+bool UltrasonicModel::isGatePenetrated()
 {
 	return ultrasonicSensor.getDistanceInCm() + 2 < distance;
 }

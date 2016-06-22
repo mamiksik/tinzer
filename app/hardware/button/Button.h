@@ -10,9 +10,10 @@
 #include "../../../framework/hardware/IButton.h"
 
 using ev3dev::address_type;
-using namespace Interfaces::Hardware;
 
-namespace Hardware {
+/*using namespace Interfaces::Hardware;
+
+namespace Hardware {*/
 	class Button : public IButton
 	{
 	public:
@@ -26,5 +27,5 @@ namespace Hardware {
 		ev3dev::touch_sensor button;
 
 	};
-}
+/*}*/
 #endif //KETCHUPHOUSE_BUTTON_H

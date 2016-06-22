@@ -5,8 +5,8 @@
 #ifndef KETCHUPHOUSE_IULTRASONICSENSOR_H
 #define KETCHUPHOUSE_IULTRASONICSENSOR_H
 
-namespace Interfaces {
-	namespace Hardware {
+/*namespace Interfaces {
+	namespace Hardware {*/
 		class IUltrasonicSensor
 		{
 		public:
@@ -16,7 +16,7 @@ namespace Interfaces {
 
 			virtual double getDistanceInCm() = 0;
 		};
-	}
-}
+//}
+//}
 
 #endif //KETCHUPHOUSE_IULTRASONICSENSOR_H

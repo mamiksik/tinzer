@@ -9,9 +9,9 @@
 #include "../../../framework/hardware/IEncoder.h"
 
 using namespace std;
-using namespace Interfaces::Hardware;
+//using namespace Interfaces::Hardware;
 
-namespace Model {
+//namespace Model {
 	class EncodersModel
 	{
 	public:
@@ -34,6 +34,6 @@ namespace Model {
 		IEncoder &leftGateEncoder;
 		IEncoder &rightGateEncoder;
 	};
-}
+//}
 
 #endif //KETCHUPHOUSE_ENCODERSENSOR_H

@@ -10,9 +10,9 @@
 #include "../../../framework/hardware/IEncoder.h"
 
 using ev3dev::address_type;
-using namespace Interfaces::Hardware;
+//using namespace Interfaces::Hardware;
 
-namespace Hardware {
+//namespace Hardware {
 	class Encoder : public IEncoder
 	{
 	public:
@@ -28,6 +28,6 @@ namespace Hardware {
 	private:
 		ev3dev::motor motor;
 	};
-}
+//}
 
 #endif //KETCHUPHOUSE_ENCODER_H

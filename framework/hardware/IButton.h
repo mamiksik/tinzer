@@ -5,8 +5,8 @@
 #ifndef KETCHUPHOUSE_IBUTTON_H
 #define KETCHUPHOUSE_IBUTTON_H
 
-namespace Interfaces {
-	namespace Hardware {
+//namespace Interfaces {
+//	namespace Hardware {
 
 		class IButton
 		{
@@ -19,6 +19,6 @@ namespace Interfaces {
 
 			virtual bool isPressed() = 0;
 		};
-	}
-}
+//	}
+//}
 #endif //KETCHUPHOUSE_IBUTTON_H

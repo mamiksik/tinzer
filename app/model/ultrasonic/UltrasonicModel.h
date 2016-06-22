@@ -7,9 +7,9 @@
 
 #include "../../../framework/hardware/IUltrasonicSensor.h"
 
-using namespace Interfaces::Hardware;
+//using namespace Interfaces::Hardware;
 
-namespace Model {
+//namespace Model {
 	class UltrasonicModel
 	{
 	public:
@@ -26,7 +26,7 @@ namespace Model {
 
 		IUltrasonicSensor &ultrasonicSensor;
 	};
-}
+//}
 
 
 #endif //KETCHUPHOUSE_ULTRASONICMODEL_H

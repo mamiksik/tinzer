@@ -7,12 +7,12 @@
 
 using namespace std;
 
-pair<int, int> Model::EncodersModel::getChassisEncodersValues()
+pair<int, int> EncodersModel::getChassisEncodersValues()
 {
 	return make_pair(leftMotorEncoder.getAbsPosition(), rightMotorEncoder.getAbsPosition());
 }
 
-pair<int, int> Model::EncodersModel::getGateEncodersValues()
+pair<int, int> EncodersModel::getGateEncodersValues()
 {
 	return make_pair(leftGateEncoder.getAbsPosition(), rightGateEncoder.getAbsPosition());
 }

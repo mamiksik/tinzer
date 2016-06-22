@@ -7,16 +7,16 @@
 
 
 class IMotor
-		{
-		public:
-			IMotor()
-			{}
+{
+public:
+	IMotor()
+	{}
 
-			virtual ~IMotor()
-			{}
+	virtual ~IMotor()
+	{}
 
-			virtual void setPower(int power) = 0;
-		};
+	virtual void setPower(int power) = 0;
+};
 
 
 #endif //KETCHUPHOUSE_IENGINE_H
