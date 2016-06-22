@@ -20,13 +20,13 @@ set(FRAMEWORK_FILES
     main.cpp
     app/Config.h
     app/threads/Bootstrap.h
-    framework/looper/looper.cpp
+    framework/loop/loop.cpp
     framework/Helpers/Helpers.cpp
     framework/controller/CoordinateController.cpp
     framework/threading/Threading.cpp
-    framework/looper/StopWatch.h
+    framework/stopWatch/StopWatch.h
     app/threads/controller/Controller.cpp
-    app/threads/logic/LogicThread.cpp)
+    app/threads/logic/Logic.cpp)
 
 set(SOURCE_FILES
     app/hardware/ev3dev.cpp
@@ -34,13 +34,14 @@ set(SOURCE_FILES
     app/hardware/encoder/Encoder.cpp
     app/hardware/motor/Motor.cpp
     app/hardware/button/Button.cpp
+    app/hardware/ultrasonicSensor/UltrasonicSensor.cpp
+
     app/model/ultrasonic/UltrasonicModel.cpp
-
     app/model/encoder/EncodersModel.cpp
-    app/model/line/LinesModel.cpp
+    app/model/line/LineModel.cpp
 
-    app/model/buttons/ButtonsModel.cpp
-    app/threads/logic/LogicThread.cpp)
+    app/model/button/ButtonsModel.cpp
+    app/threads/logic/Logic.cpp framework/hardware/IReflectiveBar.h)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 

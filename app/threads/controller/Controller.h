@@ -12,6 +12,7 @@
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/hardware/IMotor.h"
 #include "../../model/encoder/EncodersModel.h"
+#include "../../model/line/LineModel.h"
 
 using namespace Model;
 using namespace Structure;
@@ -20,18 +21,31 @@ class Controller : public CoordinateController
 {
 public:
 
+	enum class directionX
+	{
+		left = -1, none = 0, right = 1
+	};
+
+	enum class directionY
+	{
+		down = -1, none = 0, up = 1
+	};
+
 	Controller(const Coordinate &startCoordinate,
 	           int power,
-	           EncodersModel &encodersSensor,
+	           EncodersModel &encodersModel,
+	           LineModel &lineModel,
 	           IMotor &rightChassisMotor,
 	           IMotor &leftChassisMotor,
 	           IMotor &leftGateMotor,
 	           IMotor &rightGateMotor)
 
 			: startCoordinate(startCoordinate),
+			  expectedCoordinate(startCoordinate),
 			  currentCoordinate(startCoordinate),
 			  power(power),
-			  encodersSensor(encodersSensor),
+			  encodersModel(encodersModel),
+			  lineModel(lineModel),
 			  rightChassisMotor(rightChassisMotor),
 			  leftChassisMotor(leftChassisMotor),
 			  leftGateMotor(leftGateMotor),
@@ -40,6 +54,8 @@ public:
 
 	virtual ~Controller()
 	{
+		lock = true;
+
 		rightChassisMotor.setPower(0);
 		leftChassisMotor.setPower(0);
 
@@ -51,20 +67,22 @@ public:
 
 	virtual void push(Coordinate newCoordinate);
 
-	void closeGate();
+	//void closeGate();
 
-	void openLeftGate();
+	//void openLeftGate();
 
-	void openRightGate();
+	//void openRightGate();
 
 private:
 
 	const Coordinate startCoordinate;
+	Coordinate expectedCoordinate;
 	Coordinate currentCoordinate;
 
 	atomic<int> power;
 
-	EncodersModel &encodersSensor;
+	EncodersModel &encodersModel;
+	LineModel &lineModel;
 
 	IMotor &rightChassisMotor;
 	IMotor &leftChassisMotor;
@@ -73,6 +91,14 @@ private:
 	IMotor &rightGateMotor;
 
 	virtual void threadTask();
+
+	void doRotation(double rotation);
+
+	void goStraight(int distance);
+
+	directionX whitchDirectionInX(int currentX, int newX);
+
+	directionY whitchDirectionInY(int currentY, int newY);
 };
 
 

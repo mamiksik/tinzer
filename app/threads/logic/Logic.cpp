@@ -2,19 +2,15 @@
 // Created by Martin Mikšík
 //
 
-#include "LogicThread.h"
+#include "Logic.h"
 
-#include <stdexcept>
-
-#include "../../../framework/Helpers/Helpers.h"
-
-void LogicThread::threadTask()
+void Logic::threadTask()
 {
 	cout << "starting controller run thread" << endl;
 	controller.startThread();
 
-	controller.push(Coordinate(3, 3, M_PI_2));
-	controller.push(Coordinate(-3, 1, M_PI_2));
+	controller.push(Coordinate(1, 3, M_PI_2));
+	//controller.push(Coordinate(-3, 1, M_PI_2));
 
 	repeatTask = true;
 	while (repeatTask) {

@@ -19,6 +19,9 @@ namespace Hardware {
 		Motor(address_type motor_pin) : motor(motor_pin)
 		{}
 
+		virtual ~Motor()
+		{}
+
 		void setPower(int power);
 
 	private:

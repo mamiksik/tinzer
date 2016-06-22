@@ -10,13 +10,13 @@
 
 using namespace std;
 
-class LogicThread : public Threading
+class Logic : public Threading
 {
 public:
-	LogicThread(Controller &motorControl) : controller(motorControl)
+	Logic(Controller &motorControl) : controller(motorControl)
 	{}
 
-	virtual ~LogicThread()
+	virtual ~Logic()
 	{
 		controller.stopThread();
 		stopThread();

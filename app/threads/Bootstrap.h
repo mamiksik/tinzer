@@ -20,10 +20,11 @@
 #include "../hardware/ultrasonicSensor/UltrasonicSensor.h"
 
 #include "../model/encoder/EncodersModel.h"
-#include "../model/buttons/ButtonsModel.h"
+#include "../model/button/ButtonsModel.h"
 
 #include "controller/Controller.h"
-#include "logic/LogicThread.h"
+#include "logic/Logic.h"
+#include "../model/line/LineModel.h"
 
 using namespace Model;
 using namespace Hardware;
@@ -40,8 +41,6 @@ public:
 		std::signal(SIGSEGV, teardown);
 		std::signal(SIGTERM, teardown);
 
-		//Helpers::dump(Helpers::Warning, "Call with %d variable argument.", 1);
-
 		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
 		using ev3dev::OUTPUT_C;
@@ -52,48 +51,53 @@ public:
 
 		Button stopButton(INPUT_1);
 
-		Helpers::dump(Helpers::Info, "Init motors");
-		Motor leftChassisMotor(OUTPUT_C);
-		Motor rightChassisMotor(OUTPUT_D);
-
-		Motor leftGateMotor(OUTPUT_B);
+		Helpers::dump(Helpers::Debug, "Init motors");
+		/*Motor leftChassisMotor(OUTPUT_C);
+		Motor rightChassisMotor(OUTPUT_D);*/
+/*
+		Motor leftGateMotor(OUTPUT_A);
 		Motor rightGateMotor(OUTPUT_B);
 
-		Helpers::dump(Helpers::Info, "Init encoders");
+		Helpers::dump(Helpers::Debug, "Init encoders");
 		Encoder leftChassisEncoder(OUTPUT_C);
 		Encoder rightChassisEncoder(OUTPUT_D);
 
 		Encoder leftGateEncoder(OUTPUT_A);
 		Encoder rightGateEncoder(OUTPUT_B);
 
-		Helpers::dump(Helpers::Info, "Init ultrasonic");
-		UltrasonicSensor gateUltrasonicSensor(INPUT_2, true);
+			Helpers::dump(Helpers::Debug, "Init ultrasonic");
+			UltrasonicSensor gateUltrasonicSensor(INPUT_2, true);
 
-		//Reset encoders
-		Helpers::dump(Helpers::Warning, "Encoder manual reset");
-		leftChassisEncoder.set(0);
-		rightChassisEncoder.set(0);
+			//Reset encoders
+			Helpers::dump(Helpers::Warning, "Encoder manual reset");
+			leftChassisEncoder.set(0);
+			rightChassisEncoder.set(0);
 
-		//Init model layer
-		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
+			//Init model layer
+			EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
+			ButtonsModel buttonSensor(stopButton);
+			UltrasonicSensor ultrasonicSensor(gateUltrasonicSensor);
+			LineModel lineModel;
+
+			//Init controller layer
+			Controller controller(Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40,
+									encodersSensor,
+									lineModel,
+									leftChassisMotor,
+									rightChassisMotor,
+									leftGateMotor,
+									rightGateMotor);
+
+
+			//Init main controller
+			Logic logic(controller);*/
+
 		ButtonsModel buttonSensor(stopButton);
-		UltrasonicSensor ultrasonicSensor(gateUltrasonicSensor);
-
-		//Init controller layer
-		Controller motorControl(Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40,
-		                        encodersSensor,
-		                        leftChassisMotor,
-		                        rightChassisMotor,
-		                        leftGateMotor,
-		                        rightGateMotor);
-
-
-		//Init main controller
-		LogicThread logicThread(motorControl);
 
 		try {
-			logicThread.startThread();
+			//logic.startThread();
 
+			cout << "Running stop button" << endl;
 			while (true) {
 				if (buttonSensor.getStopButton()) {
 					throw std::runtime_error("Stop button pressed");
@@ -101,7 +105,7 @@ public:
 			}
 
 		} catch (...) {
-			logicThread.stopThread();
+			//logic.stopThread();
 		}
 
 		teardown(-1);

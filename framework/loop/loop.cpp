@@ -3,18 +3,20 @@
 //
 
 
+#include "loop.h"
+
 #include <stdexcept>
 #include <thread>
 #include <iostream>
-#include "looper.h"
+
 #include "../Helpers/Helpers.h"
 
-void looper::start()
+void loop::start()
 {
 	stopWatch.start();
 }
 
-void looper::compare()
+void loop::compare()
 {
 	stopWatch.stop();
 	if (maxLoopTime > stopWatch.getMs()) {

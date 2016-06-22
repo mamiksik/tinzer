@@ -3,7 +3,7 @@
 // revision: ec58e508f2c8e5488e3bd3d9e806168365247732 (2016-02-04)
 
 /*
- * C++ API to the model, motor, buttons, LEDs and battery of the ev3dev
+ * C++ API to the model, motor, button, LEDs and battery of the ev3dev
  * Linux kernel for the LEGO Mindstorms EV3 hardware
  *
  * Copyright (c) 2014 - Franz Detro
@@ -546,7 +546,7 @@ namespace ev3dev {
 		// IR Remote Control
 		static const std::string mode_ir_remote;
 
-		// IR Remote Control. State of the buttons is coded in binary
+		// IR Remote Control. State of the button is coded in binary
 		static const std::string mode_ir_rem_a;
 
 		// Calibration ???
@@ -1699,7 +1699,7 @@ namespace ev3dev {
 
 //-----------------------------------------------------------------------------
 
-// EV3 buttons
+// EV3 button
 	class button
 	{
 	public:
@@ -1724,7 +1724,7 @@ namespace ev3dev {
 		static button down;
 		static button enter;
 
-		// Call process() for each of the EV3 buttons.
+		// Call process() for each of the EV3 button.
 		// Returns true if any of the states have changed since the last call.
 		static bool process_all();
 

@@ -11,9 +11,10 @@ using namespace std;
 
 
 namespace Model {
-	class LinesModel
+	class LineModel
 	{
 	public:
+		//0. x, 1. y 2. rotation
 		array<int, 3> getCorectionData();
 	};
 }

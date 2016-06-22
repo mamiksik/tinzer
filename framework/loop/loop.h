@@ -7,15 +7,15 @@
 #define KETCHUPHOUSE_LOOPER_H
 
 #include <chrono>
-#include "StopWatch.h"
+#include "../stopWatch/StopWatch.h"
 
 using namespace std::chrono;
 
-class looper
+class loop
 {
 
 public:
-	looper(int maxLoopTime) : maxLoopTime(maxLoopTime)
+	loop(int maxLoopTime) : maxLoopTime(maxLoopTime)
 	{}
 
 	void start();
