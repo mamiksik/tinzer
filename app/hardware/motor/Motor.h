@@ -12,20 +12,28 @@ using ev3dev::address_type;
 
 
 class Motor : public IMotor
+{
+public:
+
+	Motor(address_type motor_pin) : motor(motor_pin)
 	{
-	public:
+		openedMotors.push_back(this);
+	}
 
-		Motor(address_type motor_pin) : motor(motor_pin)
-		{}
+	virtual ~Motor()
+	{
+		auto last = std::remove_if(openedMotors.begin(), openedMotors.end(), [&](Motor *m) { return m == this; });
+		openedMotors.erase(last, openedMotors.end());
+	}
 
-		virtual ~Motor()
-		{}
+	void setPower(int power);
 
-		void setPower(int power);
+	static const std::vector<Motor *> get_motors();
 
-	private:
-		ev3dev::motor motor;
-	};
+private:
+	ev3dev::motor motor;
+	static std::vector<Motor *> openedMotors;
+};
 
 
 #endif //KETCHUPHOUSE_MOTOR_H

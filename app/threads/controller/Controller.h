@@ -54,13 +54,13 @@ public:
 
 	virtual ~Controller()
 	{
-		lock = true;
+		//lock = true;
 
-		rightChassisMotor.setPower(0);
+		/*rightChassisMotor.setPower(0);
 		leftChassisMotor.setPower(0);
 
 		leftGateMotor.setPower(0);
-		rightGateMotor.setPower(0);
+		rightGateMotor.setPower(0);*/
 
 		stopThread();
 	}

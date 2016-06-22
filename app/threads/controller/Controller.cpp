@@ -8,8 +8,6 @@
 
 void Controller::push(Coordinate newCoordinate)
 {
-	double rotation = expectedCoordinate.rotation;
-
 	double xRotation = 0;
 	double yRotation = 0;
 
@@ -51,6 +49,7 @@ void Controller::push(Coordinate newCoordinate)
 void Controller::threadTask()
 {
 	do {
+		Helpers::dump(Helpers::Debug, "thread task");
 		if (lock || stepQueue.empty()) {
 			continue;
 		}

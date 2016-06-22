@@ -18,7 +18,6 @@ public:
 
 	virtual ~Logic()
 	{
-		controller.stopThread();
 		stopThread();
 	}
 

@@ -8,7 +8,6 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include <signal.h>
 #include <csignal>
 
 #include "../Config.h"
@@ -35,12 +34,12 @@ class Bootstrap
 public:
 	void init()
 	{
-		std::signal(SIGABRT, teardown);
-		std::signal(SIGFPE, teardown);
-		std::signal(SIGILL, teardown);
-		std::signal(SIGINT, teardown);
-		std::signal(SIGSEGV, teardown);
-		std::signal(SIGTERM, teardown);
+		std::signal(SIGABRT, Bootstrap::teardown);
+		std::signal(SIGFPE, Bootstrap::teardown);
+		std::signal(SIGILL, Bootstrap::teardown);
+		std::signal(SIGINT, Bootstrap::teardown);
+		std::signal(SIGSEGV, Bootstrap::teardown);
+		std::signal(SIGTERM, Bootstrap::teardown);
 
 		using ev3dev::OUTPUT_A;
 		using ev3dev::OUTPUT_B;
@@ -53,9 +52,9 @@ public:
 		Button stopButton(INPUT_1);
 
 		Helpers::dump(Helpers::Debug, "Init motors");
-		/*Motor leftChassisMotor(OUTPUT_C);
-		Motor rightChassisMotor(OUTPUT_D);*/
-/*
+		Motor leftChassisMotor(OUTPUT_C);
+		Motor rightChassisMotor(OUTPUT_D);
+
 		Motor leftGateMotor(OUTPUT_A);
 		Motor rightGateMotor(OUTPUT_B);
 
@@ -66,50 +65,43 @@ public:
 		Encoder leftGateEncoder(OUTPUT_A);
 		Encoder rightGateEncoder(OUTPUT_B);
 
-			Helpers::dump(Helpers::Debug, "Init ultrasonic");
-			UltrasonicSensor gateUltrasonicSensor(INPUT_2, true);
+		Helpers::dump(Helpers::Debug, "Init ultrasonic");
+		UltrasonicSensor gateUltrasonicSensor(INPUT_2, true);
 
-			//Reset encoders
-			Helpers::dump(Helpers::Warning, "Encoder manual reset");
-			leftChassisEncoder.set(0);
-			rightChassisEncoder.set(0);
+		//Reset encoders
+		Helpers::dump(Helpers::Warning, "Encoder manual reset");
+		leftChassisEncoder.set(0);
+		rightChassisEncoder.set(0);
 
-			//Init model layer
-			EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
-			ButtonsModel buttonSensor(stopButton);
-			UltrasonicSensor ultrasonicSensor(gateUltrasonicSensor);
-			LineModel lineModel;
-
-			//Init controller layer
-			Controller controller(Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40,
-									encodersSensor,
-									lineModel,
-									leftChassisMotor,
-									rightChassisMotor,
-									leftGateMotor,
-									rightGateMotor);
-
-
-			//Init main controller
-			Logic logic(controller);*/
-
+		//Init model layer
+		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
 		ButtonsModel buttonSensor(stopButton);
+		UltrasonicSensor ultrasonicSensor(gateUltrasonicSensor);
+		LineModel lineModel;
+
+		//Init controller layer
+		Controller controller(Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40,
+		                      encodersSensor,
+		                      lineModel,
+		                      leftChassisMotor,
+		                      rightChassisMotor,
+		                      leftGateMotor,
+		                      rightGateMotor);
+
+
+		//Init main controller
+		Logic logic(controller);
 
 		try {
-			//logic.startThread();
-
-			cout << "Running stop button" << endl;
-			bool doWhile = true;
-
-			while (doWhile) {
+			logic.startThread();
+			while (true) {
 				if (buttonSensor.getStopButton()) {
-					doWhile = false;
-					throw std::runtime_error("Stop button pressed");
+					raise(SIGINT);
 				}
 			}
 
 		} catch (...) {
-			//logic.stopThread();
+
 		}
 
 		teardown(-1);
@@ -118,29 +110,9 @@ public:
 
 	static void teardown(int signal)
 	{
-		try {
-			ev3dev::motor motor(ev3dev::OUTPUT_A);
-			motor.set_command(ev3dev::motor::command_reset);
+		for (auto motor : Motor::get_motors()) {
+			//motor->setPower(0);
 		}
-		catch (...) {}
-
-		try {
-			ev3dev::motor motor(ev3dev::OUTPUT_B);
-			motor.set_command(ev3dev::motor::command_reset);
-		}
-		catch (...) {}
-
-		try {
-			ev3dev::motor motor(ev3dev::OUTPUT_C);
-			motor.set_command(ev3dev::motor::command_reset);
-		}
-		catch (...) {}
-
-		try {
-			ev3dev::motor motor(ev3dev::OUTPUT_D);
-			motor.set_command(ev3dev::motor::command_reset);
-		}
-		catch (...) {}
 
 		if (signal != -1 && signal != SIGINT) {
 			std::cerr << "Program failed! Signal " << signal << " caught. Terminating" << std::endl;
