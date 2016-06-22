@@ -26,8 +26,9 @@
 #include "logic/Logic.h"
 #include "../model/line/LineModel.h"
 
-using namespace Model;
+
 using namespace Hardware;
+using namespace Model;
 
 class Bootstrap
 {
@@ -98,8 +99,11 @@ public:
 			//logic.startThread();
 
 			cout << "Running stop button" << endl;
-			while (true) {
+			bool doWhile = true;
+
+			while (doWhile) {
 				if (buttonSensor.getStopButton()) {
+					doWhile = false;
 					throw std::runtime_error("Stop button pressed");
 				}
 			}

@@ -20,12 +20,11 @@ namespace Hardware {
 		Button(address_type motor_pin) : button(motor_pin)
 		{}
 
-		bool isPressed();
+		virtual bool isPressed();
 
 	private:
 		ev3dev::touch_sensor button;
 
 	};
-
 }
 #endif //KETCHUPHOUSE_BUTTON_H

@@ -9,10 +9,9 @@
 #include "../ev3dev.h"
 
 using ev3dev::address_type;
-using namespace Interfaces::Hardware;
 
-namespace Hardware {
-	class Motor : public IMotor
+
+class Motor : public IMotor
 	{
 	public:
 
@@ -27,6 +26,6 @@ namespace Hardware {
 	private:
 		ev3dev::motor motor;
 	};
-}
+
 
 #endif //KETCHUPHOUSE_MOTOR_H

@@ -5,9 +5,8 @@
 #ifndef KETCHUPHOUSE_IENGINE_H
 #define KETCHUPHOUSE_IENGINE_H
 
-namespace Interfaces {
-	namespace Hardware {
-		class IMotor
+
+class IMotor
 		{
 		public:
 			IMotor()
@@ -18,7 +17,6 @@ namespace Interfaces {
 
 			virtual void setPower(int power) = 0;
 		};
-	}
-}
+
 
 #endif //KETCHUPHOUSE_IENGINE_H

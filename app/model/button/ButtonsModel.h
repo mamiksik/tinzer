@@ -18,7 +18,7 @@ namespace Model {
 	class ButtonsModel
 	{
 	public:
-		ButtonsModel(IButton &stopButtom) : stopButton(stopButtom)
+		ButtonsModel(IButton &stopButton) : stopButton(stopButton)
 		{}
 
 		bool getStopButton();
