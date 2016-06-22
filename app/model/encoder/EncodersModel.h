@@ -9,31 +9,29 @@
 #include "../../../framework/hardware/IEncoder.h"
 
 using namespace std;
-//using namespace Interfaces::Hardware;
 
-//namespace Model {
-	class EncodersModel
-	{
-	public:
-		EncodersModel(IEncoder &leftMotorEncoder, IEncoder &rightMotorEncoder, IEncoder &leftGateEncoder,
-		              IEncoder &rightGateEncoder) : leftMotorEncoder(leftMotorEncoder),
-		                                            rightMotorEncoder(rightMotorEncoder),
-		                                            leftGateEncoder(leftGateEncoder),
-		                                            rightGateEncoder(rightGateEncoder)
-		{}
+class EncodersModel
+{
+public:
+	EncodersModel(IEncoder &leftMotorEncoder, IEncoder &rightMotorEncoder, IEncoder &leftGateEncoder,
+	              IEncoder &rightGateEncoder) : leftMotorEncoder(leftMotorEncoder),
+	                                            rightMotorEncoder(rightMotorEncoder),
+	                                            leftGateEncoder(leftGateEncoder),
+	                                            rightGateEncoder(rightGateEncoder)
+	{}
 
-		pair<int, int> getChassisEncodersValues();
+	pair<int, int> getChassisEncodersValues();
 
-		pair<int, int> getGateEncodersValues();
+	pair<int, int> getGateEncodersValues();
 
 
-	protected:
-		IEncoder &leftMotorEncoder;
-		IEncoder &rightMotorEncoder;
+protected:
+	IEncoder &leftMotorEncoder;
+	IEncoder &rightMotorEncoder;
 
-		IEncoder &leftGateEncoder;
-		IEncoder &rightGateEncoder;
-	};
-//}
+	IEncoder &leftGateEncoder;
+	IEncoder &rightGateEncoder;
+};
+
 
 #endif //KETCHUPHOUSE_ENCODERSENSOR_H

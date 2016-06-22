@@ -10,24 +10,22 @@
 #include "../../../framework/hardware/IEncoder.h"
 
 using ev3dev::address_type;
-//using namespace Interfaces::Hardware;
 
-//namespace Hardware {
-	class Encoder : public IEncoder
+class Encoder : public IEncoder
+{
+public:
+	Encoder(address_type motor_pin) : motor(motor_pin)
 	{
-	public:
-		Encoder(address_type motor_pin) : motor(motor_pin)
-		{
-			motor.set_position(0);
-		}
+		motor.set_position(0);
+	}
 
-		virtual int getAbsPosition();
+	virtual int getAbsPosition();
 
-		virtual void set(int position);
+	virtual void set(int position);
 
-	private:
-		ev3dev::motor motor;
-	};
-//}
+private:
+	ev3dev::motor motor;
+};
+
 
 #endif //KETCHUPHOUSE_ENCODER_H

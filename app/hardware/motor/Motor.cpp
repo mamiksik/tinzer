@@ -5,9 +5,6 @@
 #include "Motor.h"
 #include <stdexcept>
 #include <stdlib.h>
-
-std::vector<Motor *> Motor::openedMotors;
-
 void Motor::setPower(int power)
 {
 	if (power < -100 || power > 100) {
@@ -20,9 +17,4 @@ void Motor::setPower(int power)
 
 	motor.set_duty_cycle_sp(power);
 	motor.run_forever();
-}
-
-const std::vector<Motor *> Motor::get_motors()
-{
-	return openedMotors;
 }

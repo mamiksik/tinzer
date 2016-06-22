@@ -10,7 +10,7 @@ int const LOG_LEVEL = Helpers::All;
 //Robot position settings
 const int DEFAULT_X_POSITION = 0;
 const int DEFAULT_Y_POSITION = 0;
-const double DEFAULT_ROTATION = 0;
+const double DEFAULT_ROTATION = M_PI_2;
 
 //Grid settings
 const int LINE_LEIGHT = 200; //mm

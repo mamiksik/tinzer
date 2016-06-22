@@ -13,27 +13,24 @@
 #include "../../../framework/hardware/IReflectiveBar.h"
 
 using namespace std;
-using namespace Interfaces::Hardware;
 
-namespace Hardware {
-	class ReflectiveBar : public IReflectiveBar
+class ReflectiveBar : public IReflectiveBar
+{
+public:
+	ReflectiveBar(const string &pipeLocation, const string &comand) : comand(comand)
 	{
-	public:
-		ReflectiveBar(const string &pipeLocation, const string &comand) : comand(comand)
-		{
-			pipe = fstream(pipeLocation);
-			if (!pipe.is_open()) {
-				throw runtime_error("Cannot open pipe");
-			}
+		pipe = fstream(pipeLocation);
+		if (!pipe.is_open()) {
+			throw runtime_error("Cannot open pipe");
 		}
+	}
 
-		vector<int> getData();
+	vector<int> getData();
 
-	private:
-		fstream pipe;
-		const string comand;
-	};
-}
+private:
+	fstream pipe;
+	const string comand;
+};
 
 
 #endif //KETCHUPHOUSE_LINESENSOR_H

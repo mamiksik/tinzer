@@ -10,7 +10,7 @@ namespace Structure {
 
 		//WARNING: Fixed switched axes
 		Coordinate(position x, position y, radian rotation)
-				: rotation(rotation), x(y), y(x)
+				: rotation(rotation), x(x), y(y)
 		{}
 
 		radian rotation;

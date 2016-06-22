@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include "ButtonsModel.h"
 
-bool Model::ButtonsModel::getStopButton()
+bool ButtonsModel::getStopButton()
 {
 	return stopButton.isPressed();
 }

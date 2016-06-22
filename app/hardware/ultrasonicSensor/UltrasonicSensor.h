@@ -10,9 +10,6 @@
 
 using ev3dev::address_type;
 
-/*using namespace Interfaces::Hardware;
-
-namespace Hardware {*/
 	class UltrasonicSensor : public IUltrasonicSensor
 	{
 	public:
@@ -34,6 +31,5 @@ namespace Hardware {*/
 	private:
 		ev3dev::ultrasonic_sensor sensor;
 	};
-/*}*/
 
 #endif //KETCHUPHOUSE_ULTRASONICSENSOR_H

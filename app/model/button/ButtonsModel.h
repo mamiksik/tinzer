@@ -12,20 +12,19 @@
 #include "../../../framework/threading/Threading.h"
 
 using namespace std;
-using namespace Interfaces::Hardware;
 
-namespace Model {
-	class ButtonsModel
-	{
-	public:
-		ButtonsModel(IButton &stopButton) : stopButton(stopButton)
-		{}
 
-		bool getStopButton();
+class ButtonsModel
+{
+public:
+	ButtonsModel(IButton &stopButton) : stopButton(stopButton)
+	{}
 
-	private:
-		IButton &stopButton;
-	};
-}
+	bool getStopButton();
+
+private:
+	IButton &stopButton;
+};
+
 
 #endif //KETCHUPHOUSE_BUTTONSENSOR_H

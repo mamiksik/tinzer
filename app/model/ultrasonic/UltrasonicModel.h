@@ -7,26 +7,22 @@
 
 #include "../../../framework/hardware/IUltrasonicSensor.h"
 
-//using namespace Interfaces::Hardware;
-
-//namespace Model {
-	class UltrasonicModel
+class UltrasonicModel
+{
+public:
+	UltrasonicModel(IUltrasonicSensor &ultrasonicSensor) : ultrasonicSensor(ultrasonicSensor)
 	{
-	public:
-		UltrasonicModel(IUltrasonicSensor &ultrasonicSensor) : ultrasonicSensor(ultrasonicSensor)
-		{
-			ultrasonicSensor.enable();
-			distance = ultrasonicSensor.getDistanceInCm();
-		}
+		ultrasonicSensor.enable();
+		distance = ultrasonicSensor.getDistanceInCm();
+	}
 
-		bool isGatePenetrated();
+	bool isGatePenetrated();
 
-	private:
-		double distance;
+private:
+	double distance;
 
-		IUltrasonicSensor &ultrasonicSensor;
-	};
-//}
+	IUltrasonicSensor &ultrasonicSensor;
+};
 
 
 #endif //KETCHUPHOUSE_ULTRASONICMODEL_H

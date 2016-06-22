@@ -25,10 +25,6 @@
 #include "logic/Logic.h"
 #include "../model/line/LineModel.h"
 
-
-using namespace Hardware;
-using namespace Model;
-
 class Bootstrap
 {
 public:
@@ -59,8 +55,8 @@ public:
 		Motor rightGateMotor(OUTPUT_B);
 
 		Helpers::dump(Helpers::Debug, "Init encoders");
-		Encoder leftChassisEncoder(OUTPUT_C);
-		Encoder rightChassisEncoder(OUTPUT_D);
+		Encoder leftChassisEncoder(OUTPUT_D);
+		Encoder rightChassisEncoder(OUTPUT_C);
 
 		Encoder leftGateEncoder(OUTPUT_A);
 		Encoder rightGateEncoder(OUTPUT_B);
@@ -72,6 +68,8 @@ public:
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");
 		leftChassisEncoder.set(0);
 		rightChassisEncoder.set(0);
+		leftGateEncoder.set(0);
+		rightGateEncoder.set(0);
 
 		//Init model layer
 		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
@@ -94,6 +92,7 @@ public:
 
 		try {
 			logic.startThread();
+
 			while (true) {
 				if (buttonSensor.getStopButton()) {
 					raise(SIGINT);
@@ -101,7 +100,6 @@ public:
 			}
 
 		} catch (...) {
-
 		}
 
 		teardown(-1);
@@ -110,9 +108,29 @@ public:
 
 	static void teardown(int signal)
 	{
-		for (auto motor : Motor::get_motors()) {
-			//motor->setPower(0);
+		try {
+			ev3dev::motor motor(ev3dev::OUTPUT_A);
+			motor.set_command(ev3dev::motor::command_reset);
 		}
+		catch (...) {}
+
+		try {
+			ev3dev::motor motor(ev3dev::OUTPUT_B);
+			motor.set_command(ev3dev::motor::command_reset);
+		}
+		catch (...) {}
+
+		try {
+			ev3dev::motor motor(ev3dev::OUTPUT_C);
+			motor.set_command(ev3dev::motor::command_reset);
+		}
+		catch (...) {}
+
+		try {
+			ev3dev::motor motor(ev3dev::OUTPUT_D);
+			motor.set_command(ev3dev::motor::command_reset);
+		}
+		catch (...) {}
 
 		if (signal != -1 && signal != SIGINT) {
 			std::cerr << "Program failed! Signal " << signal << " caught. Terminating" << std::endl;
