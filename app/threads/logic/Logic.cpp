@@ -7,7 +7,11 @@
 void Logic::threadTask()
 {
 	controller.push(Coordinate(1, 0, M_PI_2));
-	controller.push(Coordinate(1, 2, M_PI_2));
+	//controller.push(Coordinate(1, 2, M_PI_2));
+	//controller.push(Coordinate(2, 4, M_PI_2));
+	controller.push(Coordinate(-1, 0, M_PI_2));
+	controller.push(Coordinate(1, 0, M_PI_2));
+	//controller.push(Coordinate(0, 0, M_PI_2));
 
 	cout << "starting controller run thread" << endl;
 	controller.startThread();

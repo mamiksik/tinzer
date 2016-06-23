@@ -60,13 +60,12 @@ void Controller::push(Coordinate newCoordinate)
 		expectedCoordinate.y = newCoordinate.y;
 	}
 
-	Helpers::delay(2000);
+	//Helpers::delay(2000);
 }
 
 void Controller::threadTask()
 {
 	do {
-		//Helpers::dump(Helpers::Debug, "thread task");
 		if (lock || stepQueue.empty()) {
 			//Helpers::dump(Helpers::Debug, "eempty");
 			Helpers::delay(1);
@@ -82,6 +81,10 @@ void Controller::threadTask()
 
 		Coordinate newCoordinate = stepQueue.front();
 		stepQueue.pop();
+
+		Helpers::dump(Helpers::Debug, "thread task");
+		cout << "Thread task coordinates X: " << newCoordinate.x << " Y: " << newCoordinate.y << " Rot: " << newCoordinate.rotation << endl;
+		//Helpers::delay(2000);
 
 		if (currentCoordinate.rotation != newCoordinate.rotation) {
 			double rotation = correctionVals[2] + newCoordinate.rotation - currentCoordinate.rotation;
@@ -101,9 +104,11 @@ void Controller::threadTask()
 			directionX dirX = whitchDirectionInX(currentCoordinate.x, newCoordinate.x);
 
 			if (dirX == directionX::right) {
-				x = LINE_LEIGHT - correctionVals[0];
+				//x = LINE_LEIGHT - correctionVals[0];
+				x = (abs(currentCoordinate.x - newCoordinate.x) * LINE_LEIGHT) - correctionVals[0];
 			} else {
-				x = LINE_LEIGHT + correctionVals[0];
+				//x = LINE_LEIGHT + correctionVals[0];
+				x = (abs(currentCoordinate.x - newCoordinate.x) * LINE_LEIGHT) + correctionVals[0];
 			}
 
 			cout << x << endl;
@@ -120,10 +125,11 @@ void Controller::threadTask()
 			}
 
 			cout << "Do rotation" << endl;
-			//doRotation(alpha);
+			doRotation(alpha);
 
 			cout << "c: " << c << endl;
 			goStraight(static_cast<int>(c));
+			currentCoordinate.x = newCoordinate.x;
 		}
 
 		if (currentCoordinate.y != newCoordinate.y) {
@@ -131,9 +137,12 @@ void Controller::threadTask()
 			directionY dirY = whitchDirectionInY(currentCoordinate.y, newCoordinate.y);
 
 			if (dirY == directionY::up) {
-				y = LINE_LEIGHT - correctionVals[1];
+				//y = LINE_LEIGHT - correctionVals[1];
+				y = (abs(currentCoordinate.y - newCoordinate.y) * LINE_LEIGHT) - correctionVals[1];
 			} else {
-				y = LINE_LEIGHT + correctionVals[1];
+				//y = LINE_LEIGHT + correctionVals[1];
+				y = (abs(currentCoordinate.y - newCoordinate.y) * LINE_LEIGHT) + correctionVals[1];
+
 			}
 
 			int x = correctionVals[0];
@@ -148,6 +157,7 @@ void Controller::threadTask()
 			}
 			doRotation(alpha);
 			goStraight(static_cast<int>(c));
+			currentCoordinate.y = newCoordinate.y;
 		}
 		repeatTask = true;
 	} while (repeatTask);
@@ -172,8 +182,8 @@ void Controller::doRotation(double rotation)
 
 		do {
 
-			cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-			     << "  (rot+" << tics << ")" << endl;
+			/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
+			     << "  (rot+" << tics << ")" << endl;*/
 			//Helpers::dump(Helpers::Debug, "rotation");
 
 			encVals = encodersModel.getChassisEncodersValues();
@@ -197,8 +207,8 @@ void Controller::doRotation(double rotation)
 
 		do {
 
-			cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-			     << "  (rot-: " << tics << ")" << endl;
+			/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
+			     << "  (rot-: " << tics << ")" << endl;*/
 
 			encVals = encodersModel.getChassisEncodersValues();
 
@@ -256,8 +266,8 @@ void Controller::goStraight(int distance)
 
 	do {
 		//Helpers::dump(Helpers::Debug, "straight");
-		cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-		     << "  (str: " << tics << ")" << endl;
+		/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
+		     << "  (str: " << tics << ")" << endl;*/
 		encVals = encodersModel.getChassisEncodersValues();
 
 		if (encVals.first - startLeftEncVal > tics) {
