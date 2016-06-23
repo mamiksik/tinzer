@@ -6,6 +6,7 @@
 
 #include "Controller.h"
 
+
 void Controller::push(Coordinate newCoordinate)
 {
 	double xRotation = 0;
@@ -63,6 +64,91 @@ void Controller::push(Coordinate newCoordinate)
 	//Helpers::delay(2000);
 }
 
+
+void Controller::closeGates()
+{
+	// down RIGHT = + LEFT = -
+	// up RIGHT = - LEFT = +
+
+	pair<int, int> encVals = encodersModel.getGateEncodersValues();
+
+	int startLeftEncVal = encVals.first;
+	int startRightEncVal = encVals.second;
+
+	bool leftMotorEnd = false;
+	bool rightMotorEnd = false;
+
+	leftGateMotor.setPower(-GATE_POWER);
+	rightGateMotor.setPower(GATE_POWER);
+
+	do {
+
+		encVals = encodersModel.getGateEncodersValues();
+
+		/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
+		     << "  (str: " << GATE_TICS << ")" << endl;*/
+
+		if (encVals.first - startLeftEncVal <= -GATE_TICS) {
+			leftGateMotor.setPower(0);
+			leftMotorEnd = true;
+			Helpers::dump(Helpers::Warning, "rot - leftMotorEnd");
+		}
+
+		if (encVals.second - startRightEncVal >= GATE_TICS) {
+			rightGateMotor.setPower(0);
+			rightMotorEnd = true;
+			Helpers::dump(Helpers::Warning, "rot - rightMotorEnd");
+		}
+	} while (!leftMotorEnd || !rightMotorEnd);
+
+
+}
+
+
+void Controller::openLeftGate()
+{
+
+	Helpers::dump(Helpers::Info, "Opening left gate");
+	int encVal = encodersModel.getLeftGateEncodersValue();
+	int startEncVal = encVal;
+	bool stop = false;
+
+	leftGateMotor.setPower(GATE_POWER);
+
+	do {
+		encVal = encodersModel.getLeftGateEncodersValue();
+
+		if (encVal - startEncVal >= GATE_TICS) {
+			leftGateMotor.setPower(0);
+			stop = true;
+		}
+
+	} while (!stop);
+}
+
+
+void Controller::openRightGate()
+{
+	Helpers::dump(Helpers::Warning, "Opening right gate");
+	int encVal = encodersModel.getRightGateEncodersValue();
+	int startEncVal = encVal;
+	bool stop = false;
+
+	rightGateMotor.setPower(-GATE_POWER);
+
+	do {
+		encVal = encodersModel.getRightGateEncodersValue();
+		/*cout << encVal - startEncVal << "  (str: " << -GATE_TICS << ")" << endl;*/
+
+		if (encVal - startEncVal <= -GATE_TICS) {
+			Helpers::dump(Helpers::Warning, "Stopping right gate");
+			rightGateMotor.setPower(0);
+			stop = true;
+		}
+
+	} while (!stop);
+}
+
 void Controller::threadTask()
 {
 	do {
@@ -83,7 +169,8 @@ void Controller::threadTask()
 		stepQueue.pop();
 
 		Helpers::dump(Helpers::Debug, "thread task");
-		cout << "Thread task coordinates X: " << newCoordinate.x << " Y: " << newCoordinate.y << " Rot: " << newCoordinate.rotation << endl;
+		cout << "Thread task coordinates X: " << newCoordinate.x << " Y: " << newCoordinate.y << " Rot: "
+		     << newCoordinate.rotation << endl;
 		//Helpers::delay(2000);
 
 		if (currentCoordinate.rotation != newCoordinate.rotation) {
@@ -159,9 +246,11 @@ void Controller::threadTask()
 			goStraight(static_cast<int>(c));
 			currentCoordinate.y = newCoordinate.y;
 		}
+		Helpers::delay(1);
 		repeatTask = true;
 	} while (repeatTask);
 }
+
 
 void Controller::doRotation(double rotation)
 {
@@ -199,6 +288,7 @@ void Controller::doRotation(double rotation)
 				rightMotorEnd = true;
 				Helpers::dump(Helpers::Warning, "rot - rightMotorEnd");
 			}
+			Helpers::delay(1);
 		} while (!leftMotorEnd || !rightMotorEnd);
 
 	} else {
@@ -223,9 +313,11 @@ void Controller::doRotation(double rotation)
 				rightMotorEnd = true;
 				Helpers::dump(Helpers::Warning, "rot - rightMotorEnd");
 			}
+			Helpers::delay(1);
 		} while (!leftMotorEnd || !rightMotorEnd);
 	}
 }
+
 
 Controller::directionX Controller::whitchDirectionInX(int currentX, int newX)
 {
@@ -238,6 +330,7 @@ Controller::directionX Controller::whitchDirectionInX(int currentX, int newX)
 	}
 }
 
+
 Controller::directionY Controller::whitchDirectionInY(int currentY, int newY)
 {
 	if (currentY < newY) {
@@ -248,6 +341,7 @@ Controller::directionY Controller::whitchDirectionInY(int currentY, int newY)
 		return directionY::none;
 	}
 }
+
 
 void Controller::goStraight(int distance)
 {
@@ -281,6 +375,7 @@ void Controller::goStraight(int distance)
 			rightMotorEnd = true;
 			Helpers::dump(Helpers::Warning, "straight - rightMotorEnd");
 		}
+		Helpers::delay(1);
 	} while (!leftMotorEnd || !rightMotorEnd);
 
 	cout << leftMotorEnd << "  " << rightMotorEnd << endl;

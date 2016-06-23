@@ -12,9 +12,14 @@ class UltrasonicModel
 public:
 	UltrasonicModel(IUltrasonicSensor &ultrasonicSensor) : ultrasonicSensor(ultrasonicSensor)
 	{
-		ultrasonicSensor.enable();
-		distance = ultrasonicSensor.getDistanceInCm();
+		initGateUltrasonic();
 	}
+
+	void initGateUltrasonic();
+
+	void disableGateUltrasonic();
+
+	float gateDistance();
 
 	bool isGatePenetrated();
 

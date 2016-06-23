@@ -26,7 +26,7 @@ void Helpers::dump(int logLevel, const char *string, ...)
 				break;
 
 			case Helpers::Info:
-				printf(ANSI_COLOR_BLUE);
+				printf(ANSI_COLOR_CYAN);
 				break;
 
 			case Helpers::Warning:

@@ -20,9 +20,14 @@ public:
 	                                            rightGateEncoder(rightGateEncoder)
 	{}
 
+
 	pair<int, int> getChassisEncodersValues();
 
 	pair<int, int> getGateEncodersValues();
+
+	int getLeftGateEncodersValue();
+
+	int getRightGateEncodersValue();
 
 
 protected:

@@ -16,3 +16,13 @@ pair<int, int> EncodersModel::getGateEncodersValues()
 {
 	return make_pair(leftGateEncoder.getAbsPosition(), rightGateEncoder.getAbsPosition());
 }
+
+int EncodersModel::getLeftGateEncodersValue()
+{
+	return leftGateEncoder.getAbsPosition();
+}
+
+int EncodersModel::getRightGateEncodersValue()
+{
+	return rightGateEncoder.getAbsPosition();
+}

@@ -18,6 +18,10 @@ const int LINE_LEIGHT = 200; //mm
 //Encoder settings
 const int ENCODER_RESOLUTION = 360; //Ticks peer rev...
 
+//Gates settings
+const int GATE_TICS = 320;
+const int GATE_POWER = 50;
+
 //Robot settings
 //const double WHEEL_DISTANCE = 170;
 //const double WHEEL_DIAMETER = 80;

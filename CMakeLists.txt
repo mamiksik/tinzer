@@ -33,9 +33,9 @@ set(SOURCE_FILES
 
     app/hardware/encoder/Encoder.cpp
     app/hardware/motor/Motor.cpp
-    app/hardware/motor/Motor.h
+    app/hardware/diode/Diode.cpp
     app/hardware/button/Button.cpp
-    app/hardware/ultrasonicSensor/UltrasonicSensor.cpp
+    app/hardware/ultrasonicSensor/Ultrasonic.cpp
 
     app/model/ultrasonic/UltrasonicModel.cpp
     app/model/encoder/EncodersModel.cpp

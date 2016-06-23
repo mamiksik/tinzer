@@ -10,15 +10,15 @@
 
 using ev3dev::address_type;
 
-	class UltrasonicSensor : public IUltrasonicSensor
+	class Ultrasonic : public IUltrasonicSensor
 	{
 	public:
-		UltrasonicSensor(address_type sensor, bool enable) : sensor(sensor)
+		Ultrasonic(address_type sensor, bool enable) : sensor(sensor)
 		{
 			if (enable) {
-				UltrasonicSensor::enable();
+				Ultrasonic::enable();
 			} else {
-				UltrasonicSensor::disable();
+				Ultrasonic::disable();
 			}
 		}
 

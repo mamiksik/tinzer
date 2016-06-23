@@ -2,20 +2,20 @@
 // Created by Martin Mikšík
 //
 
-#include "UltrasonicSensor.h"
+#include "Ultrasonic.h"
 
 
-void UltrasonicSensor::enable()
+void Ultrasonic::enable()
 {
 	sensor.set_mode(ev3dev::ultrasonic_sensor::mode_us_dist_cm);
 }
 
-void UltrasonicSensor::disable()
+void Ultrasonic::disable()
 {
 	sensor.set_mode(ev3dev::ultrasonic_sensor::mode_us_listen);
 }
 
-double UltrasonicSensor::getDistanceInCm()
+double Ultrasonic::getDistanceInCm()
 {
 	const auto mode = sensor.mode();
 	if (mode != ev3dev::ultrasonic_sensor::mode_us_dist_cm)

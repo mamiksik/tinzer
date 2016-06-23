@@ -16,7 +16,7 @@
 #include "../hardware/motor/Motor.h"
 #include "../hardware/encoder/Encoder.h"
 #include "../hardware/button/Button.h"
-#include "../hardware/ultrasonicSensor/UltrasonicSensor.h"
+#include "../hardware/ultrasonicSensor/Ultrasonic.h"
 
 #include "../model/encoder/EncodersModel.h"
 #include "../model/button/ButtonsModel.h"
@@ -24,6 +24,8 @@
 #include "controller/Controller.h"
 #include "logic/Logic.h"
 #include "../model/line/LineModel.h"
+#include "../model/ultrasonic/UltrasonicModel.h"
+#include "../hardware/diode/Diode.h"
 
 class Bootstrap
 {
@@ -44,8 +46,10 @@ public:
 
 		using ev3dev::INPUT_1;
 		using ev3dev::INPUT_2;
+		using ev3dev::INPUT_3;
 
 		Button stopButton(INPUT_1);
+		Diode gateDiode(INPUT_3);
 
 		Helpers::dump(Helpers::Debug, "Init motors");
 		Motor leftChassisMotor(OUTPUT_C);
@@ -62,7 +66,7 @@ public:
 		Encoder rightGateEncoder(OUTPUT_B);
 
 		Helpers::dump(Helpers::Debug, "Init ultrasonic");
-		UltrasonicSensor gateUltrasonicSensor(INPUT_2, true);
+		Ultrasonic gateUltrasonicSensor(INPUT_2, false);
 
 		//Reset encoders
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");
@@ -74,7 +78,7 @@ public:
 		//Init model layer
 		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
 		ButtonsModel buttonSensor(stopButton);
-		UltrasonicSensor ultrasonicSensor(gateUltrasonicSensor);
+		UltrasonicModel ultrasonicModel(gateUltrasonicSensor);
 		LineModel lineModel;
 
 		//Init controller layer
@@ -88,7 +92,7 @@ public:
 
 
 		//Init main controller
-		Logic logic(controller);
+		Logic logic(controller, ultrasonicModel, gateDiode);
 
 		try {
 			logic.startThread();
@@ -98,7 +102,6 @@ public:
 					raise(SIGINT);
 				}
 			}
-
 		} catch (...) {
 		}
 

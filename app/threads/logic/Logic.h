@@ -7,22 +7,31 @@
 
 #include "../../../framework/threading/Threading.h"
 #include "../controller/Controller.h"
+#include "../../model/ultrasonic/UltrasonicModel.h"
+#include "../../hardware/diode/Diode.h"
 
 using namespace std;
 
 class Logic : public Threading
 {
 public:
-	Logic(Controller &motorControl) : controller(motorControl)
+	Logic(Controller &controller, UltrasonicModel &ultrasonicModel, Diode &gateDiode) :
+			controller(controller),
+			ultrasonicModel(ultrasonicModel),
+			gateDiode(gateDiode)
 	{}
+
 
 	virtual ~Logic()
 	{
 		stopThread();
 	}
 
+
 private:
 	Controller &controller;
+	UltrasonicModel &ultrasonicModel;
+	Diode &gateDiode;
 
 	virtual void threadTask();
 };

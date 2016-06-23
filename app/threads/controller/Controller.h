@@ -67,11 +67,11 @@ public:
 
 	virtual void push(Coordinate newCoordinate);
 
-	//void closeGate();
+	void closeGates();
 
-	//void openLeftGate();
+	void openLeftGate();
 
-	//void openRightGate();
+	void openRightGate();
 
 private:
 
