@@ -54,6 +54,9 @@ public:
 	          rightGateOpen(true)
 	{}
 
+
+	static bool lock;
+
 	virtual ~Controller()
 	{
 		//lock = true;

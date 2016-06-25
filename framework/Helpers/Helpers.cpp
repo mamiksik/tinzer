@@ -2,17 +2,20 @@
 // Created by Martin Mikšík
 //
 
+#include "Helpers.h"
+
 #include <chrono>
 #include <thread>
 #include <stdio.h>
 #include <stdarg.h>
-#include "Helpers.h"
 #include "../../app/Config.h"
+
 
 void Helpers::delay(int milliseconds)
 {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
+
 
 void Helpers::dump(int logLevel, const char *string, ...)
 {
@@ -45,3 +48,9 @@ void Helpers::dump(int logLevel, const char *string, ...)
 		va_end(args);
 	}
 }
+
+
+//vector<Coordinates> Helpers::loadData(std::string name)
+//{
+//
+//}

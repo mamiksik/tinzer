@@ -4,9 +4,9 @@
 
 #include "ReflectiveBar.h"
 
-vector<int> Hardware::ReflectiveBar::getData()
+vector<int> ReflectiveBar::getData()
 {
-	pipe << comand;
+	pipe << command << "\n";
 
 	vector<int> values;
 	for (auto &i: values) {

@@ -10,45 +10,70 @@
 void Logic::threadTask()
 {
 	int stackSize = 0;
-	int stackMaxSize = 3;
+	int stackMaxSize = 4;
 	bool penetrated = false;
 	bool gateClosed = false;
 
 	StopWatch watch;
 	controller.setPower(DEFAULT_POWER);
 
-	//controller.push(Coordinate(0, 4, M_PI_2));
-
 	cout << "starting controller run thread" << endl;
 	pushStrategy();
 	controller.startThread();
 
-	/*controller.closeGates();
-	goHome();*/
+	/*Helpers::dump(Helpers::Debug, "Close");
+	controller.closeGates();
+
+	Helpers::delay(1000);
+	Helpers::dump(Helpers::Debug, "open right");
+	controller.openRightGate();
+
+	Helpers::delay(1000);
+	Helpers::dump(Helpers::Debug, "open left");
+	controller.openLeftGate();
+
+	Helpers::delay(1000);
+	controller.closeGates();
+
+	Helpers::delay(1000);
+	controller.closeGates();
+
+	Helpers::delay(1000);
+	Helpers::dump(Helpers::Debug, "open right");
+	controller.openRightGate();*/
+	//goHome();
 
 	do {
-		cout << "LOGIC      " << ultrasonicModel.gateDistance() << endl;
-		if (ultrasonicModel.isGatePenetrated()) {
+		/*cout << "LOGIC      " << ultrasonicModel.gateDistance() << endl;*/
+		/*if (ultrasonicModel.isGatePenetrated()) {
 			if (!penetrated) {
 				stackSize++;
-				controller.setPower(controller.getPower() + 5);
-				Helpers::dump(Helpers::Info, "Stack have accepted new tin(now contain: %d out of %d)", stackSize,
-				              stackMaxSize);
+
+				*//*Helpers::dump(Helpers::Info, "Stack have accepted new tin(now contain: %d out of %d)", stackSize,
+				              stackMaxSize);*//*
 			}
 			penetrated = true;
 			gateDiode.switchOn();
 		} else {
 			penetrated = false;
 			gateDiode.switchOff();
+		}*/
+
+		if(ultrasonicModel.gateDistance() < 10){
+			Controller::lock = true;
+		}else{
+			Controller::lock = false;
 		}
 
-		if (stackSize >= stackMaxSize && !gateClosed) {
+
+		/*if (stackSize >= stackMaxSize && !gateClosed) {
 			Helpers::delay(3000);
 			controller.closeGates();
 			gateClosed = true;
-		}
+		}*/
 
 
+		//cout << "Time: " <<
 		if (watch.getMs() >= GAME_TIME) {
 			goHome();
 		}
@@ -57,20 +82,8 @@ void Logic::threadTask()
 
 		}
 
-		Helpers::delay(1);
+		Helpers::delay(10);
 	} while (repeatTask);
-
-
-	/*repeatTask = true;
-	while (repeatTask) {
-		if (controller.isEmpty()) {
-			repeatTask = true;
-			//throw std::runtime_error("Out of tasks");
-		} else {
-			Helpers::delay(10);
-			repeatTask = true;
-		}
-	}*/
 }
 
 
@@ -84,6 +97,8 @@ void Logic::goHome()
 	controller.aboard();
 	controller.resume();
 
+	controller.closeGates();
+
 	Helpers::dump(Helpers::Info, "Home push");
 	controller.push(home);
 	Helpers::dump(Helpers::Info, "Home after push");
@@ -94,11 +109,12 @@ void Logic::goHome()
 		if (home == controller.getPosition()) {
 			controller.unload();
 			waitForHome = false;
+			raise(SIGINT);
 		}
 		Helpers::delay(1);
 	}
 
-	controller.push(Coordinate(3, 5, M_PI_2));
+	/*controller.push(Coordinate(3, 5, M_PI_2));
 	controller.push(Coordinate(3, 6, M_PI));
 	controller.push(Coordinate(-3, 6, M_PI));
 
@@ -116,7 +132,7 @@ void Logic::goHome()
 			raise(SIGINT);
 		}
 		Helpers::delay(1);
-	}
+	}*/
 
 }
 
@@ -125,9 +141,11 @@ void Logic::pushStrategy()
 {
 	Helpers::dump(Helpers::Info, "Push strategy");
 
+
+
+
 	controller.push(Coordinate(0, 3, M_PI));
 	controller.push(Coordinate(-2, 3, M_PI));
-	controller.push(Coordinate(-2, 1, M_PI));
 
 	//controller.push(Coordinate(0, 3, M_PI));
 	//controller.push(Coordinate(-3, 3, M_PI * (3/4)));

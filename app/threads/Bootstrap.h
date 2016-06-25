@@ -26,6 +26,7 @@
 #include "../model/line/LineModel.h"
 #include "../model/ultrasonic/UltrasonicModel.h"
 #include "../hardware/diode/Diode.h"
+#include "../hardware/reflectiveBar/ReflectiveBar.h"
 
 class Bootstrap
 {
@@ -48,7 +49,13 @@ public:
 		using ev3dev::INPUT_2;
 		using ev3dev::INPUT_3;
 
+		using ev3dev::INPUT_4;
+
 		Button stopButton(INPUT_1);
+
+		Button startButton(INPUT_4);
+
+
 		Diode gateDiode(INPUT_3);
 
 		Helpers::dump(Helpers::Debug, "Init motors");
@@ -67,6 +74,12 @@ public:
 
 		Helpers::dump(Helpers::Debug, "Init ultrasonic");
 		Ultrasonic gateUltrasonicSensor(INPUT_2, false);
+
+
+		//Reflective bars
+		//ReflectiveBar leftReflectiveBar("/ttcy/ACM", "nic_neposilej");
+		//ReflectiveBar rightReflectiveBar("/ttcy/ACM", "nic_neposilej");
+		//ReflectiveBar bottomReflectiveBar("/ttcy/ACM", "nic_neposilej");
 
 		//Reset encoders
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");

@@ -12,6 +12,10 @@ int const LOG_LEVEL = Helpers::All;
 int const GAME_TIME = 10000; // 3min = 180 000; // 2min 120000
 int const DEFAULT_POWER = 40;
 
+
+//ReflectiveBar settings
+int const SENSOR_DISTANCE = 30;
+
 //Robot position settings
 const int DEFAULT_X_POSITION = 0;
 const int DEFAULT_Y_POSITION = 0;
@@ -24,7 +28,7 @@ const int LINE_LEIGHT = 200; //mm
 const int ENCODER_RESOLUTION = 360; //Ticks peer rev...
 
 //Gates settings
-const int GATE_TICS = 320;
+const int GATE_TICS = 285;
 const int GATE_POWER = 50;
 
 //Robot settings

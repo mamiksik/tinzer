@@ -14,6 +14,12 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+#include <vector>
+
+#include "../structures/Coordinate.h"
+
+using namespace std;
+
 class Helpers
 {
 public:
@@ -25,6 +31,8 @@ public:
 	static void delay(int milliseconds);
 
 	static void dump(int logLevel, const char *string, ...);
+
+	//static vector<Coordinate> loadData(std::string name);
 };
 
 

@@ -6,6 +6,8 @@
 
 #include "Controller.h"
 
+bool Controller::lock = false;
+
 
 void Controller::push(Coordinate newCoordinate)
 {
@@ -86,12 +88,14 @@ void Controller::closeGates()
 	if (leftGateOpen) {
 		leftGateMotor.setPower(-GATE_POWER);
 	} else {
+		Helpers::dump(Helpers::Error, "Left gate closed");
 		leftMotorEnd = true;
 	}
 
 	if (rightGateOpen) {
 		rightGateMotor.setPower(GATE_POWER);
 	} else {
+		Helpers::dump(Helpers::Error, "Right gate closed");
 		rightMotorEnd = true;
 	}
 
@@ -105,13 +109,13 @@ void Controller::closeGates()
 		if (encVals.first - startLeftEncVal <= -GATE_TICS) {
 			leftGateMotor.setPower(0);
 			leftMotorEnd = true;
-			Helpers::dump(Helpers::Warning, "rot - leftMotorEnd");
+			/*Helpers::dump(Helpers::Warning, "rot - leftMotorEnd");*/
 		}
 
 		if (encVals.second - startRightEncVal >= GATE_TICS) {
 			rightGateMotor.setPower(0);
 			rightMotorEnd = true;
-			Helpers::dump(Helpers::Warning, "rot - rightMotorEnd");
+			/*Helpers::dump(Helpers::Warning, "rot - rightMotorEnd");*/
 		}
 	} while (!leftMotorEnd || !rightMotorEnd);
 
@@ -122,7 +126,8 @@ void Controller::closeGates()
 
 void Controller::openLeftGate()
 {
-	if(!leftGateOpen){
+	if(leftGateOpen){
+		Helpers::dump(Helpers::Error, "Left gate opend");
 		return;
 	}
 
@@ -134,6 +139,7 @@ void Controller::openLeftGate()
 	leftGateMotor.setPower(GATE_POWER);
 
 	do {
+	/*	cout << encVal - startEncVal << "  (str: " << -GATE_TICS << ")" << endl;*/
 		encVal = encodersModel.getLeftGateEncodersValue();
 
 		if (encVal - startEncVal >= GATE_TICS) {
@@ -142,12 +148,15 @@ void Controller::openLeftGate()
 		}
 
 	} while (!stop);
+
+	leftGateOpen = true;
 }
 
 
 void Controller::openRightGate()
 {
-	if(!rightGateOpen){
+	if(rightGateOpen){
+		Helpers::dump(Helpers::Error, "Right gate opend");
 		return;
 	}
 
@@ -160,15 +169,17 @@ void Controller::openRightGate()
 
 	do {
 		encVal = encodersModel.getRightGateEncodersValue();
-		/*cout << encVal - startEncVal << "  (str: " << -GATE_TICS << ")" << endl;*/
+//		cout << encVal - startEncVal << "  (str: " << -GATE_TICS << ")" << endl;
 
 		if (encVal - startEncVal <= -GATE_TICS) {
-			Helpers::dump(Helpers::Warning, "Stopping right gate");
+		//	Helpers::dump(Helpers::Warning, "Stopping right gate");
 			rightGateMotor.setPower(0);
 			stop = true;
 		}
 
 	} while (!stop);
+
+	rightGateOpen = true;
 }
 
 
@@ -301,6 +312,8 @@ void Controller::unload()
 	do {
 		encVals = encodersModel.getChassisEncodersValues();
 
+		Helpers::dump(Helpers::Warning, "Do unload");
+
 		if (encVals.first - startLeftEncVal <= -tics) {
 			leftChassisMotor.setPower(0);
 			leftMotorEnd = true;
@@ -351,6 +364,16 @@ void Controller::doRotation(double rotation)
 
 			encVals = encodersModel.getChassisEncodersValues();
 
+
+			if(lock){
+				leftChassisMotor.setPower(0);
+				rightChassisMotor.setPower(0);
+				continue;
+			}else{
+				leftChassisMotor.setPower(-power);
+				rightChassisMotor.setPower(power);
+			}
+
 			if (encVals.first - startLeftEncVal <= -tics) {
 				leftChassisMotor.setPower(0);
 				leftMotorEnd = true;
@@ -375,6 +398,15 @@ void Controller::doRotation(double rotation)
 			     << "  (rot-: " << tics << ")" << endl;*/
 
 			encVals = encodersModel.getChassisEncodersValues();
+
+			if(lock){
+				leftChassisMotor.setPower(0);
+				rightChassisMotor.setPower(0);
+				continue;
+			}else{
+				leftChassisMotor.setPower(power);
+				rightChassisMotor.setPower(-power);
+			}
 
 			if (encVals.first - startLeftEncVal >= -tics) {
 				leftChassisMotor.setPower(0);
@@ -437,6 +469,15 @@ void Controller::goStraight(int distance)
 		/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
 		     << "  (str: " << tics << ")" << endl;*/
 		encVals = encodersModel.getChassisEncodersValues();
+
+		if(lock){
+			leftChassisMotor.setPower(0);
+			rightChassisMotor.setPower(0);
+			continue;
+		}else{
+			leftChassisMotor.setPower(power);
+			rightChassisMotor.setPower(power);
+		}
 
 		if (encVals.first - startLeftEncVal > tics) {
 			leftChassisMotor.setPower(0);

@@ -19,7 +19,7 @@ public:
 
 	void disableGateUltrasonic();
 
-	float gateDistance();
+	double gateDistance();
 
 	bool isGatePenetrated();
 

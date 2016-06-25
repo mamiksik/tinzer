@@ -19,7 +19,7 @@ void UltrasonicModel::disableGateUltrasonic()
 }
 
 
-float UltrasonicModel::gateDistance()
+double UltrasonicModel::gateDistance()
 {
 	return ultrasonicSensor.getDistanceInCm();
 }

@@ -14,10 +14,10 @@
 
 using namespace std;
 
-class ReflectiveBar : public IReflectiveBar
+class ReflectiveBar /*: public IReflectiveBar*/
 {
 public:
-	ReflectiveBar(const string &pipeLocation, const string &comand) : comand(comand)
+	ReflectiveBar(const string &pipeLocation, const string &command) : command(command)
 	{
 		pipe = fstream(pipeLocation);
 		if (!pipe.is_open()) {
@@ -29,7 +29,7 @@ public:
 
 private:
 	fstream pipe;
-	const string comand;
+	const string command;
 };
 
 

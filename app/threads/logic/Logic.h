@@ -21,7 +21,6 @@ public:
 			gateDiode(gateDiode)
 	{}
 
-
 	virtual ~Logic()
 	{
 		stopThread();
