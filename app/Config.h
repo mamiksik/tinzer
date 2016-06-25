@@ -21,7 +21,8 @@ const int DEFAULT_X_POSITION = reader.GetInteger("robot", "x_position", 0);
 const int DEFAULT_Y_POSITION = reader.GetInteger("robot", "y_position", 0);
 const double DEFAULT_ROTATION = reader.GetReal("robot", "rotation", M_PI_2);
 
-const int ENEMY_DETECTION_DISTANCE = reader.GetInteger("robot", "enemy_distance", 0);
+const int ENEMY_DETECTION_DISTANCE = reader.GetInteger("robot", "enemy_distance", 30);
+const int ENEMY_WAITING = reader.GetInteger("robot", "enemy_waiting", 5000);
 
 //ReflectiveBar settings
 const int SENSOR_DISTANCE = reader.GetInteger("reflective_bar", "sensor_distance", 30);

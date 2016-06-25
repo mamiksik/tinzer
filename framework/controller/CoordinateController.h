@@ -28,7 +28,7 @@ public:
 
 	virtual Coordinate getPosition() = 0;
 
-	void aboard();
+	virtual void aboard();
 
 	void pause();
 

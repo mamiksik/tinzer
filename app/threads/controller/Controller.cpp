@@ -9,6 +9,13 @@
 bool Controller::lockMotors = false;
 
 
+void Controller::aboard()
+{
+	expectedCoordinate = currentCoordinate;
+	CoordinateController::aboard();
+}
+
+
 void Controller::push(Coordinate newCoordinate)
 {
 	double xRotation = 0;
@@ -171,8 +178,10 @@ void Controller::threadTask()
 		//array<int, 3> correctionVals = lineModel.getCorectionData();
 		array<double, 3> correctionVals;
 
-		correctionVals[0] = 100;
-		correctionVals[1] = 100;
+		//X
+		correctionVals[0] = 0;
+		//Y
+		correctionVals[1] = 0;
 		correctionVals[2] = 0;
 
 		Coordinate newCoordinate = stepQueue.front();
@@ -288,7 +297,7 @@ void Controller::unload()
 	do {
 		encVals = encodersModel.getChassisEncodersValues();
 
-		Helpers::dump(Helpers::Warning, "Do unload");
+		//Helpers::dump(Helpers::Warning, "Do unload");
 
 		if (encVals.first - startLeftEncVal <= -tics) {
 			leftChassisMotor.setPower(0);

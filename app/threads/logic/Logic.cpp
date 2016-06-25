@@ -13,9 +13,15 @@ void Logic::threadTask()
 	int stackMaxSize = 4;
 	bool penetrated = false;
 	bool gateClosed = false;*/
+
+	/*bool seeEnemy = false;
+	bool retreat = false;*/
+	/*StopWatch watch(false);*/
+
+	StopWatch gameWatch;
+
 	bool stay = true;
 
-	StopWatch watch;
 	controller.setPower(DEFAULT_POWER);
 
 	Helpers::dump(Helpers::Info, "Starting controller run thread");
@@ -28,6 +34,7 @@ void Logic::threadTask()
 	gateDiode.switchOn();
 	while (stay) {
 		if (buttonsModel.isPressedStart()) {
+			gameWatch.reset();
 			Helpers::dump(Helpers::Info, "1. 2. 3. GO!...");
 			controller.resume();
 			stay = false;
@@ -35,32 +42,24 @@ void Logic::threadTask()
 		Helpers::delay(1);
 	}
 
-	for(auto coordinate: strategy){
-		cout << "X:" << coordinate.x << "Y:" << coordinate.y << "Rotation:" << coordinate.rotation << endl;
-		controller.push(coordinate);
-	}
-
+	loadStraregy(strategy);
 
 	do {
-		if (ultrasonicModel.gateDistance() < ENEMY_DETECTION_DISTANCE) {
+		if (ultrasonicModel.gateDistance() < ENEMY_DETECTION_DISTANCE /*&& !retreat*/) {
 			Helpers::dump(Helpers::Warning, "Enemy in range!");
 			Controller::lockMotors = true;
 		} else {
 			Controller::lockMotors = false;
+
 		}
 
-
-		/*if (stackSize >= stackMaxSize && !gateClosed) {
-			Helpers::delay(3000);
-			controller.closeGates();
-			gateClosed = true;
-		}*/
-
-
-		//cout << "Time: " <<
-		if (watch.getMs() >= GAME_TIME) {
+		if (gameWatch.getMs() >= GAME_TIME) {
 			goHome();
 		}
+
+		/*if(controller.isEmpty()){
+			Helpers::dump(Helpers::Info, "%d s to go", (GAME_TIME - gameWatch.getMs()) / 1000);
+		}*/
 
 		Helpers::delay(10);
 	} while (repeatTask);
@@ -76,10 +75,10 @@ void Logic::goHome()
 	controller.pause();
 	controller.aboard();
 	controller.resume();
+	controller.push(home);
 
 	controller.closeGates();
 
-	controller.push(home);
 	bool waitForHome = true;
 
 	while (waitForHome) {
@@ -91,6 +90,15 @@ void Logic::goHome()
 			raise(SIGINT);
 		}
 		Helpers::delay(1);
+	}
+}
+
+
+void Logic::loadStraregy(vector<Coordinate> strategy)
+{
+	for(auto coordinate: strategy){
+		cout << "X:" << coordinate.x << "Y:" << coordinate.y << "Rotation:" << coordinate.rotation << endl;
+		controller.push(coordinate);
 	}
 }
 

@@ -38,6 +38,8 @@ private:
 	virtual void threadTask();
 
 	void goHome();
+
+	void loadStraregy(vector<Coordinate> strategy);
 };
 
 

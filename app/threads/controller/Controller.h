@@ -78,6 +78,8 @@ public:
 
 	int getPower() const;
 
+	virtual void aboard();
+
 private:
 	const Coordinate startCoordinate;
 	Coordinate expectedCoordinate;
