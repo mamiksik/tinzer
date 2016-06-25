@@ -201,11 +201,11 @@ void Controller::threadTask()
 			directionX dirX = witchDirectionInX(currentCoordinate.x, newCoordinate.x);
 
 			if (dirX == directionX::right) {
-				//x = LINE_LEIGHT - correctionVals[0];
-				x = (abs(currentCoordinate.x - newCoordinate.x) * LINE_LEIGHT) - correctionVals[0];
+				//x = LINE_LENGHT - correctionVals[0];
+				x = (abs(currentCoordinate.x - newCoordinate.x) * LINE_LENGHT) - correctionVals[0];
 			} else {
-				//x = LINE_LEIGHT + correctionVals[0];
-				x = (abs(currentCoordinate.x - newCoordinate.x) * LINE_LEIGHT) + correctionVals[0];
+				//x = LINE_LENGHT + correctionVals[0];
+				x = (abs(currentCoordinate.x - newCoordinate.x) * LINE_LENGHT) + correctionVals[0];
 			}
 
 			cout << x << endl;
@@ -234,11 +234,11 @@ void Controller::threadTask()
 			directionY dirY = witchDirectionInY(currentCoordinate.y, newCoordinate.y);
 
 			if (dirY == directionY::up) {
-				//y = LINE_LEIGHT - correctionVals[1];
-				y = (abs(currentCoordinate.y - newCoordinate.y) * LINE_LEIGHT) - correctionVals[1];
+				//y = LINE_LENGHT - correctionVals[1];
+				y = (abs(currentCoordinate.y - newCoordinate.y) * LINE_LENGHT) - correctionVals[1];
 			} else {
-				//y = LINE_LEIGHT + correctionVals[1];
-				y = (abs(currentCoordinate.y - newCoordinate.y) * LINE_LEIGHT) + correctionVals[1];
+				//y = LINE_LENGHT + correctionVals[1];
+				y = (abs(currentCoordinate.y - newCoordinate.y) * LINE_LENGHT) + correctionVals[1];
 
 			}
 
@@ -273,7 +273,7 @@ void Controller::unload()
 	Helpers::dump(Helpers::Info, "Unloading stacks");
 	openLeftGate();
 	//TODO: Dont use const val
-	int tics = static_cast<int>(ENCODER_RESOLUTION * 2 * LINE_LEIGHT / (WHEEL_DIAMETER * M_PI));
+	int tics = static_cast<int>(ENCODER_RESOLUTION * 2 * LINE_LENGHT / (WHEEL_DIAMETER * M_PI));
 
 	pair<int, int> encVals = encodersModel.getChassisEncodersValues();
 	int startLeftEncVal = encVals.first;

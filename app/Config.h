@@ -1,42 +1,44 @@
 #ifndef KETCHUPHOUSE_CONFIG_H
 #define KETCHUPHOUSE_CONFIG_H
 
-#include <math.h>
+#include <cmath>
 #include "../framework/Helpers/Helpers.h"
+#include "../framework/libs/iniReader/INIReader.h"
 
 //Framework settings
-int const LOG_LEVEL = Helpers::All;
+const int LOG_LEVEL = Helpers::All;
 
+extern INIReader reader;
 
 //Game settings
-int const GAME_TIME = 10000; // 3min = 180 000; // 2min 120000
-int const DEFAULT_POWER = 40;
-int const ENEMY_DETECTION_DISTANCE = 20;
+const int GAME_TIME = reader.GetInteger("game", "time", 120000);//100000; // 3min = 180 000; // 2min 120000
+const int LINE_LENGHT = reader.GetInteger("game", "line_leight", 200); //mm
 
+//Robot settings
+const int DEFAULT_POWER = reader.GetInteger("robot", "power", 40);
+
+const int DEFAULT_X_POSITION = reader.GetInteger("robot", "x_position", 0);
+const int DEFAULT_Y_POSITION = reader.GetInteger("robot", "y_position", 0);
+const double DEFAULT_ROTATION = reader.GetReal("robot", "rotation", M_PI_2);
+
+const int ENEMY_DETECTION_DISTANCE = reader.GetInteger("robot", "enemy_distance", 0);
 
 //ReflectiveBar settings
-int const SENSOR_DISTANCE = 30;
+const int SENSOR_DISTANCE = reader.GetInteger("reflective_bar", "sensor_distance", 30);
 
-//Robot position settings
-const int DEFAULT_X_POSITION = 0;
-const int DEFAULT_Y_POSITION = 0;
-const double DEFAULT_ROTATION = M_PI_2;
-
-//Grid settings
-const int LINE_LEIGHT = 200; //mm
-
-//Encoder settings
-const int ENCODER_RESOLUTION = 360; //Ticks peer rev...
 
 //Gates settings
-const int GATE_TICS = 285;
-const int GATE_POWER = 50;
+
+
+const int GATE_TICS = reader.GetInteger("gate", "tics", 285);
+const int GATE_POWER = reader.GetInteger("gate", "power", 50);
 
 //Robot settings
 //const double WHEEL_DISTANCE = 170;
 //const double WHEEL_DIAMETER = 80;
 
-const double WHEEL_DISTANCE = 230;
-const double WHEEL_DIAMETER = 70;
+const double WHEEL_DISTANCE = reader.GetInteger("control", "wheel_distance", 230);
+const double WHEEL_DIAMETER = reader.GetInteger("control", "wheel_diameter", 70);
+const int ENCODER_RESOLUTION = reader.GetInteger("control", "encoder_resolution", 360); //mm //Ticks peer rev...
 
 #endif //KETCHUPHOUSE_CONFIG_H

@@ -22,27 +22,26 @@ void Logic::threadTask()
 	controller.startThread();
 	controller.pause();
 
-	/*vector<Coordinate> strategy = Helpers::loadData("strategy");
-
-	for(auto coordinate: strategy){
-		controller.push(coordinate);
-	}*/
-
-	controller.push(Coordinate(0, 1, M_PI_2));
+	vector<Coordinate> strategy = Helpers::loadData("strategy.txt");
 
 	Helpers::dump(Helpers::Info, "Robot is ready and waiting for start");
 	gateDiode.switchOn();
 	while (stay) {
 		if (buttonsModel.isPressedStart()) {
 			Helpers::dump(Helpers::Info, "1. 2. 3. GO!...");
+			controller.resume();
 			stay = false;
 		}
 		Helpers::delay(1);
 	}
 
+	for(auto coordinate: strategy){
+		cout << "X:" << coordinate.x << "Y:" << coordinate.y << "Rotation:" << coordinate.rotation << endl;
+		controller.push(coordinate);
+	}
+
 
 	do {
-
 		if (ultrasonicModel.gateDistance() < ENEMY_DETECTION_DISTANCE) {
 			Helpers::dump(Helpers::Warning, "Enemy in range!");
 			Controller::lockMotors = true;

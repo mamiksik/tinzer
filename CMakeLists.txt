@@ -17,6 +17,9 @@ endif ()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -pthread  -D_GLIBCXX_USE_NANOSLEEP")
 
 set(FRAMEWORK_FILES
+    framework/libs/iniReader/ini.h
+    framework/libs/iniReader/ini.cpp
+    framework/libs/iniReader/INIReader.cpp
     main.cpp
     app/Config.h
     app/threads/Bootstrap.h
@@ -46,7 +49,7 @@ set(SOURCE_FILES
     app/model/line/LineModel.cpp
 
     app/model/button/ButtonsModel.cpp
-    app/threads/logic/Logic.cpp framework/hardware/IReflectiveBar.h app/model/ReflectiveBars/ReflectiveModel.cpp app/model/ReflectiveBars/ReflectiveModel.h)
+    app/threads/logic/Logic.cpp framework/hardware/IReflectiveBar.h app/model/ReflectiveBars/ReflectiveModel.cpp app/model/ReflectiveBars/ReflectiveModel.h framework/libs/iniReader/ini.cpp)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 
