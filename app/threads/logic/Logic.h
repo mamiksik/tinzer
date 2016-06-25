@@ -27,13 +27,16 @@ public:
 		stopThread();
 	}
 
-
 private:
 	Controller &controller;
 	UltrasonicModel &ultrasonicModel;
 	Diode &gateDiode;
 
 	virtual void threadTask();
+
+	void goHome();
+
+	void pushStrategy();
 };
 
 

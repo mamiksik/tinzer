@@ -7,6 +7,11 @@
 //Framework settings
 int const LOG_LEVEL = Helpers::All;
 
+
+//Game settings
+int const GAME_TIME = 10000; // 3min = 180 000; // 2min 120000
+int const DEFAULT_POWER = 40;
+
 //Robot position settings
 const int DEFAULT_X_POSITION = 0;
 const int DEFAULT_Y_POSITION = 0;

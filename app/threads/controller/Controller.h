@@ -49,7 +49,9 @@ public:
 			  rightChassisMotor(rightChassisMotor),
 			  leftChassisMotor(leftChassisMotor),
 			  leftGateMotor(leftGateMotor),
-			  rightGateMotor(rightGateMotor)
+			  rightGateMotor(rightGateMotor),
+	          leftGateOpen(true),
+	          rightGateOpen(true)
 	{}
 
 	virtual ~Controller()
@@ -67,19 +69,29 @@ public:
 
 	virtual void push(Coordinate newCoordinate);
 
+	virtual Coordinate getPosition();
+
+	void unload();
+
 	void closeGates();
 
 	void openLeftGate();
 
 	void openRightGate();
 
-private:
+	void setPower(int power);
 
+	int getPower() const;
+
+private:
 	const Coordinate startCoordinate;
 	Coordinate expectedCoordinate;
+
+	//ToDo: Atomic
 	Coordinate currentCoordinate;
 
-	atomic<int> power;
+	//ToDo: Atomic
+	int power;
 
 	EncodersModel &encodersModel;
 	LineModel &lineModel;
@@ -89,6 +101,9 @@ private:
 
 	IMotor &leftGateMotor;
 	IMotor &rightGateMotor;
+
+	bool leftGateOpen;
+	bool rightGateOpen;
 
 	virtual void threadTask();
 

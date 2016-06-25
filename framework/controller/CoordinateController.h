@@ -26,7 +26,7 @@ public:
 
 	virtual void push(Coordinate item) = 0;
 
-	//virtual Coordinate getPosition() = 0;
+	virtual Coordinate getPosition() = 0;
 
 	void aboard();
 

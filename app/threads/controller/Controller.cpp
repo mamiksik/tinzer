@@ -61,6 +61,11 @@ void Controller::push(Coordinate newCoordinate)
 		expectedCoordinate.y = newCoordinate.y;
 	}
 
+	if (expectedCoordinate.rotation != newCoordinate.rotation) {
+		stepQueue.push(Coordinate(expectedCoordinate.x, expectedCoordinate.y, newCoordinate.rotation));
+		expectedCoordinate.rotation = newCoordinate.rotation;
+	}
+
 	//Helpers::delay(2000);
 }
 
@@ -78,8 +83,17 @@ void Controller::closeGates()
 	bool leftMotorEnd = false;
 	bool rightMotorEnd = false;
 
-	leftGateMotor.setPower(-GATE_POWER);
-	rightGateMotor.setPower(GATE_POWER);
+	if (leftGateOpen) {
+		leftGateMotor.setPower(-GATE_POWER);
+	} else {
+		leftMotorEnd = true;
+	}
+
+	if (rightGateOpen) {
+		rightGateMotor.setPower(GATE_POWER);
+	} else {
+		rightMotorEnd = true;
+	}
 
 	do {
 
@@ -101,12 +115,16 @@ void Controller::closeGates()
 		}
 	} while (!leftMotorEnd || !rightMotorEnd);
 
-
+	leftGateOpen = false;
+	rightGateOpen = false;
 }
 
 
 void Controller::openLeftGate()
 {
+	if(!leftGateOpen){
+		return;
+	}
 
 	Helpers::dump(Helpers::Info, "Opening left gate");
 	int encVal = encodersModel.getLeftGateEncodersValue();
@@ -129,6 +147,10 @@ void Controller::openLeftGate()
 
 void Controller::openRightGate()
 {
+	if(!rightGateOpen){
+		return;
+	}
+
 	Helpers::dump(Helpers::Warning, "Opening right gate");
 	int encVal = encodersModel.getRightGateEncodersValue();
 	int startEncVal = encVal;
@@ -148,6 +170,7 @@ void Controller::openRightGate()
 
 	} while (!stop);
 }
+
 
 void Controller::threadTask()
 {
@@ -249,6 +272,57 @@ void Controller::threadTask()
 		Helpers::delay(1);
 		repeatTask = true;
 	} while (repeatTask);
+}
+
+
+Coordinate Controller::getPosition()
+{
+	return currentCoordinate;
+}
+
+
+void Controller::unload()
+{
+	openLeftGate();
+
+	//TODO: Dont use const val
+	int tics = static_cast<int>(ENCODER_RESOLUTION * 2 * LINE_LEIGHT / (WHEEL_DIAMETER * M_PI));
+
+	pair<int, int> encVals = encodersModel.getChassisEncodersValues();
+	int startLeftEncVal = encVals.first;
+	int startRightEncVal = encVals.second;
+
+	bool leftMotorEnd = false;
+	bool rightMotorEnd = false;
+
+	leftChassisMotor.setPower(-power);
+	rightChassisMotor.setPower(-power);
+
+	do {
+		encVals = encodersModel.getChassisEncodersValues();
+
+		if (encVals.first - startLeftEncVal <= -tics) {
+			leftChassisMotor.setPower(0);
+			leftMotorEnd = true;
+			Helpers::dump(Helpers::Warning, "straight - leftMotorEnd");
+		}
+
+		if (encVals.second - startRightEncVal <= -tics) {
+			rightChassisMotor.setPower(0);
+			rightMotorEnd = true;
+			Helpers::dump(Helpers::Warning, "straight - rightMotorEnd");
+		}
+
+		if (encVals.second - startRightEncVal <= -tics / 2 || encVals.first - startLeftEncVal <= -tics / 2) {
+			openRightGate();
+		}
+
+		Helpers::delay(1);
+	} while (!leftMotorEnd || !rightMotorEnd);
+
+	currentCoordinate.x = 2;
+	currentCoordinate.y = 0;
+	currentCoordinate.rotation = M_PI;
 }
 
 
@@ -380,4 +454,16 @@ void Controller::goStraight(int distance)
 
 	cout << leftMotorEnd << "  " << rightMotorEnd << endl;
 
+}
+
+
+void Controller::setPower(int power)
+{
+	Controller::power = power;
+}
+
+
+int Controller::getPower() const
+{
+	return power;
 }

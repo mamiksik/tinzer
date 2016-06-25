@@ -111,7 +111,7 @@ public:
 
 	static void teardown(int signal)
 	{
-		try {
+		/*try {
 			ev3dev::motor motor(ev3dev::OUTPUT_A);
 			motor.set_command(ev3dev::motor::command_reset);
 		}
@@ -133,7 +133,20 @@ public:
 			ev3dev::motor motor(ev3dev::OUTPUT_D);
 			motor.set_command(ev3dev::motor::command_reset);
 		}
-		catch (...) {}
+		catch (...) {}*/
+
+		Helpers::dump(Helpers::Debug, "Teardown");
+
+		/*
+		if(Motor::get_motors().size() != 0){
+			Motor::lock = true;
+		}
+		*/
+
+		for (auto motor : Motor::get_motors()) {
+			motor->setPower(0);
+			motor->lock = true;
+		}
 
 		if (signal != -1 && signal != SIGINT) {
 			std::cerr << "Program failed! Signal " << signal << " caught. Terminating" << std::endl;

@@ -7,6 +7,10 @@
 #include <stdlib.h>
 void Motor::setPower(int power)
 {
+	if(lock && power != 0){
+		return;
+	}
+
 	/*if (power < -100 || power > 100) {
 		throw std::runtime_error("Power out of range: " + std::to_string(abs(power)) + "/100");
 	}
@@ -28,4 +32,12 @@ void Motor::setPower(int power)
 	motor.set_speed_sp(power);
 	motor.run_forever();
 
+}
+
+std::vector<Motor *> Motor::openedMotors;
+bool Motor::lock = false;
+
+const std::vector<Motor *> Motor::get_motors()
+{
+	return openedMotors;
 }

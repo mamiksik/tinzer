@@ -4,18 +4,26 @@
 namespace Structure {
 	struct Coordinate
 	{
-		typedef int position;
-		typedef double radian;
-
-
-		//WARNING: Fixed switched axes
-		Coordinate(position x, position y, radian rotation)
+		Coordinate(int x, int y, double rotation)
 				: rotation(rotation), x(x), y(y)
 		{}
 
-		radian rotation;
-		position x;
-		position y;
+		double rotation;
+		int x;
+		int y;
+
+		bool operator==(const Coordinate& o) const {
+			bool equal = true;
+			if(x != o.x){
+				equal = false;
+			} else if (y != o.y){
+				equal = false;
+			} else if (rotation != o.rotation){
+				equal = false;
+			}
+
+			return equal;
+		}
 	};
 }
 
