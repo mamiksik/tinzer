@@ -6,7 +6,7 @@
 
 #include "Controller.h"
 
-bool Controller::lock = false;
+bool Controller::lockMotors = false;
 
 
 void Controller::push(Coordinate newCoordinate)
@@ -20,8 +20,6 @@ void Controller::push(Coordinate newCoordinate)
 		xRotation = M_PI;
 	}
 
-	cout << "xRotation: " << xRotation << endl;
-
 	if (newCoordinate.y > expectedCoordinate.y) {
 		yRotation = M_PI_2;
 	} else {
@@ -29,19 +27,13 @@ void Controller::push(Coordinate newCoordinate)
 	}
 
 	//ToDo: First x or y
-	//if (yRotation > xRotation) {
 	if (expectedCoordinate.x != newCoordinate.x) {
 
 		if (expectedCoordinate.rotation != xRotation) {
-			cout << "1. xrot X: " << expectedCoordinate.x << " Y: " << expectedCoordinate.y << " Rot: " << xRotation
-			     << endl;
 			stepQueue.push(Coordinate(expectedCoordinate.x, expectedCoordinate.y, xRotation));
 			expectedCoordinate.rotation = xRotation;
 		}
 
-
-		cout << "2. new x X: " << newCoordinate.x << " Y: " << expectedCoordinate.y << " Rot: "
-		     << expectedCoordinate.rotation << endl;
 		stepQueue.push(Coordinate(newCoordinate.x, expectedCoordinate.y, xRotation));
 		expectedCoordinate.x = newCoordinate.x;
 	}
@@ -50,15 +42,9 @@ void Controller::push(Coordinate newCoordinate)
 	if (expectedCoordinate.y != newCoordinate.y) {
 
 		if (expectedCoordinate.rotation != yRotation) {
-			cout << "3. y rot X: " << expectedCoordinate.x << " Y: " << expectedCoordinate.y << " Rot: " << yRotation
-			     << endl;
 			stepQueue.push(Coordinate(expectedCoordinate.x, expectedCoordinate.y, yRotation));
 			expectedCoordinate.rotation = yRotation;
 		}
-
-
-		cout << "4. new y X: " << expectedCoordinate.x << " Y: " << newCoordinate.y << " Rot: "
-		     << expectedCoordinate.rotation << endl;
 		stepQueue.push(Coordinate(expectedCoordinate.x, newCoordinate.y, yRotation));
 		expectedCoordinate.y = newCoordinate.y;
 	}
@@ -67,8 +53,6 @@ void Controller::push(Coordinate newCoordinate)
 		stepQueue.push(Coordinate(expectedCoordinate.x, expectedCoordinate.y, newCoordinate.rotation));
 		expectedCoordinate.rotation = newCoordinate.rotation;
 	}
-
-	//Helpers::delay(2000);
 }
 
 
@@ -103,19 +87,14 @@ void Controller::closeGates()
 
 		encVals = encodersModel.getGateEncodersValues();
 
-		/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-		     << "  (str: " << GATE_TICS << ")" << endl;*/
-
 		if (encVals.first - startLeftEncVal <= -GATE_TICS) {
 			leftGateMotor.setPower(0);
 			leftMotorEnd = true;
-			/*Helpers::dump(Helpers::Warning, "rot - leftMotorEnd");*/
 		}
 
 		if (encVals.second - startRightEncVal >= GATE_TICS) {
 			rightGateMotor.setPower(0);
 			rightMotorEnd = true;
-			/*Helpers::dump(Helpers::Warning, "rot - rightMotorEnd");*/
 		}
 	} while (!leftMotorEnd || !rightMotorEnd);
 
@@ -126,7 +105,7 @@ void Controller::closeGates()
 
 void Controller::openLeftGate()
 {
-	if(leftGateOpen){
+	if (leftGateOpen) {
 		Helpers::dump(Helpers::Error, "Left gate opend");
 		return;
 	}
@@ -139,7 +118,6 @@ void Controller::openLeftGate()
 	leftGateMotor.setPower(GATE_POWER);
 
 	do {
-	/*	cout << encVal - startEncVal << "  (str: " << -GATE_TICS << ")" << endl;*/
 		encVal = encodersModel.getLeftGateEncodersValue();
 
 		if (encVal - startEncVal >= GATE_TICS) {
@@ -155,7 +133,7 @@ void Controller::openLeftGate()
 
 void Controller::openRightGate()
 {
-	if(rightGateOpen){
+	if (rightGateOpen) {
 		Helpers::dump(Helpers::Error, "Right gate opend");
 		return;
 	}
@@ -169,10 +147,8 @@ void Controller::openRightGate()
 
 	do {
 		encVal = encodersModel.getRightGateEncodersValue();
-//		cout << encVal - startEncVal << "  (str: " << -GATE_TICS << ")" << endl;
 
 		if (encVal - startEncVal <= -GATE_TICS) {
-		//	Helpers::dump(Helpers::Warning, "Stopping right gate");
 			rightGateMotor.setPower(0);
 			stop = true;
 		}
@@ -186,7 +162,7 @@ void Controller::openRightGate()
 void Controller::threadTask()
 {
 	do {
-		if (lock || stepQueue.empty()) {
+		if (lockStack || stepQueue.empty()) {
 			//Helpers::dump(Helpers::Debug, "eempty");
 			Helpers::delay(1);
 			continue;
@@ -195,8 +171,8 @@ void Controller::threadTask()
 		//array<int, 3> correctionVals = lineModel.getCorectionData();
 		array<double, 3> correctionVals;
 
-		correctionVals[0] = 0;
-		correctionVals[1] = 0;
+		correctionVals[0] = 100;
+		correctionVals[1] = 100;
 		correctionVals[2] = 0;
 
 		Coordinate newCoordinate = stepQueue.front();
@@ -222,7 +198,7 @@ void Controller::threadTask()
 		if (currentCoordinate.x != newCoordinate.x) {
 			Helpers::dump(Helpers::Debug, "i am here");
 			int x = 0;
-			directionX dirX = whitchDirectionInX(currentCoordinate.x, newCoordinate.x);
+			directionX dirX = witchDirectionInX(currentCoordinate.x, newCoordinate.x);
 
 			if (dirX == directionX::right) {
 				//x = LINE_LEIGHT - correctionVals[0];
@@ -255,7 +231,7 @@ void Controller::threadTask()
 
 		if (currentCoordinate.y != newCoordinate.y) {
 			int y = 0;
-			directionY dirY = whitchDirectionInY(currentCoordinate.y, newCoordinate.y);
+			directionY dirY = witchDirectionInY(currentCoordinate.y, newCoordinate.y);
 
 			if (dirY == directionY::up) {
 				//y = LINE_LEIGHT - correctionVals[1];
@@ -294,8 +270,8 @@ Coordinate Controller::getPosition()
 
 void Controller::unload()
 {
+	Helpers::dump(Helpers::Info, "Unloading stacks");
 	openLeftGate();
-
 	//TODO: Dont use const val
 	int tics = static_cast<int>(ENCODER_RESOLUTION * 2 * LINE_LEIGHT / (WHEEL_DIAMETER * M_PI));
 
@@ -357,19 +333,13 @@ void Controller::doRotation(double rotation)
 		rightChassisMotor.setPower(40);
 
 		do {
-
-			/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-			     << "  (rot+" << tics << ")" << endl;*/
-			//Helpers::dump(Helpers::Debug, "rotation");
-
 			encVals = encodersModel.getChassisEncodersValues();
 
-
-			if(lock){
+			if (lockMotors) {
 				leftChassisMotor.setPower(0);
 				rightChassisMotor.setPower(0);
 				continue;
-			}else{
+			} else {
 				leftChassisMotor.setPower(-power);
 				rightChassisMotor.setPower(power);
 			}
@@ -393,17 +363,13 @@ void Controller::doRotation(double rotation)
 		rightChassisMotor.setPower(-power);
 
 		do {
-
-			/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-			     << "  (rot-: " << tics << ")" << endl;*/
-
 			encVals = encodersModel.getChassisEncodersValues();
 
-			if(lock){
+			if (lockMotors) {
 				leftChassisMotor.setPower(0);
 				rightChassisMotor.setPower(0);
 				continue;
-			}else{
+			} else {
 				leftChassisMotor.setPower(power);
 				rightChassisMotor.setPower(-power);
 			}
@@ -425,7 +391,7 @@ void Controller::doRotation(double rotation)
 }
 
 
-Controller::directionX Controller::whitchDirectionInX(int currentX, int newX)
+Controller::directionX Controller::witchDirectionInX(int currentX, int newX)
 {
 	if (currentX < newX) {
 		return directionX::right;
@@ -437,7 +403,7 @@ Controller::directionX Controller::whitchDirectionInX(int currentX, int newX)
 }
 
 
-Controller::directionY Controller::whitchDirectionInY(int currentY, int newY)
+Controller::directionY Controller::witchDirectionInY(int currentY, int newY)
 {
 	if (currentY < newY) {
 		return directionY::up;
@@ -465,16 +431,13 @@ void Controller::goStraight(int distance)
 	rightChassisMotor.setPower(power);
 
 	do {
-		//Helpers::dump(Helpers::Debug, "straight");
-		/*cout << encVals.first - startLeftEncVal << "  " << encVals.second - startRightEncVal
-		     << "  (str: " << tics << ")" << endl;*/
 		encVals = encodersModel.getChassisEncodersValues();
 
-		if(lock){
+		if (lockMotors) {
 			leftChassisMotor.setPower(0);
 			rightChassisMotor.setPower(0);
 			continue;
-		}else{
+		} else {
 			leftChassisMotor.setPower(power);
 			rightChassisMotor.setPower(power);
 		}

@@ -26,6 +26,7 @@ set(FRAMEWORK_FILES
     framework/threading/Threading.cpp
     framework/stopWatch/StopWatch.h
     framework/structures/Coordinate.h
+    framework/Helpers/Helpers.cpp
     app/threads/controller/Controller.cpp
     app/threads/logic/Logic.cpp
     )

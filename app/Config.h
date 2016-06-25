@@ -11,6 +11,7 @@ int const LOG_LEVEL = Helpers::All;
 //Game settings
 int const GAME_TIME = 10000; // 3min = 180 000; // 2min 120000
 int const DEFAULT_POWER = 40;
+int const ENEMY_DETECTION_DISTANCE = 20;
 
 
 //ReflectiveBar settings

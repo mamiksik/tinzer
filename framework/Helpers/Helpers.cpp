@@ -8,6 +8,9 @@
 #include <thread>
 #include <stdio.h>
 #include <stdarg.h>
+#include <fstream>
+#include <sstream>
+
 #include "../../app/Config.h"
 
 
@@ -50,7 +53,25 @@ void Helpers::dump(int logLevel, const char *string, ...)
 }
 
 
-//vector<Coordinates> Helpers::loadData(std::string name)
-//{
-//
-//}
+vector<Structure::Coordinate> Helpers::loadData(std::string path)
+{
+	vector<Structure::Coordinate> data;
+
+	ifstream file(path);
+	string str;
+	while (getline(file, str)) {
+
+		istringstream stream(str);
+		int x;
+		int y;
+		double rotation;
+
+		stream >> x;
+		stream >> y;
+		stream >> rotation;
+
+		data.push_back(Structure::Coordinate(x, y, rotation));
+	}
+
+	return data;
+}

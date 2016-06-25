@@ -55,18 +55,10 @@ public:
 	{}
 
 
-	static bool lock;
+	static bool lockMotors;
 
 	virtual ~Controller()
 	{
-		//lock = true;
-
-		/*rightChassisMotor.setPower(0);
-		leftChassisMotor.setPower(0);
-
-		leftGateMotor.setPower(0);
-		rightGateMotor.setPower(0);*/
-
 		stopThread();
 	}
 
@@ -114,9 +106,9 @@ private:
 
 	void goStraight(int distance);
 
-	directionX whitchDirectionInX(int currentX, int newX);
+	directionX witchDirectionInX(int currentX, int newX);
 
-	directionY whitchDirectionInY(int currentY, int newY);
+	directionY witchDirectionInY(int currentY, int newY);
 };
 
 

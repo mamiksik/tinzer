@@ -17,13 +17,17 @@ using namespace std;
 class ButtonsModel
 {
 public:
-	ButtonsModel(IButton &stopButton) : stopButton(stopButton)
+	ButtonsModel(IButton &stopButton, IButton &startButton) : stopButton(stopButton), startButton(startButton)
 	{}
 
-	bool getStopButton();
+	bool isPressedStop();
+
+	bool isPressedStart();
+
 
 private:
 	IButton &stopButton;
+	IButton &startButton;
 };
 
 

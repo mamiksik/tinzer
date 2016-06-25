@@ -21,7 +21,7 @@ using namespace Structure;
 class CoordinateController : public Threading
 {
 public:
-	CoordinateController() : lock(false)
+	CoordinateController() : lockStack(false)
 	{}
 
 	virtual void push(Coordinate item) = 0;
@@ -41,7 +41,7 @@ public:
 protected:
 	virtual void threadTask() = 0;
 
-	bool lock;
+	bool lockStack;
 
 	//ToDo: Thread safe
 	queue<Coordinate> stepQueue;

@@ -15,6 +15,7 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 #include <vector>
+#include <string>
 
 #include "../structures/Coordinate.h"
 
@@ -32,7 +33,7 @@ public:
 
 	static void dump(int logLevel, const char *string, ...);
 
-	//static vector<Coordinate> loadData(std::string name);
+	static vector<Structure::Coordinate> loadData(string path);
 };
 
 

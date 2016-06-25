@@ -4,6 +4,7 @@
 
 #include "ReflectiveBar.h"
 
+
 vector<int> ReflectiveBar::getData()
 {
 	pipe << command << "\n";

@@ -90,7 +90,7 @@ public:
 
 		//Init model layer
 		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
-		ButtonsModel buttonSensor(stopButton);
+		ButtonsModel buttonSensor(stopButton, startButton);
 		UltrasonicModel ultrasonicModel(gateUltrasonicSensor);
 		LineModel lineModel;
 
@@ -105,13 +105,13 @@ public:
 
 
 		//Init main controller
-		Logic logic(controller, ultrasonicModel, gateDiode);
+		Logic logic(controller, ultrasonicModel, buttonSensor, gateDiode);
 
 		try {
 			logic.startThread();
 
 			while (true) {
-				if (buttonSensor.getStopButton()) {
+				if (buttonSensor.isPressedStop()) {
 					raise(SIGINT);
 				}
 			}
@@ -152,7 +152,7 @@ public:
 
 		/*
 		if(Motor::get_motors().size() != 0){
-			Motor::lock = true;
+			Motor::lockStack = true;
 		}
 		*/
 

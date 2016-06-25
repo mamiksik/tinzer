@@ -13,12 +13,12 @@ void CoordinateController::aboard()
 
 void CoordinateController::pause()
 {
-	lock = true;
+	lockStack = true;
 }
 
 void CoordinateController::resume()
 {
-	lock = false;
+	lockStack = false;
 }
 
 bool CoordinateController::isEmpty()
@@ -28,5 +28,5 @@ bool CoordinateController::isEmpty()
 
 bool CoordinateController::isReady()
 {
-	return !lock;
+	return !lockStack;
 }

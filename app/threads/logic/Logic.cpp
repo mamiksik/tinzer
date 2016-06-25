@@ -9,60 +9,45 @@
 
 void Logic::threadTask()
 {
-	int stackSize = 0;
+	/*int stackSize = 0;
 	int stackMaxSize = 4;
 	bool penetrated = false;
-	bool gateClosed = false;
+	bool gateClosed = false;*/
+	bool stay = true;
 
 	StopWatch watch;
 	controller.setPower(DEFAULT_POWER);
 
-	cout << "starting controller run thread" << endl;
-	pushStrategy();
+	Helpers::dump(Helpers::Info, "Starting controller run thread");
 	controller.startThread();
+	controller.pause();
 
-	/*Helpers::dump(Helpers::Debug, "Close");
-	controller.closeGates();
+	/*vector<Coordinate> strategy = Helpers::loadData("strategy");
 
-	Helpers::delay(1000);
-	Helpers::dump(Helpers::Debug, "open right");
-	controller.openRightGate();
+	for(auto coordinate: strategy){
+		controller.push(coordinate);
+	}*/
 
-	Helpers::delay(1000);
-	Helpers::dump(Helpers::Debug, "open left");
-	controller.openLeftGate();
+	controller.push(Coordinate(0, 1, M_PI_2));
 
-	Helpers::delay(1000);
-	controller.closeGates();
+	Helpers::dump(Helpers::Info, "Robot is ready and waiting for start");
+	gateDiode.switchOn();
+	while (stay) {
+		if (buttonsModel.isPressedStart()) {
+			Helpers::dump(Helpers::Info, "1. 2. 3. GO!...");
+			stay = false;
+		}
+		Helpers::delay(1);
+	}
 
-	Helpers::delay(1000);
-	controller.closeGates();
-
-	Helpers::delay(1000);
-	Helpers::dump(Helpers::Debug, "open right");
-	controller.openRightGate();*/
-	//goHome();
 
 	do {
-		/*cout << "LOGIC      " << ultrasonicModel.gateDistance() << endl;*/
-		/*if (ultrasonicModel.isGatePenetrated()) {
-			if (!penetrated) {
-				stackSize++;
 
-				*//*Helpers::dump(Helpers::Info, "Stack have accepted new tin(now contain: %d out of %d)", stackSize,
-				              stackMaxSize);*//*
-			}
-			penetrated = true;
-			gateDiode.switchOn();
+		if (ultrasonicModel.gateDistance() < ENEMY_DETECTION_DISTANCE) {
+			Helpers::dump(Helpers::Warning, "Enemy in range!");
+			Controller::lockMotors = true;
 		} else {
-			penetrated = false;
-			gateDiode.switchOff();
-		}*/
-
-		if(ultrasonicModel.gateDistance() < 10){
-			Controller::lock = true;
-		}else{
-			Controller::lock = false;
+			Controller::lockMotors = false;
 		}
 
 
@@ -78,10 +63,6 @@ void Logic::threadTask()
 			goHome();
 		}
 
-		if (controller.isEmpty()) {
-
-		}
-
 		Helpers::delay(10);
 	} while (repeatTask);
 }
@@ -89,7 +70,7 @@ void Logic::threadTask()
 
 void Logic::goHome()
 {
-	Helpers::dump(Helpers::Info, "Go Home");
+	Helpers::dump(Helpers::Info, "Going home");
 
 	Coordinate home = Coordinate(0, 0, M_PI);
 
@@ -99,63 +80,19 @@ void Logic::goHome()
 
 	controller.closeGates();
 
-	Helpers::dump(Helpers::Info, "Home push");
 	controller.push(home);
-	Helpers::dump(Helpers::Info, "Home after push");
 	bool waitForHome = true;
 
 	while (waitForHome) {
-		Helpers::dump(Helpers::Info, "Home wait");
 		if (home == controller.getPosition()) {
+			controller.pause();
 			controller.unload();
+			Helpers::dump(Helpers::Info, "I am at home");
 			waitForHome = false;
 			raise(SIGINT);
 		}
 		Helpers::delay(1);
 	}
-
-	/*controller.push(Coordinate(3, 5, M_PI_2));
-	controller.push(Coordinate(3, 6, M_PI));
-	controller.push(Coordinate(-3, 6, M_PI));
-
-	controller.push(Coordinate(-1, 0, M_PI));
-
-	home = Coordinate(-1, 0, M_PI);
-	waitForHome = true;
-
-	while (waitForHome) {
-
-		cout << "Home " << waitForHome << endl;
-		if (home == controller.getPosition()) {
-			controller.unload();
-			waitForHome = false;
-			raise(SIGINT);
-		}
-		Helpers::delay(1);
-	}*/
-
 }
 
 
-void Logic::pushStrategy()
-{
-	Helpers::dump(Helpers::Info, "Push strategy");
-
-
-
-
-	controller.push(Coordinate(0, 3, M_PI));
-	controller.push(Coordinate(-2, 3, M_PI));
-
-	//controller.push(Coordinate(0, 3, M_PI));
-	//controller.push(Coordinate(-3, 3, M_PI * (3/4)));
-	//controller.push(Coordinate(-3, 2, 0));
-
-	//controller.push(Coordinate(3, 2, 0));
-
-	//controller.push(Coordinate(3, 2, 0));
-	//controller.push(Coordinate(3, 3, M_PI));
-	//controller.push(Coordinate(1, 3, M_PI_2));
-
-
-}
