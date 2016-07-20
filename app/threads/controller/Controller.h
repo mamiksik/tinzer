@@ -12,9 +12,7 @@
 #include "../../../framework/structures/Coordinate.h"
 #include "../../../framework/hardware/IMotor.h"
 #include "../../model/encoder/EncodersModel.h"
-#include "../../model/line/LineModel.h"
 
-using namespace Model;
 using namespace Structure;
 
 class Controller : public CoordinateController
@@ -34,7 +32,6 @@ public:
 	Controller(const Coordinate &startCoordinate,
 	           int power,
 	           EncodersModel &encodersModel,
-	           LineModel &lineModel,
 	           IMotor &rightChassisMotor,
 	           IMotor &leftChassisMotor,
 	           IMotor &leftGateMotor,
@@ -45,7 +42,6 @@ public:
 			  currentCoordinate(startCoordinate),
 			  power(power),
 			  encodersModel(encodersModel),
-			  lineModel(lineModel),
 			  rightChassisMotor(rightChassisMotor),
 			  leftChassisMotor(leftChassisMotor),
 			  leftGateMotor(leftGateMotor),
@@ -91,7 +87,6 @@ private:
 	int power;
 
 	EncodersModel &encodersModel;
-	LineModel &lineModel;
 
 	IMotor &rightChassisMotor;
 	IMotor &leftChassisMotor;

@@ -42,14 +42,13 @@ set(SOURCE_FILES
     app/hardware/diode/Diode.cpp
     app/hardware/button/Button.cpp
     app/hardware/ultrasonicSensor/Ultrasonic.cpp
-    app/hardware/reflectiveBar/ReflectiveBar.cpp
-
     app/model/ultrasonic/UltrasonicModel.cpp
     app/model/encoder/EncodersModel.cpp
-    app/model/line/LineModel.cpp
 
     app/model/button/ButtonsModel.cpp
-    app/threads/logic/Logic.cpp framework/hardware/IReflectiveBar.h app/model/ReflectiveBars/ReflectiveModel.cpp app/model/ReflectiveBars/ReflectiveModel.h framework/libs/iniReader/ini.cpp)
+    app/threads/logic/Logic.cpp
+	framework/libs/iniReader/ini.cpp
+		)
 
 add_executable(KetchupHouse ${FRAMEWORK_FILES} ${SOURCE_FILES})
 

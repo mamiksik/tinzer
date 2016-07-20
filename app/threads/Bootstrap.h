@@ -23,10 +23,8 @@
 
 #include "controller/Controller.h"
 #include "logic/Logic.h"
-#include "../model/line/LineModel.h"
 #include "../model/ultrasonic/UltrasonicModel.h"
 #include "../hardware/diode/Diode.h"
-#include "../hardware/reflectiveBar/ReflectiveBar.h"
 
 class Bootstrap
 {
@@ -52,9 +50,7 @@ public:
 		using ev3dev::INPUT_4;
 
 		Button stopButton(INPUT_1);
-
 		Button startButton(INPUT_4);
-
 
 		Diode gateDiode(INPUT_3);
 
@@ -75,12 +71,6 @@ public:
 		Helpers::dump(Helpers::Debug, "Init ultrasonic");
 		Ultrasonic gateUltrasonicSensor(INPUT_2, false);
 
-
-		//Reflective bars
-		//ReflectiveBar leftReflectiveBar("/ttcy/ACM", "nic_neposilej");
-		//ReflectiveBar rightReflectiveBar("/ttcy/ACM", "nic_neposilej");
-		//ReflectiveBar bottomReflectiveBar("/ttcy/ACM", "nic_neposilej");
-
 		//Reset encoders
 		Helpers::dump(Helpers::Warning, "Encoder manual reset");
 		leftChassisEncoder.set(0);
@@ -92,12 +82,10 @@ public:
 		EncodersModel encodersSensor(leftChassisEncoder, rightChassisEncoder, leftGateEncoder, rightGateEncoder);
 		ButtonsModel buttonSensor(stopButton, startButton);
 		UltrasonicModel ultrasonicModel(gateUltrasonicSensor);
-		LineModel lineModel;
 
 		//Init controller layer
 		Controller controller(Coordinate(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, DEFAULT_ROTATION), 40,
 		                      encodersSensor,
-		                      lineModel,
 		                      leftChassisMotor,
 		                      rightChassisMotor,
 		                      leftGateMotor,
@@ -125,12 +113,6 @@ public:
 	static void teardown(int signal)
 	{
 		Helpers::dump(Helpers::Debug, "Teardown");
-
-		/*
-		if(Motor::get_motors().size() != 0){
-			Motor::lockStack = true;
-		}
-		*/
 
 		for (auto motor : Motor::get_motors()) {
 			motor->setPower(0);

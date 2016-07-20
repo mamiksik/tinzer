@@ -9,17 +9,7 @@
 
 void Logic::threadTask()
 {
-	/*int stackSize = 0;
-	int stackMaxSize = 4;
-	bool penetrated = false;
-	bool gateClosed = false;*/
-
-	/*bool seeEnemy = false;
-	bool retreat = false;*/
-	/*StopWatch watch(false);*/
-
 	StopWatch gameWatch;
-
 	bool stay = true;
 
 	controller.setPower(DEFAULT_POWER);
@@ -56,10 +46,6 @@ void Logic::threadTask()
 		if (gameWatch.getMs() >= GAME_TIME) {
 			goHome();
 		}
-
-		/*if(controller.isEmpty()){
-			Helpers::dump(Helpers::Info, "%d s to go", (GAME_TIME - gameWatch.getMs()) / 1000);
-		}*/
 
 		Helpers::delay(10);
 	} while (repeatTask);
